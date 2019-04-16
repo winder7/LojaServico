@@ -9,19 +9,19 @@
     <http auto-config="true"> 
         <intercept-url pattern="/admin/**" access="ROLE_ADMINISTRADOR" /> 
         <form-login login-page="/publico/login.xhtml" 
-                            always-use-default-target="true" 
-                            default-target-url="/admin/principal.xhtml"
-                            authentication-failure-url="/publico/login.xhtml?login_error=1" />
+                    always-use-default-target="true" 
+                    default-target-url="/admin/principal.xhtml"
+                    authentication-failure-url="/publico/login.xhtml?login_error=1" />
         <logout logout-success-url="/publico/index.xhtml"/> 
         <remember-me /> 
     </http>
     <authentication-manager>
         <authentication-provider>
             <jdbc-user-service data-source-ref="hibernateDbDataSource" 
-                                           authorities-by-username-query="SELECT pes_nome, 'ROLE_ADMINISTRADOR' 
+                               authorities-by-username-query="SELECT pes_nome, 'ROLE_ADMINISTRADOR' 
 																	FROM pessoa 
 																	WHERE pes_email = ?"
-                                           users-by-username-query="SELECT pes_email, pes_senha, '1' FROM pessoa WHERE pes_email = ?" />
+                               users-by-username-query="SELECT pes_email, pes_senha, '1' FROM pessoa WHERE pes_email = ?" />
         </authentication-provider>
     </authentication-manager>
 </beans:beans>
