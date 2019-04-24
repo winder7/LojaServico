@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context reloadable="true" path="/LojaServico">
-    <Resource 	name="jdbc/hibernatedb" 
-                auth="Container" 
-                type="javax.sql.DataSource"
-                maxActive="100" 
-                maxIdle="30" 
-                maxWait="10000"
-                username="postgres" 
-                password="root" 
-                driverClassName="org.postgresql.Driver"
-                url="jdbc:postgresql://localhost:5432/hibernatedb?autoReconnect=true"
-    />
+<Context path="/LojaServico" reloadable="true">
+  <Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/bdlojaservico" password="root" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/bdlojaservico?autoReconnect=true" username="postgres"/>
 </Context>

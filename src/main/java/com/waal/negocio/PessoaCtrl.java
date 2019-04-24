@@ -1,4 +1,4 @@
-package  com.waal.negocio;
+package com.waal.negocio;
 
 import com.ibm.icu.text.SimpleDateFormat;
 import com.waal.beans.Fone;
@@ -11,6 +11,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.waal.persistencia.PessoaDAO;
 import java.util.Date;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @Autor Winder Rezende
@@ -25,47 +27,61 @@ public class PessoaCtrl implements Serializable {
     private Pessoa pessoa = new Pessoa();
     private Fone fone = new Fone();
 
-    public List<Pessoa> getListagem(){
+    public List<Pessoa> getListagem() {
         return PessoaDAO.listagem(filtro);
     }
-    
+
     public void actionGravar() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (pessoa.getId() == 0) {
             PessoaDAO.inserir(pessoa);
             context.addMessage(null, new FacesMessage("Sucesso", "Inserido com sucesso!"));
-        }else {
+        } else {
             PessoaDAO.alterar(pessoa);
             context.addMessage(null, new FacesMessage("Sucesso", "Alterado com sucesso!"));
         }
     }
-    
-    public void actionInserir(){
+
+    public void actionInserir() {
         pessoa = new Pessoa();
     }
-    
+
     public void actionExcluir() {
         PessoaDAO.excluir(pessoa);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Excluído com sucesso!"));
     }
-    
-    public void actionInserirFone(){
+
+    public void actionInserirFone() {
         fone = new Fone();
         fone.setPessoa(pessoa);
         pessoa.getFones().add(fone);
     }
-    
+
     public void actionExcluirFone() {
         pessoa.getFones().remove(fone);
     }
-    
+
     public String formatarNumero(double num) {
         return String.format("%,.1f", num) + " %";
     }
-    
+
     public String formatarData(Date data) {
         return new SimpleDateFormat("dd/MM/yyyy").format(data);
+    }
+
+    public String getUsuarioLogado() {
+        String usr = "";
+        try {
+            UserDetails user = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            usr = user.toString();
+            int ini = usr.indexOf("Username: ");
+            int fim = usr.indexOf("; Password:");
+            usr = usr.substring((ini + 10), fim);
+        } catch (Exception e) {
+            System.out.println("Errrrrrrrrrrrrrrrrrrrroooo" + e);
+        }
+        return usr;
     }
 
     //GET-SET

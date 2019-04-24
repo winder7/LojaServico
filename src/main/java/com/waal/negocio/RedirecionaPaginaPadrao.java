@@ -18,10 +18,10 @@ public class RedirecionaPaginaPadrao implements AuthenticationSuccessHandler{
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-        if (roles.contains("ROLE_ADMINSTRATOR")) {
-            response.sendRedirect("/LojaServico/index.xhtml");
+        if (roles.contains("ROLE_ADMINISTRADOR")) {
+            response.sendRedirect("/LojaServico/admin/principal.xhtml"); 
         }else if (roles.contains("ROLE_CLIENTE")) {
-            response.sendRedirect("/LojaServico/index.xhtml");
+            response.sendRedirect("/LojaServico/cliente/principal.xhtml");
         }
     }
 }

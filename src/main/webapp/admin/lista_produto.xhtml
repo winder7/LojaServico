@@ -20,12 +20,17 @@
 
 
 
-            <p:panel id="basic" header="Lista de produtos" style="margin-bottom:20px">
+            <p:panel id="basic" header="Lista de produtos" style="margin-bottom:20px; margin-top: 20px">
                 <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
                                  actionListener="#{produtoCtrl.actionInserir()}"
                                  oncomplete="PF('cadDialog').show()"
                                  update=":form:cadDetail">
                 </p:commandButton>
+                <p:row>
+                    <p:inputText value="#{formaPgtoCtrl.filtro}" label="Pesquisar" >
+                        <f:ajax event="keypress" immediate="true" render="tbl"/>
+                    </p:inputText>
+                </p:row>
                 <p:dataTable id="tbl" var="f" value="#{produtoCtrl.listagem}"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                              {PageLinks} {NextPageLink} {LastPageLink}"

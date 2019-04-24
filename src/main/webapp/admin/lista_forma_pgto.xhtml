@@ -17,8 +17,7 @@
         </div>
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
-            <p:accordionPanel> style="margin-bottom:20px; margin-top: 30px">
-                <p:tab title="Lista de Formas de Pagamento">
+            <p:panel header="Lista de Formas de Pagamento" style="margin-bottom:20px; margin-top: 20px">
                     <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
                                      actionListener="#{produtoCtrl.actionInserir()}"
                                      oncomplete="PF('cadDialog').show()"
@@ -58,8 +57,7 @@
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
-                </p:tab>
-            </p:accordionPanel>
+            </p:panel>
 
             <p:dialog  header="Cadastro de Forma de Pagamento" widgetVar="cadDialog" modal="true"
                        showEffect="fade" hideEffect="fade" resizable="false">
@@ -71,7 +69,7 @@
                         <p:inputText value="#{formaPgtoCtrl.formaPgto.descricao}" size="30" maxlength="20"/>
                         <h:outputLabel value="Nº Max. Parcelas"/>
                         <p:inputText value="#{formaPgtoCtrl.formaPgto.numMaxParc}" size="30" maxlength="3"/>
-                        <h:outputLabel value="Nº Padrado de Parcelas"/>
+                        <h:outputLabel value="Nº Padrão de Parcelas"/>
                         <p:inputText value="#{formaPgtoCtrl.formaPgto.numPadraoParc}" size="30" maxlength="3"/>
                         <h:outputLabel value="Intervalo (dias)"/>
                         <p:inputText value="#{formaPgtoCtrl.formaPgto.intervaloDias}" size="30" maxlength="3"/>

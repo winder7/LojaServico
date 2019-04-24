@@ -5,20 +5,22 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:body>
+    <h:body style="background-image: url('../resources/img/back.png')">
         <h:form style="margin-bottom: 10px">  
             <p:growl id="messages"/>
 
             <p:menubar>
-                <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home"/>
-                <p:menuitem value="Produtos" url="lista_produto.xhtml" icon="pi pi-th-large" />
-                <p:menuitem value="Serviços" url="lista_servico.xhtml" icon="fa fa-cloud" />
-                <p:menuitem value="Formas de Pagamento" url="lista_formaPgto.xhtml" icon="fa fa-money" />
-                <p:menuitem value="Pessoas" url="lista_pessoa.xhtml" icon="fa fa-group" />
+                <p:menuitem value="Inicio" url="#{request.contextPath}/publico/index.xhtml" icon="pi pi-home"/>
+                <p:menuitem value="Produtos" url="#{request.contextPath}/admin/lista_produto.xhtml" icon="fa fa-cubes" />
+                <p:menuitem value="Serviços" url="#{request.contextPath}/admin/lista_servico.xhtml" icon="fa fa-wrench" />
+                <p:menuitem value="Formas de Pagamento" url="#{request.contextPath}/admin/lista_forma_pgto.xhtml" icon="fa fa-credit-card" />
+                <p:menuitem value="Pessoas" url="#{request.contextPath}/admin/lista_pessoa.xhtml" icon="fa fa-group" />
 
                 <f:facet name="options">
-                    <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Pesquisar"/>
-                    <p:commandButton type="button" value="Sair" icon="pi pi-sign-out" />
+                    <p:inputText style="margin:1px 10px 1px 1px; margin-right: 5px" placeholder="Pesquisar"/>
+                    <p:button icon="fa fa-user" style="margin-right: 2px"/>
+                    <p:outputLabel value="#{pessoaCtrl.usuarioLogado}" style="margin-right: 2px"/>
+                    <p:button value="Sair" icon="pi pi-sign-out" href="#{request.contextPath}/j_spring_security_logout"/>
                 </f:facet>
             </p:menubar>
         </h:form>

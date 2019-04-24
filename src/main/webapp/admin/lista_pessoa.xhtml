@@ -17,65 +17,68 @@
         </div>
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
-            <p:accordionPanel> style="margin-bottom:20px; margin-top: 30px">
-                <p:tab title="Lista de Pessoas">
-                    <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
-                                     actionListener="#{pessoaCtrl.actionInserir()}"
-                                     oncomplete="PF('cadDialog').show()"
-                                     update=":form:cadDetail">
-                    </p:commandButton>
-                    <p:dataTable id="tbl" var="f" value="#{pessoaCtrl.listagem}"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                                 {PageLinks} {NextPageLink} {LastPageLink}"
-                                 paginator="true" rows="10" style="margin-bottom:20px">
-                        <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
-                            <h:outputText value="#{f.id}" />
-                        </p:column>
-                        <p:column headerText="Nome" sortBy="f.nome">
-                            <h:outputText value="#{f.nome}" />
-                        </p:column>
-                        <p:column headerText="CPF" sortBy="f.cpf">
-                            <h:outputText value="#{f.cpf}"/>
-                        </p:column>
-                        <p:column headerText="RG" sortBy="f.rg">
-                            <h:outputText value="#{f.rg}" />
-                        </p:column>
-                        <p:column headerText="Data de Nascimento" sortBy="f.dataNasc">
-                            <h:outputLabel value="#{pessoaCtrl.formatarData(f.dataNasc)}"/>
-                        </p:column>
-                        <p:column headerText="Rua" sortBy="f.rua">
-                            <h:outputText value="#{f.rua}" />
-                        </p:column>
-                        <p:column headerText="Bairro" sortBy="f.bairro">
-                            <h:outputText value="#{f.bairro}" />
-                        </p:column>
-                        <p:column headerText="Cidade" sortBy="f.cidade">
-                            <h:outputText value="#{f.cidade}" />
-                        </p:column>
-                        <p:column headerText="UF" sortBy="f.uf">
-                            <h:outputText value="#{f.uf}" />
-                        </p:column>
-                        <p:column headerText="CEP" sortBy="f.cep">
-                            <h:outputText value="#{f.cep}" />
-                        </p:column>
-                        <p:column headerText="E-mail" sortBy="f.email">
-                            <h:outputText value="#{f.email}" />
-                        </p:column>
-                        <p:column headerText="Senha" sortBy="f.senha">
-                            <h:outputText value="#{f.senha}" />
-                        </p:column>
-                        <p:column headerText="Tipo" sortBy="f.tipo">
-                            <h:outputText value="#{f.tipo}" />
-                        </p:column>
-                        <p:column style="width:32px;text-align: center">
-                            <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()"
-                                             icon="pi pi-search" title="View">
-                                <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.pessoa}" />
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>
-                </p:tab>
-            </p:accordionPanel>
+            <p:panel header="Lista de Pessoas" style="margin-bottom:20px; margin-top: 20px">
+                <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
+                                 actionListener="#{pessoaCtrl.actionInserir()}"
+                                 oncomplete="PF('cadDialog').show()"
+                                 update=":form:cadDetail">
+                </p:commandButton>
+                <p:row>
+                    <p:inputText value="#{formaPgtoCtrl.filtro}" label="Pesquisar" >
+                        <f:ajax event="keypress" immediate="true" render="tbl"/>
+                    </p:inputText>
+                </p:row>
+                <p:dataTable id="tbl" var="f" value="#{pessoaCtrl.listagem}"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true" rows="10" style="margin-bottom:20px">
+                    <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
+                        <h:outputText value="#{f.id}" />
+                    </p:column>
+                    <p:column headerText="Nome" sortBy="f.nome">
+                        <h:outputText value="#{f.nome}" />
+                    </p:column>
+                    <p:column headerText="CPF" sortBy="f.cpf">
+                        <h:outputText value="#{f.cpf}"/>
+                    </p:column>
+                    <p:column headerText="RG" sortBy="f.rg">
+                        <h:outputText value="#{f.rg}" />
+                    </p:column>
+                    <p:column headerText="Data de Nascimento" sortBy="f.dataNasc">
+                        <h:outputLabel value="#{pessoaCtrl.formatarData(f.dataNasc)}"/>
+                    </p:column>
+                    <p:column headerText="Rua" sortBy="f.rua">
+                        <h:outputText value="#{f.rua}" />
+                    </p:column>
+                    <p:column headerText="Bairro" sortBy="f.bairro">
+                        <h:outputText value="#{f.bairro}" />
+                    </p:column>
+                    <p:column headerText="Cidade" sortBy="f.cidade">
+                        <h:outputText value="#{f.cidade}" />
+                    </p:column>
+                    <p:column headerText="UF" sortBy="f.uf">
+                        <h:outputText value="#{f.uf}" />
+                    </p:column>
+                    <p:column headerText="CEP" sortBy="f.cep">
+                        <h:outputText value="#{f.cep}" />
+                    </p:column>
+                    <p:column headerText="E-mail" sortBy="f.email">
+                        <h:outputText value="#{f.email}" />
+                    </p:column>
+                    <p:column headerText="Senha" sortBy="f.senha">
+                        <h:outputText value="#{f.senha}" />
+                    </p:column>
+                    <p:column headerText="Tipo" sortBy="f.tipo">
+                        <h:outputText value="#{f.tipo}" />
+                    </p:column>
+                    <p:column style="width:32px;text-align: center">
+                        <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()"
+                                         icon="pi pi-search" title="View">
+                            <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.pessoa}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
 
             <p:dialog  header="Cadastro de Pessoas" widgetVar="cadDialog" modal="true"
                        showEffect="fade" hideEffect="fade" resizable="false">
@@ -134,9 +137,9 @@
                         </h:dataTable>
                     </h:panelGrid>
                     <h:panelGrid columns="3">
-                    <p:commandButton value="Excluir" icon="fa fa-fw fa-trash" action="#{pessoaCtrl.actionExcluir}" update="form"/>
-                    <p:commandButton value="Gravar" icon="fa fa-fw fa-save" action="#{pessoaCtrl.actionGravar}" update="form"/>
-                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-close" oncomplete="PF('cadDialog').hide()"/>
+                        <p:commandButton value="Excluir" icon="fa fa-fw fa-trash" action="#{pessoaCtrl.actionExcluir}" update="form"/>
+                        <p:commandButton value="Gravar" icon="fa fa-fw fa-save" action="#{pessoaCtrl.actionGravar}" update="form"/>
+                        <p:commandButton value="Cancelar" icon="fa fa-fw fa-close" oncomplete="PF('cadDialog').hide()"/>
                     </h:panelGrid>
                 </p:outputPanel>
             </p:dialog>
