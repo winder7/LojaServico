@@ -7,6 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
+        <link rel="shortcut icon" href="../resources/img/favicon.png"/>
         <title>Lista de Servicos</title>
     </h:head>
     <h:body>
@@ -15,7 +16,6 @@
                 <ui:include src="/templates/template.xhtml" />
             </ui:insert>
         </div>
-
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
             <p:panel id="basic" header="Lista de Serviços" style="margin-bottom:20px; margin-top: 20px">
@@ -25,7 +25,7 @@
                                  update=":form:cadDetail">
                 </p:commandButton>
                 <p:row>
-                    <p:inputText value="#{formaPgtoCtrl.filtro}" label="Pesquisar" >
+                    <p:inputText value="#{servicoCtrl.filtro}" label="Pesquisar" >
                         <f:ajax event="keypress" immediate="true" render="tbl"/>
                     </p:inputText>
                 </p:row>
@@ -57,7 +57,7 @@
                 </p:dataTable>
             </p:panel>
 
-            <p:dialog  header="Cadastro de Produtos" widgetVar="cadDialog" modal="true"
+            <p:dialog  header="Cadastro de Serviços" widgetVar="cadDialog" modal="true"
                        showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="cadDetail" style="text-align: center;">
                     <h:panelGrid columns="2" style="text-align: Left;" >

@@ -6,8 +6,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
+        <link rel="shortcut icon" href="../resources/img/favicon.png"/>
         <title>Lista de Formas de Pagamento</title>
-
     </h:head>
     <h:body >       
         <div id="header">
@@ -19,7 +19,7 @@
             <p:growl id="msgs" showDetail="true"/>
             <p:panel header="Lista de Formas de Pagamento" style="margin-bottom:20px; margin-top: 20px">
                     <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
-                                     actionListener="#{produtoCtrl.actionInserir()}"
+                                     actionListener="#{formaPgtoCtrl.actionInserir()}"
                                      oncomplete="PF('cadDialog').show()"
                                      update=":form:cadDetail">
                     </p:commandButton>
@@ -66,7 +66,7 @@
                         <h:outputLabel value="Código"/>
                         <p:inputText value="#{formaPgtoCtrl.formaPgto.id}" size="6" maxlength="10" readonly="true" />
                         <h:outputLabel value="Nome"/>
-                        <p:inputText value="#{formaPgtoCtrl.formaPgto.descricao}" size="30" maxlength="20"/>
+                        <p:inputText value="#{formaPgtoCtrl.formaPgto.descricao}" size="30" maxlength="60"/>
                         <h:outputLabel value="Nº Max. Parcelas"/>
                         <p:inputText value="#{formaPgtoCtrl.formaPgto.numMaxParc}" size="30" maxlength="3"/>
                         <h:outputLabel value="Nº Padrão de Parcelas"/>
@@ -74,7 +74,7 @@
                         <h:outputLabel value="Intervalo (dias)"/>
                         <p:inputText value="#{formaPgtoCtrl.formaPgto.intervaloDias}" size="30" maxlength="3"/>
                         <h:outputLabel value="Percen. Acress."/>
-                        <p:inputText value="#{formaPgtoCtrl.formaPgto.percentualAcres}" size="30" maxlength="3"/>
+                        <p:inputText value="#{formaPgtoCtrl.formaPgto.percentualAcres}" size="30" maxlength="4"/>
                     </h:panelGrid>
                     <p:commandButton value="Excluir" icon="fa fa-fw fa-trash" action="#{formaPgtoCtrl.actionExcluir}" update="form"/>
                     <p:commandButton value="Gravar" icon="fa fa-fw fa-save" action="#{formaPgtoCtrl.actionGravar}" update="form"/>

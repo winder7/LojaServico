@@ -7,6 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
+        <link rel="shortcut icon" href="../resources/img/favicon.png"/>
         <title>Lista de Produtos</title>
     </h:head>
     <h:body>
@@ -17,9 +18,6 @@
         </div>
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
-
-
-
             <p:panel id="basic" header="Lista de produtos" style="margin-bottom:20px; margin-top: 20px">
                 <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
                                  actionListener="#{produtoCtrl.actionInserir()}"
@@ -27,7 +25,7 @@
                                  update=":form:cadDetail">
                 </p:commandButton>
                 <p:row>
-                    <p:inputText value="#{formaPgtoCtrl.filtro}" label="Pesquisar" >
+                    <p:inputText value="#{produtoCtrl.filtro}" label="Pesquisar" >
                         <f:ajax event="keypress" immediate="true" render="tbl"/>
                     </p:inputText>
                 </p:row>
@@ -39,10 +37,10 @@
                         <h:outputText value="#{f.id}"/>
                     </p:column>
                     <p:column headerText="Nome" sortBy="f.nome">
-                        <h:outputText value="#{f.nome}" />
+                        <h:outputText value="#{f.nome}"/>
                     </p:column>
                     <p:column headerText="Preço" sortBy="f.preco">
-                        <h:outputText value="#{produtoCtrl.formatarNumero(f.preco)}" />
+                        <h:outputText value="#{produtoCtrl.formatarNumero(f.preco)}"/>
                     </p:column>
                     <p:column style="width:32px;text-align: center">
                         <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()"

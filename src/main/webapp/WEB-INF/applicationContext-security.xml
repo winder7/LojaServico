@@ -19,6 +19,7 @@
     <beans:bean id="successHandler" class="com.waal.negocio.RedirecionaPaginaPadrao"></beans:bean>
     <authentication-manager>
         <authentication-provider>
+            <password-encoder hash="sha-256"/>
             <jdbc-user-service data-source-ref="bdlojaservicoDataSource" 
                                authorities-by-username-query="SELECT pes_nome, 'ROLE_ADMINISTRADOR' FROM pessoa WHERE pes_email = ?"
                                users-by-username-query="SELECT pes_email, pes_senha, '1' FROM pessoa WHERE pes_email = ?" />
