@@ -41,9 +41,9 @@ public class ServicoDAO implements Serializable {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         Query consulta;
         if (filtro.trim().length() == 0) {
-            consulta = sessao.createQuery("from Servico order by serv_id");
+            consulta = sessao.createQuery("from Servico order by ser_id");
         } else {
-            consulta = sessao.createQuery("from Servico " + "where serv_nome like :parametro order by serv_id");
+            consulta = sessao.createQuery("from Servico " + "where ser_nome like :parametro order by ser_id");
             consulta.setString("parametro", "%" + filtro + "%");
         }
         List lista = consulta.list();

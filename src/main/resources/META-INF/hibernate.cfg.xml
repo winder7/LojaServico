@@ -22,10 +22,12 @@
         <property name="use_sql_comments">true</property>
          
         <!-- Maoeamento das Classes -->
-        <mapping class="com.waal.beans.Produto" /> 
-        <mapping class="com.waal.beans.Servico" />
-        <mapping class="com.waal.beans.FormaPgto" />
-        <mapping class="com.waal.beans.Pessoa" />
-        <mapping class="com.waal.beans.Fone" /> 
+        <mapping class="com.waal.beans.Fone"/>
+        <mapping class="com.waal.beans.FormaPgto"/>
+        <mapping class="com.waal.beans.ItensPed"/>
+        <mapping class="com.waal.beans.Pedido"/> 
+        <mapping class="com.waal.beans.Pessoa"/>
+        <mapping class="com.waal.beans.Produto"/> 
+        <mapping class="com.waal.beans.Servico"/>
     </session-factory>
 </hibernate-configuration>

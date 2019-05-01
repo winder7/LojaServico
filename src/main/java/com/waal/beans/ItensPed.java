@@ -26,12 +26,6 @@ public class ItensPed implements Serializable {
     private float valorUnit;
     @Column(name = "itp_sub_total", nullable = true)
     private float subTotal;
-    @Column(name = "fk_ped_id", nullable = true)
-    private int pedId;
-    @Column(name = "fk_pro_id", nullable = true)
-    private int proId;
-    @Column(name = "fk_ser_id", nullable = true)
-    private int serId;
 
     public int getId() {
         return id;
@@ -63,29 +57,5 @@ public class ItensPed implements Serializable {
 
     public void setSubTotal(float subTotal) {
         this.subTotal = subTotal;
-    }
-
-    public int getPedId() {
-        return pedId;
-    }
-
-    public void setPedId(int pedId) {
-        this.pedId = pedId;
-    }
-
-    public int getProId() {
-        return proId;
-    }
-
-    public void setProId(int proId) {
-        this.proId = proId;
-    }
-
-    public int getSerId() {
-        return serId;
-    }
-
-    public void setSerId(int serId) {
-        this.serId = serId;
     }
 }

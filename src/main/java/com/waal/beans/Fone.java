@@ -28,11 +28,9 @@ public class Fone implements Serializable {
     private String numero;
     @Column(name = "fon_descricao", length = 30, nullable = true)
     private String descricao;
-    @Column(name = "fk_pes_id")
-    private int pesId;
     
     @ManyToOne
-    @JoinColumn(name = "pes_id")
+    @JoinColumn(name = "fk_pes_id")
     private Pessoa pessoa;
 
     public int getId() {
@@ -65,13 +63,5 @@ public class Fone implements Serializable {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
-    }
-
-    public int getPesId() {
-        return pesId;
-    }
-
-    public void setPesId(int pesId) {
-        this.pesId = pesId;
     }
 }

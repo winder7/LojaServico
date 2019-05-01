@@ -38,10 +38,6 @@ public class Pedido implements Serializable {
     private float totalGeral;
     @Column(name = "ped_desconto", nullable = true)
     private float desconto;
-    @Column(name = "fk_pes_id", nullable = true)
-    private int pesId;
-    @Column(name = "fk_pes_id", nullable = true)
-    private int fpgId;
 
     public int getId() {
         return id;
@@ -105,21 +101,5 @@ public class Pedido implements Serializable {
 
     public void setDesconto(float desconto) {
         this.desconto = desconto;
-    }
-
-    public int getPesId() {
-        return pesId;
-    }
-
-    public void setPesId(int pesId) {
-        this.pesId = pesId;
-    }
-
-    public int getFpgId() {
-        return fpgId;
-    }
-
-    public void setFpgId(int fpgId) {
-        this.fpgId = fpgId;
     }
 }
