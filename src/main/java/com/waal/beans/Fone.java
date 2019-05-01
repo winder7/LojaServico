@@ -13,13 +13,13 @@ import javax.persistence.Table;
 
 
 /**
- * @Autor m159255
+ * @Autor Winder Rezende
  * @Data 27/02/2019
  */
 
 @Entity
 @Table(name = "fone")
-public class Fone {
+public class Fone implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fon_id")
@@ -28,6 +28,8 @@ public class Fone {
     private String numero;
     @Column(name = "fon_descricao", length = 30, nullable = true)
     private String descricao;
+    @Column(name = "fk_pes_id")
+    private int pesId;
     
     @ManyToOne
     @JoinColumn(name = "pes_id")
@@ -63,5 +65,13 @@ public class Fone {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+
+    public int getPesId() {
+        return pesId;
+    }
+
+    public void setPesId(int pesId) {
+        this.pesId = pesId;
     }
 }

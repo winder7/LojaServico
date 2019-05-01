@@ -11,13 +11,13 @@ import javax.persistence.Table;
 
 
 /**
- * @Autor m159255
+ * @Autor Winder Rezende
  * @Data 27/02/2019
  */
 
 @Entity
 @Table(name = "produto")
-public class Produto {
+public class Produto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pro_id")

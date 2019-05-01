@@ -9,24 +9,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @Autor m159255
+ * @Autor Winder Rezende
  * @Data 27/02/2019
  */
 
 @Entity
 @Table(name = "servico")
-public class Servico {
+public class Servico implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "serv_id")
+    @Column(name = "ser_id")
     private int id;
-    @Column(name = "serv_nome", length = 60, nullable = true)
+    @Column(name = "ser_nome", length = 20, nullable = true)
     private String nome;
-    @Column(name = "serv_descricao", length = 60, nullable = true)
+    @Column(name = "ser_descricao", length = 60, nullable = true)
     private String descricao;
-    @Column(name = "serv_und", length = 60, nullable = true)
+    @Column(name = "ser_und", length = 60, nullable = true)
     private String und;
-    @Column(name = "serv_valor", nullable = true)
+    @Column(name = "ser_valor", nullable = true)
     private float valor;
 
     public int getId() {

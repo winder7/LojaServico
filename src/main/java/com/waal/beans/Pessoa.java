@@ -16,22 +16,22 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
- * @Autor m159255
+ * @Autor Winder Rezende
  * @Data 27/02/2019
  */
 
 @Entity
 @Table(name = "pessoa")
-public class Pessoa {
+public class Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pes_id")
     private int id;
     @Column(name = "pes_nome", length = 60, nullable = true)
     private String nome;
-    @Column(name = "pes_cpf", length = 14,nullable = true)
+    @Column(name = "pes_cpf", length = 15,nullable = true)
     private String cpf;
-    @Column(name = "pes_rg", length = 20,nullable = true)
+    @Column(name = "pes_rg", length = 10,nullable = true)
     private String rg;
     @Column(name = "pes_data_nasc", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -40,7 +40,7 @@ public class Pessoa {
     private String rua;
     @Column(name = "pes_bairro", length = 30, nullable = true)
     private String bairro;
-    @Column(name = "pes_cidade", length = 20, nullable = true)
+    @Column(name = "pes_cidade", length = 30, nullable = true)
     private String cidade;
     @Column(name = "pes_uf", length = 2, nullable = true)
     private String uf;
@@ -48,10 +48,12 @@ public class Pessoa {
     private int cep;
     @Column(name = "pes_email", length = 40, nullable = true)
     private String email;
-    @Column(name = "pes_senha", length = 32, nullable = true)
+    @Column(name = "pes_senha", length = 64, nullable = true)
     private String senha;
     @Column(name = "pes_tipo", length = 30, nullable = true)
     private String tipo;
+    @Column(name = "pes_situacao", nullable = true)
+    private boolean situacao;
     
     //Relacionamentos de 1 para vários
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval=true)
@@ -167,5 +169,13 @@ public class Pessoa {
 
     public void setFones(List<Fone> fones) {
         this.fones = fones;
+    }
+
+    public boolean isSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(boolean situacao) {
+        this.situacao = situacao;
     }
 }

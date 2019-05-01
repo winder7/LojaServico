@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @Autor m159255
+ * @Autor Winder Rezende
  * @Data 27/02/2019
  */
 
@@ -20,7 +20,7 @@ public class FormaPgto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fpg_id")
     private int id;
-    @Column(name = "fpg_descricao", length = 20, nullable = true)
+    @Column(name = "fpg_descricao", length = 60, nullable = true)
     private String descricao;
     @Column(name = "fpg_num_max_parc", nullable = true)
     private int numMaxParc;
