@@ -13,7 +13,9 @@ import com.waal.persistencia.PessoaDAO;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Date;
+import org.primefaces.event.FlowEvent;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -29,6 +31,8 @@ public class PessoaCtrl implements Serializable {
     private String filtro = "";
     private Pessoa pessoa = new Pessoa();
     private Fone fone = new Fone();
+    private boolean usrLogado;
+    private String tipopessoa = "PF";
 
     public List<Pessoa> getListagem() {
         return PessoaDAO.listagem(filtro);
@@ -76,20 +80,26 @@ public class PessoaCtrl implements Serializable {
     }
 
     public String getUsuarioLogado() {
-        String usr = "";
+        String nome = "";
         try {
             UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            usr = user.toString();
+            String detalhes = user.toString();
             System.out.println(user);
-            if (usr.length() > 0) {
-                int ini = usr.indexOf("Username: ");
-                int fim = usr.indexOf("; Password:");
-                usr = usr.substring((ini + 10), fim);
+            if (detalhes.length() > 0) {
+                String[] allDetails = detalhes.split(";");
+                String[] nomeUsr = allDetails[0].split(":");
+                String nomeUsuario = nomeUsr[2].trim();
+                System.out.println(nomeUsuario);
+                nome = PessoaDAO.pesqNomeUsr(nomeUsuario).getNome();
+                System.out.println(nome);
             }
+            usrLogado = true;
         } catch (Exception e) {
-            System.out.println("Errrrrrrrrrrrrrrrrrrrroooo" + e);
+            usrLogado = false;
+            System.out.println("Erro: Nenhum usúario logado! " + e);
+            return "Olá Visitante!";
         }
-        return usr;
+        return nome;
     }
 
     private String encriptarSenha(String senha) {
@@ -105,11 +115,19 @@ public class PessoaCtrl implements Serializable {
             hash = hexString.toString();
 
             System.out.println(hash);
-        } catch (Exception ex) {
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             System.out.println("Erro ao encriptar senha:\n" + ex);
             return null;
         }
         return hash;
+    }
+
+    public String onFlowProcess(FlowEvent event) {
+        return event.getNewStep();
+    }
+
+    public void teste() {
+        System.out.println(tipopessoa);
     }
 
     //GET-SET
@@ -135,5 +153,21 @@ public class PessoaCtrl implements Serializable {
 
     public void setFone(Fone fone) {
         this.fone = fone;
+    }
+
+    public boolean isUsrLogado() {
+        return usrLogado;
+    }
+
+    public void setUsrLogado(boolean usrLogado) {
+        this.usrLogado = usrLogado;
+    }
+
+    public String getTipopessoa() {
+        return tipopessoa;
+    }
+
+    public void setTipopessoa(String tipopessoa) {
+        this.tipopessoa = tipopessoa;
     }
 }

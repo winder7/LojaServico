@@ -25,7 +25,7 @@
                     </p:commandButton>
                     <p:row>
                         <p:inputText value="#{formaPgtoCtrl.filtro}" label="Pesquisar" >
-                            <f:ajax event="keypress" immediate="true" render="tbl"/>
+                            <f:ajax event="keyup" immediate="true" render="tbl"/>
                         </p:inputText>
                     </p:row>
                     <p:dataTable id="tbl" var="f" value="#{formaPgtoCtrl.listagem}"

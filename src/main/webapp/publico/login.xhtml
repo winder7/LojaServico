@@ -4,19 +4,24 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <link rel="shortcut icon" href="../resources/img/favicon.png"/>
         <title>Login</title>
         <link rel="StyleSheet" type="text/css" href="../resources/css/login.css" media="screen" />
     </h:head>
     <h:body style="background-image: url('../resources/img/back.png')">
-
+        <div id="header" style="padding: 8px 8px 8px 8px">
+            <ui:insert name="template" >
+                <ui:include src="/templates/template.xhtml" />
+            </ui:insert>
+        </div>
         <form id="loginForm" method="post" action="#{request.contextPath}/j_spring_security_check">
             <b:form>
                 <h:panelGrid class="painel" columns="1">
                     <center><img class="img" src="../resources/img/login1.png" /></center>
-                    <b:inputText id="login" name='j_username' placeholder="Usuário" required="true" requiredMessage="Digite o Usuário">
+                    <b:inputText id="login" name='j_username' placeholder="E-mail" required="true" requiredMessage="Digite o Usuário">
                         <f:facet name="prepend">
                             <b:iconAwesome name="user" size="lg"/>
                         </f:facet>

@@ -55,10 +55,19 @@ public class PessoaDAO implements Serializable {
 
     public static Pessoa pesqId(int valor) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-        Query consulta;
-        consulta = sessao.createQuery("from Pessoa " + "where pes_id = :parametro");
+        Query consulta = sessao.createQuery("from Pessoa " + "where pes_id = :parametro");
         consulta.setInteger("parametro", valor);
+        Pessoa pessoa = (Pessoa) consulta.uniqueResult();
         sessao.close();
-        return (Pessoa) consulta.uniqueResult();
+        return pessoa;
+    }
+    
+    public static Pessoa pesqNomeUsr(String valor) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Query consulta = sessao.createQuery("from Pessoa " + "where pes_email = :parametro");
+        consulta.setString("parametro", valor);
+        Pessoa pessoa = (Pessoa) consulta.uniqueResult();
+        sessao.close();
+        return pessoa;
     }
 }
