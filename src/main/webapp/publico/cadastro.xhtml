@@ -28,6 +28,10 @@
                         <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="10" maxlength="10"/>
                         <h:outputLabel value="Data de Nascimento"/>
                         <p:calendar value="#{pessoaCtrl.pessoa.dataNasc}" size="11" pattern="dd/MM/yyyy"/>
+                        <h:outputLabel value="CEP"/>
+                        <p:inputText value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9">
+                            <p:ajax event="blur" update="form2" listener="#{pessoaCtrl.BuscaCep()}"/>
+                        </p:inputText>
                         <h:outputLabel value="Rua"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.rua}" size="60" maxlength="60"/>
                         <h:outputLabel value="Bairro"/>
@@ -36,8 +40,6 @@
                         <p:inputText value="#{pessoaCtrl.pessoa.cidade}" size="30" maxlength="30"/>
                         <h:outputLabel value="UF"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.uf}" size="2" maxlength="2"/>
-                        <h:outputLabel value="CEP"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9"/>
                         <h:outputLabel value="E-mail"/>
                         <p:inputText required="true" size="30"  value="#{pessoaCtrl.pessoa.email}" requiredMessage="Por favor insira o email."  validatorMessage="E-mail invalido">
                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
@@ -78,7 +80,7 @@
                 </p:outputPanel>
             </p:panel>
         </h:form>
-        
+
         <style type="text/css">
             .label {
                 width:20%;

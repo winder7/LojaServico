@@ -10,10 +10,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.waal.persistencia.PessoaDAO;
+import com.waal.uteis.BuscaCEP;
+import com.waal.uteis.CepDTO;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Date;
 import org.primefaces.event.FlowEvent;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,6 +52,20 @@ public class PessoaCtrl implements Serializable {
         }
     }
 
+    public void BuscaCep(){
+        String cep = Integer.toString(pessoa.getCep());
+        CepDTO cepDto = new CepDTO();
+        if(cep.length() >= 8){
+            cepDto = BuscaCEP.Buscar(cep);
+            System.out.println("Entrei " + cep);
+        }
+        if(cepDto != null) {
+            pessoa.setRua(cepDto.getLogradouro());
+            pessoa.setBairro(cepDto.getBairro());
+            pessoa.setCidade(cepDto.getCidade());
+            pessoa.setUf(cepDto.getUf());
+        }
+    }
     public void actionInserir() {
         pessoa = new Pessoa();
     }
