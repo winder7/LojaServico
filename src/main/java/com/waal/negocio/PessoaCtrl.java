@@ -53,7 +53,7 @@ public class PessoaCtrl implements Serializable {
     }
 
     public void BuscaCep(){
-        String cep = Integer.toString(pessoa.getCep());
+        String cep = pessoa.getCep();
         CepDTO cepDto = new CepDTO();
         if(cep.length() >= 8){
             cepDto = BuscaCEP.Buscar(cep);

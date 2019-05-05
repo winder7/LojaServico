@@ -29,9 +29,9 @@ public class Pessoa implements Serializable {
     private int id;
     @Column(name = "pes_nome", length = 60, nullable = true)
     private String nome;
-    @Column(name = "pes_cpf", length = 15,nullable = true)
+    @Column(name = "pes_cpf", length = 20,nullable = true)
     private String cpf;
-    @Column(name = "pes_rg", length = 10,nullable = true)
+    @Column(name = "pes_rg", length = 20,nullable = true)
     private String rg;
     @Column(name = "pes_data_nasc", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -44,7 +44,7 @@ public class Pessoa implements Serializable {
     private String cidade;
     @Column(name = "pes_uf", length = 2, nullable = true)
     private String uf;
-    @Column(name = "pes_cep", nullable = true)
+    @Column(name = "pes_cep", length = 10, nullable = true)
     private String cep;
     @Column(name = "pes_email", length = 40, nullable = true)
     private String email;
