@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.waal.persistencia.PessoaDAO;
 import com.waal.uteis.BuscaCEP;
@@ -35,7 +34,7 @@ public class PessoaCtrl implements Serializable {
     private Fone fone = new Fone();
     private boolean usrLogado;
     private String tipopessoa = "PF";
-    
+
     private boolean editar = false;
 
     public List<Pessoa> getListagem() {
@@ -55,22 +54,21 @@ public class PessoaCtrl implements Serializable {
         }
     }
 
-    public void BuscaCep(){
+    public void BuscaCep() {
         String cep = pessoa.getCep();
         CepDTO cepDto = new CepDTO();
-        if(cep.length() >= 8){
+        if (cep.length() >= 8) {
             cepDto = BuscaCEP.Buscar(cep);
-            System.out.println("Entrei " + cep);
         }
-        if(cepDto != null) {
-            System.out.println("entrei nessa porra");
+        if (cepDto != null) {
+            pessoa.setNome(pessoa.getNome());
             pessoa.setRua(cepDto.getLogradouro());
             pessoa.setBairro(cepDto.getBairro());
             pessoa.setCidade(cepDto.getCidade());
             pessoa.setUf(cepDto.getUf());
         }
     }
-    
+
     public String actionInserir() {
         pessoa = new Pessoa();
         return "lista_pessoa.xhtml";
