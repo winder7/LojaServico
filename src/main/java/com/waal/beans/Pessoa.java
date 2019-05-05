@@ -45,7 +45,7 @@ public class Pessoa implements Serializable {
     @Column(name = "pes_uf", length = 2, nullable = true)
     private String uf;
     @Column(name = "pes_cep", nullable = true)
-    private int cep;
+    private String cep;
     @Column(name = "pes_email", length = 40, nullable = true)
     private String email;
     @Column(name = "pes_senha", length = 64, nullable = true)
@@ -131,11 +131,11 @@ public class Pessoa implements Serializable {
         this.uf = uf;
     }
 
-    public int getCep() {
+    public String getCep() {
         return cep;
     }
 
-    public void setCep(int cep) {
+    public void setCep(String cep) {
         this.cep = cep;
     }
 
@@ -163,19 +163,19 @@ public class Pessoa implements Serializable {
         this.tipo = tipo;
     }
 
-    public List<Fone> getFones() {
-        return fones;
-    }
-
-    public void setFones(List<Fone> fones) {
-        this.fones = fones;
-    }
-
     public boolean isSituacao() {
         return situacao;
     }
 
     public void setSituacao(boolean situacao) {
         this.situacao = situacao;
+    }
+
+    public List<Fone> getFones() {
+        return fones;
+    }
+
+    public void setFones(List<Fone> fones) {
+        this.fones = fones;
     }
 }
