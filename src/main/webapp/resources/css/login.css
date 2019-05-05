@@ -77,3 +77,7 @@ i.imagem-busca {
     padding: 4px;
     font-size: 19px;
 }
+
+body .ui-panelgrid .ui-panelgrid-cell {
+    border: none !important;
+}
