@@ -75,7 +75,7 @@
                         <h:outputLabel value="Nome"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.nome}" size="60" maxlength="60"/>
                         <h:outputLabel value="CPF"/>
-                        <p:inputMask size="10" mask="999.999.999-99" id="cpf" value="#{pessoaCtrl.pessoa.cpf}" />
+                        <p:inputMask size="13" mask="999.999.999-99" id="cpf" value="#{pessoaCtrl.pessoa.cpf}" />
                         <h:outputLabel value="RG"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="10" maxlength="10"/>
                         <h:outputLabel value="Data de Nascimento"/>
@@ -137,9 +137,9 @@
                         </h:dataTable>
                     </h:panelGrid>
                     <h:panelGrid columns="3">
-                        <p:commandButton value="Excluir" icon="fa fa-fw fa-trash" action="#{pessoaCtrl.actionExcluir}" update="form"/>
-                        <p:commandButton value="Gravar" icon="fa fa-fw fa-save" action="#{pessoaCtrl.actionGravar}" update="form"/>
-                        <p:commandButton value="Cancelar" icon="fa fa-fw fa-close" oncomplete="PF('cadDialog').hide()"/>
+                        <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{pessoaCtrl.actionExcluir}" update="form"/>
+                        <p:commandButton value="Inserir" icon="fa fa-plus-circle" class="botaoGravar" action="#{pessoaCtrl.actionGravar}" update="form"/>
+                        <p:commandButton value="Cancelar" icon="fa fa-close" class="botaoCancelar" oncomplete="PF('cadDialog').hide()"/>
                     </h:panelGrid>
                 </p:outputPanel>
             </p:dialog>

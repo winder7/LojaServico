@@ -63,9 +63,9 @@ html {
 }
 
 .img{
-   width: 75%;
-   margin-top: 30%;
-   margin-bottom: 5%;
+    width: 75%;
+    margin-top: 30%;
+    margin-bottom: 5%;
 }
 
 i.imagem-busca {
@@ -80,4 +80,41 @@ i.imagem-busca {
 
 body .ui-panelgrid .ui-panelgrid-cell {
     border: none !important;
+}
+.botaoCancelar {
+    font-weight: bold;
+    margin-top: 12px !important;
+    color: black !important;
+    background-color: #EC961C !important
+}
+.botaoGravar {
+    font-weight: bold;
+    margin-top: 10px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    color: black !important;
+    background-color: #419641 !important; 
+}
+.botaoExcluir {
+    font-weight: bold;
+    margin-top: 10px !important;
+    color: black !important;
+    background-color: #C73834 !important;
+}
+.botaoInserir {
+    margin-left: 15px;
+    background-color: #007bff !important;
+    background: linear-gradient(#00C5FF, #0095E1)!important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00C5FF', endColorstr='#0095E1')!important;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #09A1E0;
+    border-radius: 4px;
+    color: #ffffff !important;
+    cursor: pointer;
+    font-family: sans-serif;
+    text-align: center;
+    font-weight: bold;
+    height: 32px;
+    width: 100px;
 }
