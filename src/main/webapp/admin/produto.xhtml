@@ -63,9 +63,9 @@
                         <h:outputLabel value="Preço"/>
                         <p:inputText value="#{produtoCtrl.produto.preco}" size="6" maxlength="6" type="decimal"/>
                     </h:panelGrid>
-                    <p:commandButton value="Excluir" icon="fa fa-fw fa-trash" action="#{produtoCtrl.actionExcluir}" update="form"/>
-                    <p:commandButton value="Gravar" icon="fa fa-fw fa-save" action="#{produtoCtrl.actionGravar}" update="form"/>
-                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-close" oncomplete="PF('cadDialog').hide()"/>
+                    <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{produtoCtrl.actionExcluir}" update="form"/>
+                        <p:commandButton value="Inserir" icon="fa fa-plus-circle" class="botaoGravar" action="#{produtoCtrl.actionGravar}" update="form"/>
+                        <p:commandButton value="Cancelar" icon="fa fa-close" class="botaoCancelar" oncomplete="PF('cadDialog').hide()"/>
                 </p:outputPanel>
             </p:dialog>
         </h:form>
