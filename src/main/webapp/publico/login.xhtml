@@ -12,7 +12,7 @@
         <link rel="StyleSheet" type="text/css" href="../resources/css/login.css" media="screen" />
     </h:head>
     <h:body style="background-image: url('../resources/img/back.png')">
-        <div id="header" style="padding: 8px 8px 8px 8px">
+        <div id="header">
             <ui:insert name="template" >
                 <ui:include src="/templates/template.xhtml" />
             </ui:insert>
@@ -34,8 +34,7 @@
                     <h:panelGrid columns="2" class="alterarSenha">
                         <b:selectBooleanCheckbox value='_spring_security_remember_me'/>
                         <h:outputLabel value="Mantenha-me conectado." />
-                    </h:panelGrid>
-                    
+                    </h:panelGrid>                   
                     
                     <b:panelGrid columns="2">
                         <b:commandButton id="btnLogin" class="btnLogin" title="Entrar no sistema" look="success" value="Login" onclick="document.getElementById('loginForm').submit()"/>

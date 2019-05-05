@@ -4,28 +4,29 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    
+    <h:head>
+        <link rel="StyleSheet" type="text/css" href="../resources/css/login.css" media="screen" />
+    </h:head>    
     <h:body style="background-image: url('../resources/img/back.png')">
-        <h:form style="margin-bottom: 10px">  
+        <h:form>  
             <p:growl id="messages"/>
 
-            <p:menubar>
-                <p:menuitem value="Inicio" url="#{request.contextPath}/publico/index.xhtml" icon="pi pi-home"/>
-                <p:menuitem value="Produtos" url="#{request.contextPath}/admin/lista_produto.xhtml" icon="fa fa-cubes" />
-                <p:menuitem value="Serviços" url="#{request.contextPath}/admin/lista_servico.xhtml" icon="fa fa-wrench" />
-                <p:menuitem value="Formas de Pagamento" url="#{request.contextPath}/admin/lista_forma_pgto.xhtml" icon="fa fa-credit-card" />
-                <p:menuitem value="Pessoas" url="#{request.contextPath}/admin/lista_pessoa.xhtml" icon="fa fa-group" />
-
+            <p:menubar style="background-color: #67BC48; border: none;"> 
+                <p:menuitem url="#{request.contextPath}/publico/index.xhtml" style="font-size: 15px;margin-right: -15px"><img style="width: 40px;" src="../resources/img/waal.png"/></p:menuitem>
+                <p:menuitem url="#{request.contextPath}/publico/index.xhtml"><b>Marido de Aluguel</b></p:menuitem>
                 <f:facet name="options">
-                    <p:inputText style="margin:1px 10px 1px 1px;" placeholder="O que você deseja buscar?"/>
+                    <p:inputText style="margin:5px 10px 1px 1px;  width: 750px;" placeholder="O que você deseja buscar?">
+                        <a href="#"><i class="imagem-busca fa fa-search"></i></a>
+                    </p:inputText>
                 </f:facet>
-                <p:submenu label="Suporte" icon="fa fa-question-circle" style="float: right">
+                <p:submenu icon="fa fa-question-circle" style="float: right;margin-top:4px">
                     <p:menuitem value="Sobre" icon="fa fa-book" oncomplete="PF('sobreDialog').show()"/>
                 </p:submenu>
 
-                <p:submenu label="Cesta" icon="fa fa-shopping-basket" style="float: right; margin-right: 120px"/>
+                <p:submenu label="Cesta" icon="fa fa-shopping-basket" style="float: right;margin-top:4px"/>
 
-                <p:submenu label="#{pessoaCtrl.usuarioLogado}" icon="fa fa-user-circle-o" style="float: right; margin-right: 10px">
+                <p:submenu label="#{pessoaCtrl.usuarioLogado}" icon="fa fa-user-circle-o" style="color: white; float: right; margin-right: 10px;margin-top:4px">
                     <p:menuitem rendered="#{!pessoaCtrl.usrLogado}" value="Crie sua conta" url="#{request.contextPath}/publico/cadastro.xhtml" icon="fa fa-address-book-o"/>
                     <p:menuitem rendered="#{!pessoaCtrl.usrLogado}" value="Entre" url="#{request.contextPath}/publico/login.xhtml" icon="fa fa-sign-in"/>
                     <p:menuitem rendered="#{pessoaCtrl.usrLogado}" value="Minha Conta" icon="fa fa-id-card-o"/>
@@ -43,7 +44,19 @@
                     <p:commandButton value="Fechar" icon="fa fa-fw fa-close" oncomplete="PF('sobreDialog').hide()"/>
                 </p:outputPanel>
             </p:dialog>
-            
+
+        </h:form>
+
+        <h:form style="margin-bottom: 10px">  
+            <p:growl id="messages"/>
+
+            <p:menubar>
+                <p:menuitem value="Produtos" url="#{request.contextPath}/admin/lista_produto.xhtml" icon="fa fa-cubes" />
+                <p:menuitem value="Serviços" url="#{request.contextPath}/admin/lista_servico.xhtml" icon="fa fa-wrench" />
+                <p:menuitem value="Formas de Pagamento" url="#{request.contextPath}/admin/lista_forma_pgto.xhtml" icon="fa fa-credit-card" />
+                <p:menuitem value="Pessoas" url="#{request.contextPath}/admin/lista_pessoa.xhtml" icon="fa fa-group" />
+            </p:menubar>
+
         </h:form>
     </h:body>
 </html>
