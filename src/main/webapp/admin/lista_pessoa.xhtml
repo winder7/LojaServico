@@ -4,8 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <link rel="shortcut icon" href="../resources/img/favicon.png"/>
         <title>Lista de Usuários</title>
@@ -18,134 +17,99 @@
         </div>
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
-            <b:panel collapsible="true" title="Cadastrar Pessoa" look="success" id="cadastro-pessoas" iconAwesome="child" icon-size="lg" >
-                <div>
-                    <b:row>
-                        <b:inputText label="Nome" value="#{pessoaCtrl.pessoa.nome}" placeholder="Digite o nome do aluno" 
-                                     tiny-screen="one-fourth" required="true" />
-                        <b:inputText value="#{pessoaCtrl.pessoa.cpf}" label="CPF" type="text" placeholder="___.___.___-__"
-                                     tiny-screen="one-fourth" required="true" mask="999.999.999-99"/>
-                        <b:inputText value="#{pessoaCtrl.pessoa.rg}" label="RG" type="text" mask="9{1,10}"
-                                     tiny-screen="one-fourth" required="true" />
-                        <b:inputText tiny-screen="one-fourth" value="#{pessoaCtrl.pessoa.dataNasc}" label="Data de Nascimento" type="date" 
-                                     required="true" />
-                    </b:row>
-
-                    <p:panelGrid columns="5" id="endereco" style="width: 100%; margin-left: -15px;">
-                        <b:inputText label="CEP" value="#{pessoaCtrl.pessoa.cep}" size="10" maxlength="10" mask="99.999-999">
-                            <f:ajax event="blur" render="endereco" listener="#{pessoaCtrl.BuscaCep()}"/>
-                        </b:inputText>
-                        <b:inputText value="#{pessoaCtrl.pessoa.rua}" label="Rua" type="text" required="true"/>
-                        <b:inputText value="#{pessoaCtrl.pessoa.bairro}" label="Bairro" type="text" required="true" />
-                        <b:inputText value="#{pessoaCtrl.pessoa.cidade}" label="Cidade" type="text" required="true" />
-                        <b:inputText value="#{pessoaCtrl.pessoa.uf}" label="UF" type="text" required="true" />
-                    </p:panelGrid>
-
-                    <b:row style="padding: 15px">
-                        <b:commandButton style="margin-right: 10px" iconAwesome="plus-circle"  icon-size="lg" value="Incluir" 
-                                         title="Incluir Usuário" look="success" action="#{pessoaCtrl.actionGravar()}" rendered="#{!alunoBean.editar}"/> 
-                        <b:commandButton iconAwesome="refresh" icon-size="lg" value="Alterar" 
-                                         title="Alterar" look="info" action="#{pessoaCtrl.actionGravar()}" rendered="#{alunoBean.editar}"/>
-                        <b:commandButton iconAwesome="remove" icon-size="lg" value="Cancelar"
-                                         title="Cancelar" look="danger" action="#{pessoaCtrl.actionInserir()}" immediate="true"/>
-                    </b:row>
-                </div>
-            </b:panel>
-            <p:panel header="Lista de Pessoas" style="margin-bottom:20px; margin-top: 20px">
+            <p:panel header="Lista de Usuários" style="margin-bottom:20px; margin-top: 20px">
                 <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
                                  actionListener="#{pessoaCtrl.actionInserir()}"
                                  oncomplete="PF('cadDialog').show()"
                                  update=":form:cadDetail">
                 </p:commandButton>
                 <p:row>
-                    <p:inputText value="#{produtoCtrl.filtro}" label="Pesquisar" >
+                    <p:inputText value="#{pessoaCtrl.filtro}" placeholder="Pesquisar" >
                         <f:ajax event="keyup" immediate="true" render="tbl"/>
                     </p:inputText>
                 </p:row>
-                <p:dataTable id="tbl" var="f" value="#{pessoaCtrl.listagem}"
+                <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{pessoaCtrl.listagem}"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                             {PageLinks} {NextPageLink} {LastPageLink}"
+                             {PageLinks} {NextPageLink} {LastPageLink}" rowsPerPageTemplate="5,10,15"
                              paginator="true" rows="10" style="margin-bottom:20px">
-                    <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
+
+                    <p:column headerText="ID" sortBy="f.id" style="text-align: center; width: 12px">
                         <h:outputText value="#{f.id}" />
                     </p:column>
-                    <p:column headerText="Nome" sortBy="f.nome">
+                    <p:column style="width:270px;" headerText="Nome" sortBy="f.nome">
                         <h:outputText value="#{f.nome}" />
                     </p:column>
-                    <p:column headerText="CPF" sortBy="f.cpf">
+                    <p:column style="width:125px;" headerText="CPF" sortBy="f.cpf">
                         <h:outputText value="#{f.cpf}"/>
                     </p:column>
-                    <p:column headerText="RG" sortBy="f.rg">
+                    <p:column style="width:80px;" headerText="RG" sortBy="f.rg">
                         <h:outputText value="#{f.rg}" />
                     </p:column>
-                    <p:column headerText="Data de Nascimento" sortBy="f.dataNasc">
+                    <p:column style="width:70px;" headerText="Dt. Nasc." sortBy="f.dataNasc">
                         <h:outputLabel value="#{pessoaCtrl.formatarData(f.dataNasc)}"/>
                     </p:column>
-                    <p:column headerText="Rua" sortBy="f.rua">
-                        <h:outputText value="#{f.rua}" />
+                    <p:column style="width:130px;" headerText="Localidade" sortBy="f.cidade">
+                        <h:outputText value="#{f.cidade} - #{f.uf.toUpperCase()}"/>
                     </p:column>
-                    <p:column headerText="Bairro" sortBy="f.bairro">
-                        <h:outputText value="#{f.bairro}" />
-                    </p:column>
-                    <p:column headerText="Cidade" sortBy="f.cidade">
-                        <h:outputText value="#{f.cidade}" />
-                    </p:column>
-                    <p:column headerText="UF" sortBy="f.uf">
-                        <h:outputText value="#{f.uf}" />
-                    </p:column>
-                    <p:column headerText="CEP" sortBy="f.cep">
-                        <h:outputText value="#{f.cep}" />
-                    </p:column>
-                    <p:column headerText="E-mail" sortBy="f.email">
+                    <p:column style="width:250px;" headerText="E-mail" sortBy="f.email">
                         <h:outputText value="#{f.email}" />
                     </p:column>
-                    <p:column headerText="Senha" sortBy="f.senha">
-                        <h:outputText value="#{f.senha}" />
-                    </p:column>
-                    <p:column headerText="Tipo" sortBy="f.tipo">
-                        <h:outputText value="#{f.tipo}" />
+                    <p:column style="width:100px;" headerText="Tipo">
+                        <p:outputLabel value="#{f.tipo == 'ROLE_ADMINISTRADOR' ? 'Administrador' : 'Cliente'}"/>
                     </p:column>
                     <p:column style="width:32px;text-align: center">
-                        <p:commandButton update=":form:cadastro-pessoas" icon="pi pi-search" title="View">
+                        <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()"
+                                         icon="pi pi-search" title="View">
                             <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.pessoa}" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </p:panel>
 
-            <p:dialog  header="Cadastro de Pessoas" widgetVar="cadDialog" modal="true"
-                       showEffect="fade" hideEffect="fade" resizable="false">
-                <p:outputPanel id="cadDetail" style="text-align: center;">
-                    <h:panelGrid columns="2" style="text-align: Left;" >
+            <p:dialog  header="Cadastro de Usuários" widgetVar="cadDialog" modal="true"
+                       showEffect="fade" hideEffect="fade" fitViewport="true" resizable="false">
+                <p:outputPanel id="cadDetail">
+                    <h:panelGrid columns="2"  >
                         <h:outputLabel value="Código"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.id}" size="6" readonly="true" />
                         <h:outputLabel value="Nome"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.nome}" size="60" maxlength="60"/>
                         <h:outputLabel value="CPF"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.cpf}" size="15" maxlength="15"/>
+                        <p:inputMask size="10" mask="999.999.999-99" id="cpf" value="#{pessoaCtrl.pessoa.cpf}" />
                         <h:outputLabel value="RG"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="10" maxlength="10"/>
                         <h:outputLabel value="Data de Nascimento"/>
-                        <p:calendar value="#{pessoaCtrl.pessoa.dataNasc}" size="11" pattern="dd/MM/yyyy"/>
+                        <p:calendar value="#{pessoaCtrl.pessoa.dataNasc}" size="11" id="popup" pattern="dd/MM/yyyy"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" id="endereco" >
+                        <h:outputText value="CEP " />
+                        <p:inputText style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9">
+                            <p:ajax event="blur" update="endereco" listener="#{pessoaCtrl.BuscaCep()}"/>
+                        </p:inputText>
                         <h:outputLabel value="Rua"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.rua}" size="60" maxlength="60"/>
+                        <p:inputText style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.rua}" size="60" maxlength="60"/>
                         <h:outputLabel value="Bairro"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.bairro}" size="30" maxlength="30"/>
+                        <p:inputText style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.bairro}" size="30" maxlength="30"/>
                         <h:outputLabel value="Cidade"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.cidade}" size="30" maxlength="30"/>
+                        <p:inputText style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.cidade}" size="30" maxlength="30"/>
                         <h:outputLabel value="UF"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.uf}" size="2" maxlength="2"/>
-                        <h:outputLabel value="CEP"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9"/>
+                        <p:inputText style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.uf}" size="9" maxlength="9"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" style="text-align: Left;" >
                         <h:outputLabel value="E-mail"/>
-                        <p:inputText size="30"  value="#{pessoaCtrl.pessoa.email}" requiredMessage="Por favor insira o email."  validatorMessage="E-mail invalido">
+                        <p:inputText style="margin-left: 91px;" size="30"  value="#{pessoaCtrl.pessoa.email}"
+                                     requiredMessage="Por favor insira o email."  validatorMessage="E-mail invalido">
                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                         </p:inputText>
                         <h:outputLabel value="Senha"/>
-                        <p:password value="#{pessoaCtrl.pessoa.senha}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
+                        <p:password style="margin-left: 91px;" value="#{pessoaCtrl.pessoa.senha}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
                                     weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Inserir sua senha"/>
-                        <h:outputLabel value="Tipo"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.tipo}" size="30" maxlength="30"/>
+                        <p:outputLabel value="Tipo"/>
+                        <p:selectOneMenu style="margin-left: 91px;" value="#{pessoaCtrl.pessoa.tipo}" >
+                            <f:selectItem itemLabel="Selecione" itemValue="#{pessoaCtrl.pessoa.tipo}" />
+                            <f:selectItem itemLabel="Cliente" itemValue="ROLE_CLIENTE" />
+                            <f:selectItem itemLabel="Administrador" itemValue="ROLE_ADMINISTRADOR" />
+                        </p:selectOneMenu>
                     </h:panelGrid>
                     <h:panelGrid columns="2" >
                         <h:dataTable id="listaFones" value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows">
