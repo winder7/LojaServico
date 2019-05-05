@@ -15,72 +15,6 @@
                 <ui:include src="/templates/template.xhtml" />
             </ui:insert>
         </div>
-        <h:form id="form2">
-            <p:growl id="msgs" showDetail="true"/>
-            <p:panel header="Cadastro" style="margin-bottom:20px; margin-top: 20px">
-                <p:outputPanel>
-                    <h:panelGrid columns="2" style="text-align: Left;" >
-                        <h:outputLabel value="Nome"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.nome}" size="60" maxlength="60"/>
-                        <h:outputLabel value="CPF"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.cpf}" size="15" maxlength="15"/>
-                        <h:outputLabel value="RG"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="10" maxlength="10"/>
-                        <h:outputLabel value="Data de Nascimento"/>
-                        <p:calendar value="#{pessoaCtrl.pessoa.dataNasc}" size="11" pattern="dd/MM/yyyy"/>
-                        <h:outputLabel value="CEP"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9">
-                            <p:ajax event="blur" update="form2" listener="#{pessoaCtrl.BuscaCep()}"/>
-                        </p:inputText>
-                        <h:outputLabel value="Rua"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.rua}" size="60" maxlength="60"/>
-                        <h:outputLabel value="Bairro"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.bairro}" size="30" maxlength="30"/>
-                        <h:outputLabel value="Cidade"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.cidade}" size="30" maxlength="30"/>
-                        <h:outputLabel value="UF"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.uf}" size="2" maxlength="2"/>
-                        <h:outputLabel value="E-mail"/>
-                        <p:inputText required="true" size="30"  value="#{pessoaCtrl.pessoa.email}" requiredMessage="Por favor insira o email."  validatorMessage="E-mail invalido">
-                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
-                        </p:inputText>
-                        <h:outputLabel value="Senha"/>
-                        <p:password required="true" value="#{pessoaCtrl.pessoa.senha}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
-                                    weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Inserir sua senha"/>
-                    </h:panelGrid>
-                    <h:panelGrid columns="2" >
-                        <h:dataTable id="listaFones" value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows">
-                            <f:facet name="header">
-                                <p:commandButton value="Adicionar Fone" update=":form"
-                                                 actionListener="#{pessoaCtrl.actionInserirFone()}"/>
-                            </f:facet>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputLabel value="Número"/>
-                                </f:facet>
-                                <p:inputMask value="#{f.numero}" mask="(99)9999-9999"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputLabel value="Descrição"/>
-                                </f:facet>
-                                <p:inputText value="#{f.descricao}" size="30" maxlength="30"/>
-                            </h:column>
-                            <h:column>
-                                <p:commandButton value="Remover" update=":form" actionListener="#{pessoaCtrl.actionExcluirFone()}">
-                                    <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.fone}"/>
-                                </p:commandButton>
-                            </h:column>
-                        </h:dataTable>
-                    </h:panelGrid>
-                    <h:panelGrid columns="2" >
-                        <p:commandButton value="Criar Conta" action="#{pessoaCtrl.actionGravar}" update="form2"/>
-                        <p:button value="Cancelar" href="#{request.contextPath}/publico/index.xhtml"/>
-                    </h:panelGrid>
-                </p:outputPanel>
-            </p:panel>
-        </h:form>
-
         <style type="text/css">
             .label {
                 width:20%;
@@ -113,7 +47,7 @@
         <h:form id="form">
             <p:growl id="growl" sticky="true" showDetail="true"/>
 
-            <p:wizard flowListener="#{pessoaCtrl.onFlowProcess}">
+            <p:wizard flowListener="#{pessoaCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
                 <p:tab id="login" title="Login">
                     <p:panel header="Dados de Login">
                         <p:messages />
@@ -161,15 +95,17 @@
                 <p:tab id="address" title="Endereço">
                     <p:panel header="Dados de Endereço">
                         <p:messages />
-                        <h:panelGrid columns="2" columnClasses="label, value">
+                        <h:panelGrid columns="2" id="endereco" columnClasses="label, value">
+                            <h:outputText value="CEP: " />
+                            <p:inputText value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9">
+                                <p:ajax event="blur" update="endereco" listener="#{pessoaCtrl.BuscaCep()}"/>
+                            </p:inputText>
+
                             <h:outputText value="Rua: " />
                             <p:inputText value="#{pessoaCtrl.pessoa.rua}" size="60" maxlength="60"/>
 
                             <h:outputText value="Bairro: " />
                             <p:inputText value="#{pessoaCtrl.pessoa.bairro}" size="30" maxlength="30"/>
-
-                            <h:outputText value="CEP: " />
-                            <p:inputText value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9"/>
 
                             <h:outputText value="Cidade: " />
                             <p:inputText value="#{pessoaCtrl.pessoa.cidade}" size="30" maxlength="30"/>
@@ -186,7 +122,7 @@
                         <h:panelGrid columns="2" >
                             <h:dataTable id="listaFones" value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows">
                                 <f:facet name="header">
-                                    <p:commandButton value="Adicionar Fone" update=":form"
+                                    <p:commandButton value="Adicionar Telefone" update=":form"
                                                      actionListener="#{pessoaCtrl.actionInserirFone()}"/>
                                 </f:facet>
                                 <h:column>
