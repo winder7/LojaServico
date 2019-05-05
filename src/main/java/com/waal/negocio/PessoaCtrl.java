@@ -35,6 +35,8 @@ public class PessoaCtrl implements Serializable {
     private Fone fone = new Fone();
     private boolean usrLogado;
     private String tipopessoa = "PF";
+    
+    private boolean editar = false;
 
     public List<Pessoa> getListagem() {
         return PessoaDAO.listagem(filtro);
@@ -61,14 +63,17 @@ public class PessoaCtrl implements Serializable {
             System.out.println("Entrei " + cep);
         }
         if(cepDto != null) {
+            System.out.println("entrei nessa porra");
             pessoa.setRua(cepDto.getLogradouro());
             pessoa.setBairro(cepDto.getBairro());
             pessoa.setCidade(cepDto.getCidade());
             pessoa.setUf(cepDto.getUf());
         }
     }
-    public void actionInserir() {
+    
+    public String actionInserir() {
         pessoa = new Pessoa();
+        return "lista_pessoa.xhtml";
     }
 
     public void actionExcluir() {
@@ -185,5 +190,13 @@ public class PessoaCtrl implements Serializable {
 
     public void setTipopessoa(String tipopessoa) {
         this.tipopessoa = tipopessoa;
+    }
+
+    public boolean isEditar() {
+        return editar;
+    }
+
+    public void setEditar(boolean editar) {
+        this.editar = editar;
     }
 }
