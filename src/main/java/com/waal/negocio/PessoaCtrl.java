@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.event.FlowEvent;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @Data 03/06/2019, 20:57:21
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PessoaCtrl implements Serializable {
 
     private static final long serialVersionUID = 1L;

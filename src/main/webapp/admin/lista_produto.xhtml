@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
 
     <h:head>
         <link rel="shortcut icon" href="../resources/img/favicon.png"/>
@@ -18,11 +19,25 @@
         </div>
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
-            
-            <p:panel id="ts" header="Cadastrar produtos" style="margin-bottom:20px; margin-top: 20px">
-                <p:inputText label="teste"/>
-            </p:panel>
-            
+
+            <b:panel id="teste" title="Cadastrar produtos" collapsible="true" look="info" iconAwesome="cubes" icon-size="lg" style="margin-bottom:20px; margin-top: 20px">
+                <b:row>
+                    <b:inputText label="Nome" value="#{produtoCtrl.produto.nome}" tiny-screen="one-third"/>
+                    <b:inputText value="#{produtoCtrl.produto.preco}" label="Preço" placeholder="Digite o preço do produto" mask="numeric"
+                                 tiny-screen="one-third" required="true" >
+                        <f:facet name="prepend">
+                            <h:outputText value="R$" />
+                        </f:facet>
+                    </b:inputText>
+                </b:row>
+                <b:row style="margin-left: 0px">
+                    <b:commandButton iconAwesome="plus-circle" icon-size="lg" value="Inserir"
+                                     title="Inserir" look="success" action="#{produtoCtrl.actionGravar}"/>  
+                    <b:commandButton iconAwesome="remove" icon-size="lg" value="Cancelar" style="margin-left: 10px"
+                                     title="Cancelar" look="danger" action="#{produtoCtrl.actionInserir()}" immediate="true" update=":form:teste"/>
+                </b:row>
+            </b:panel>
+
             <p:panel id="basic" header="Lista de produtos" style="margin-bottom:20px; margin-top: 20px">
                 <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
                                  actionListener="#{produtoCtrl.actionInserir()}"
@@ -48,7 +63,7 @@
                         <h:outputText value="#{produtoCtrl.formatarNumero(f.preco)}"/>
                     </p:column>
                     <p:column style="width:32px;text-align: center">
-                        <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()"
+                        <p:commandButton update=":form:teste"
                                          icon="pi pi-search" title="View">
                             <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.produto}" />
                         </p:commandButton>
