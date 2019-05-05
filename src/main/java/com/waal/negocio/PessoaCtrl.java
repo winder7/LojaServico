@@ -15,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import org.primefaces.event.FlowEvent;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
