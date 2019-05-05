@@ -10,16 +10,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
-
 /**
  * @Autor Winder Rezende
  * @Data 27/02/2019
  */
-
 @Entity
 @Table(name = "fone")
 public class Fone implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fon_id")
@@ -28,7 +26,7 @@ public class Fone implements Serializable {
     private String numero;
     @Column(name = "fon_descricao", length = 30, nullable = true)
     private String descricao;
-    
+
     @ManyToOne
     @JoinColumn(name = "fk_pes_id")
     private Pessoa pessoa;

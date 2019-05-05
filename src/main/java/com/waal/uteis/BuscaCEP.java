@@ -18,7 +18,7 @@ public class BuscaCEP {
     public static CepDTO Buscar(String cep) {
         try {
             System.out.println("Cep antes: " + cep);
-            String cepFormatado = cep.replaceAll("[^0-9]","");
+            String cepFormatado = cep.replaceAll("[^0-9]", "");
             System.out.println("Cep Formatado " + cepFormatado);
             URL url = new URL("http://viacep.com.br/ws/" + cepFormatado + "/xml");
 

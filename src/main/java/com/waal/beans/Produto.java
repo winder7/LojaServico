@@ -8,16 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-
 /**
  * @Autor Winder Rezende
  * @Data 27/02/2019
  */
-
 @Entity
 @Table(name = "produto")
 public class Produto implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pro_id")

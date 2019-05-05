@@ -18,6 +18,11 @@
         </div>
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
+            
+            <p:panel id="ts" header="Cadastrar produtos" style="margin-bottom:20px; margin-top: 20px">
+                <p:inputText label="teste"/>
+            </p:panel>
+            
             <p:panel id="basic" header="Lista de produtos" style="margin-bottom:20px; margin-top: 20px">
                 <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
                                  actionListener="#{produtoCtrl.actionInserir()}"

@@ -19,19 +19,19 @@ import javax.persistence.Temporal;
  * @Autor Winder Rezende
  * @Data 27/02/2019
  */
-
 @Entity
 @Table(name = "pessoa")
 public class Pessoa implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pes_id")
     private int id;
     @Column(name = "pes_nome", length = 60, nullable = true)
     private String nome;
-    @Column(name = "pes_cpf", length = 20,nullable = true)
+    @Column(name = "pes_cpf", length = 20, nullable = true)
     private String cpf;
-    @Column(name = "pes_rg", length = 20,nullable = true)
+    @Column(name = "pes_rg", length = 20, nullable = true)
     private String rg;
     @Column(name = "pes_data_nasc", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -54,9 +54,9 @@ public class Pessoa implements Serializable {
     private String tipo;
     @Column(name = "pes_situacao", nullable = true)
     private boolean situacao;
-    
+
     //Relacionamentos de 1 para vários
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval=true)
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Fone> fones = new ArrayList<Fone>();
 
     public int getId() {

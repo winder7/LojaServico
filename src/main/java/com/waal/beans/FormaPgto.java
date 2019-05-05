@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * @Autor Winder Rezende
  * @Data 27/02/2019
  */
-
 @Entity
 @Table(name = "forma_pgto")
 public class FormaPgto implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fpg_id")

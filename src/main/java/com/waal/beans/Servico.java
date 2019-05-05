@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * @Autor Winder Rezende
  * @Data 27/02/2019
  */
-
 @Entity
 @Table(name = "servico")
 public class Servico implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ser_id")
