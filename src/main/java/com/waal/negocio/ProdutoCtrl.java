@@ -8,13 +8,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.waal.persistencia.ProdutoDAO;
+import javax.faces.bean.ViewScoped;
 
 /**
  * @Autor Winder Rezende
  * @Data 27/02/2019, 20:45:21
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ProdutoCtrl implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,9 +38,9 @@ public class ProdutoCtrl implements Serializable {
         return "lista_produto";
     }
 
-    public String actionInserir() {
+    public void actionInserir() {
         produto = new Produto();
-        return "lista_produto";
+        //return "lista_produto";
     }
 
     public String actionExcluir() {

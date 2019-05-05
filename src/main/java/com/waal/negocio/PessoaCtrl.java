@@ -26,7 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @Data 03/06/2019, 20:57:21
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class PessoaCtrl implements Serializable {
 
     private static final long serialVersionUID = 1L;
