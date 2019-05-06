@@ -60,7 +60,7 @@
             </p:menubar>
 
             <!--Menu Cliente-->
-            <p:menubar rendered="#{pessoaCtrl.userNaoEhAdminELogado}">
+            <p:menubar rendered="#{!pessoaCtrl.userAdmin}">
                 <p:menuitem value="Produtos" url="#{request.contextPath}/cliente/produtos.xhtml" icon="fa fa-cubes" />
                 <p:menuitem value="Serviços" url="#{request.contextPath}/cliente/servicos.xhtml" icon="fa fa-wrench" />
             </p:menubar>
