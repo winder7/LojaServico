@@ -44,6 +44,9 @@ public class PessoaCtrl implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         if (pessoa.getId() == 0) {
             pessoa.setSenha(encriptarSenha(pessoa.getSenha()));
+            if (!usrLogado) {
+                pessoa.setTipo("ROLE_CLIENTE");
+            }
             PessoaDAO.inserir(pessoa);
             context.addMessage(null, new FacesMessage("Sucesso", "Inserido com sucesso!"));
         } else {
