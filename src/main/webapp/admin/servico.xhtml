@@ -72,9 +72,9 @@
                         <h:outputLabel value="Valor"/>
                         <p:inputText value="#{servicoCtrl.servico.valor}" size="30" maxlength="20"/>
                     </h:panelGrid>
-                    <p:commandButton value="Excluir" icon="fa fa-fw fa-trash" action="#{servicoCtrl.actionExcluir}" update="form"/>
-                    <p:commandButton value="Gravar" icon="fa fa-fw fa-save" action="#{servicoCtrl.actionGravar}" update="form"/>
-                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-close" oncomplete="PF('cadDialog').hide()"/>
+                    <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{servicoCtrl.actionExcluir}" update="form"/>
+                    <p:commandButton value="Inserir" icon="fa fa-plus-circle" class="botaoGravar" action="#{servicoCtrl.actionGravar}" update="form"/>
+                    <p:commandButton value="Cancelar" icon="fa fa-close" class="botaoCancelar" oncomplete="PF('cadDialog').hide()"/>
                 </p:outputPanel>
             </p:dialog>
         </h:form>

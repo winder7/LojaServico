@@ -114,7 +114,7 @@
                     <h:panelGrid columns="2" >
                         <h:dataTable id="listaFones" value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows">
                             <f:facet name="header">
-                                <p:commandButton value="Adicionar Fone" update=":form:cadDetail"
+                                <p:commandButton value="Adicionar Fone" update=":form:cadDetail" icon="fa fa-phone"
                                                  actionListener="#{pessoaCtrl.actionInserirFone()}"/>
                             </f:facet>
                             <h:column>
@@ -138,7 +138,7 @@
                     </h:panelGrid>
                     <h:panelGrid columns="3">
                         <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{pessoaCtrl.actionExcluir}" update="form"/>
-                        <p:commandButton value="Inserir" icon="fa fa-plus-circle" class="botaoGravar" action="#{pessoaCtrl.actionGravar}" update="form"/>
+                        <p:commandButton value="Gravar" icon="fa fa-save" class="botaoGravar" action="#{pessoaCtrl.actionGravar}" update="form"/>
                         <p:commandButton value="Cancelar" icon="fa fa-close" class="botaoCancelar" oncomplete="PF('cadDialog').hide()"/>
                     </h:panelGrid>
                 </p:outputPanel>

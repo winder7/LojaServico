@@ -76,9 +76,9 @@
                         <h:outputLabel value="Percen. Acress."/>
                         <p:inputText value="#{formaPgtoCtrl.formaPgto.percentualAcres}" size="30" maxlength="4"/>
                     </h:panelGrid>
-                    <p:commandButton value="Excluir" icon="fa fa-fw fa-trash" action="#{formaPgtoCtrl.actionExcluir}" update="form"/>
-                    <p:commandButton value="Gravar" icon="fa fa-fw fa-save" action="#{formaPgtoCtrl.actionGravar}" update="form"/>
-                    <p:commandButton value="Cancelar" icon="fa fa-fw fa-close" oncomplete="PF('cadDialog').hide()"/>
+                    <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{formaPgtoCtrl.actionExcluir}" update="form"/>
+                    <p:commandButton value="Gravar" icon="fa fa-save" class="botaoGravar" action="#{formaPgtoCtrl.actionGravar}" update="form"/>
+                    <p:commandButton value="Cancelar" icon="fa fa-close" class="botaoCancelar" oncomplete="PF('cadDialog').hide()"/>
                 </p:outputPanel>
             </p:dialog>
         </h:form>
