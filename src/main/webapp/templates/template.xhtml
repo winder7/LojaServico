@@ -31,7 +31,7 @@
                 <p:submenu label="#{pessoaCtrl.usuarioLogado}" icon="fa fa-user-circle-o" style="color: white; float: right; margin-right: 10px;margin-top:4px">
                     <p:menuitem rendered="#{!pessoaCtrl.usrLogado}" value="Crie sua conta" url="#{request.contextPath}/publico/cadastro.xhtml" icon="fa fa-address-book-o"/>
                     <p:menuitem rendered="#{!pessoaCtrl.usrLogado}" value="Entre" url="#{request.contextPath}/publico/login.xhtml" icon="fa fa-sign-in"/>
-                    <p:menuitem rendered="#{pessoaCtrl.usrLogado}" value="Minha Conta" icon="fa fa-id-card-o"/>
+                    <p:menuitem rendered="#{pessoaCtrl.usrLogado}" value="Minha Conta" icon="fa fa-id-card-o" url="#{request.contextPath}/cliente/minha_conta.xhtml"/>
                     <p:menuitem rendered="#{pessoaCtrl.usrLogado}" value="Sair" icon="fa fa-sign-out" url="#{request.contextPath}/j_spring_security_logout"/>
                 </p:submenu>  
             </p:menubar>
@@ -51,11 +51,18 @@
 
         <h:form style="margin-bottom: 10px">  
             <p:growl id="messages"/>
+            <!--Menu Admin-->
             <p:menubar rendered="#{pessoaCtrl.userAdmin}">
                 <p:menuitem value="Produtos" url="#{request.contextPath}/admin/produto.xhtml" icon="fa fa-cubes" />
                 <p:menuitem value="Serviços" url="#{request.contextPath}/admin/servico.xhtml" icon="fa fa-wrench" />
                 <p:menuitem value="Formas de Pagamento" url="#{request.contextPath}/admin/forma_pgto.xhtml" icon="fa fa-credit-card" />
                 <p:menuitem value="Usuários" url="#{request.contextPath}/admin/usuarios.xhtml" icon="fa fa-group" />
+            </p:menubar>
+
+            <!--Menu Cliente-->
+            <p:menubar rendered="#{pessoaCtrl.userNaoEhAdminELogado}">
+                <p:menuitem value="Produtos" url="#{request.contextPath}/cliente/produtos.xhtml" icon="fa fa-cubes" />
+                <p:menuitem value="Serviços" url="#{request.contextPath}/cliente/servicos.xhtml" icon="fa fa-wrench" />
             </p:menubar>
         </h:form>
     </h:body>
