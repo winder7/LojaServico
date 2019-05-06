@@ -134,10 +134,6 @@ public class PessoaCtrl implements Serializable {
         return event.getNewStep();
     }
 
-    public void teste() {
-        System.out.println(tipopessoa);
-    }
-
     //GET-SET
     public String getFiltro() {
         return filtro;

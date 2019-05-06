@@ -194,7 +194,7 @@
                         </h:panelGrid>
 
                         <h:panelGrid columns="2" >
-                            <p:commandButton value="Criar Conta" action="#{pessoaCtrl.actionGravar}" update="form"/>
+                            <p:commandButton value="Criar Conta" actionListener="#{pessoaCtrl.actionGravar}" update="form" action="login.xhtml?faces-redirect=true"/>
                             <p:button value="Cancelar" href="#{request.contextPath}/publico/index.xhtml"/>
                         </h:panelGrid>
                     </p:panel>
