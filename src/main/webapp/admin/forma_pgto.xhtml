@@ -28,7 +28,7 @@
                             <f:ajax event="keyup" immediate="true" render="tbl"/>
                         </p:inputText>
                     </p:row>
-                    <p:dataTable id="tbl" var="f" value="#{formaPgtoCtrl.listagem}"
+                    <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{formaPgtoCtrl.listagem}"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                  {PageLinks} {NextPageLink} {LastPageLink}"
                                  paginator="true" rows="10" style="margin-bottom:20px">

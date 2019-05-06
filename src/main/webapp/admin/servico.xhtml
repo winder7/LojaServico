@@ -29,7 +29,7 @@
                         <f:ajax event="keyup" immediate="true" render="tbl"/>
                     </p:inputText>
                 </p:row>
-                <p:dataTable id="tbl" var="f" value="#{servicoCtrl.listagem}"
+                <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{servicoCtrl.listagem}"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                              {PageLinks} {NextPageLink} {LastPageLink}"
                              paginator="true" rows="10" style="margin-bottom:20px">
