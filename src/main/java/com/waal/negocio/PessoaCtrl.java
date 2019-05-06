@@ -105,13 +105,9 @@ public class PessoaCtrl implements Serializable {
         usrLogado = !"Olá Visitante!".equals(nome);
         return nome;
     }
-    
-    public boolean ehUserAdmin(){
-        if(usrLogado) {
-            return SessionData.ehUserAdmin();
-        } else {
-            return false;
-        }
+
+    public boolean getUserAdmin() {
+        return SessionData.ehUserAdmin();
     }
 
     private String encriptarSenha(String senha) {

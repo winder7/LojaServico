@@ -37,7 +37,7 @@ public class SessionData {
             if (detalhes.length() > 0) {
                 String[] allDetails = detalhes.split(":");
                 role = "ROLE_ADMINISTRADOR".equals(allDetails[allDetails.length-1].trim());
-                System.out.println("DEsgdas " + detalhes.toString());
+                System.out.println("ehUserAdmin " + role);
             }
         } catch (Exception e) {
             System.out.println("Erro getRole: Nenhum usúario logado! " + e);
