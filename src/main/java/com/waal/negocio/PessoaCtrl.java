@@ -11,14 +11,13 @@ import javax.faces.context.FacesContext;
 import com.waal.persistencia.PessoaDAO;
 import com.waal.uteis.BuscaCEP;
 import com.waal.uteis.CepDTO;
+import com.waal.uteis.SessionData;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import javax.faces.bean.SessionScoped;
 import org.primefaces.event.FlowEvent;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @Autor Winder Rezende
@@ -99,26 +98,17 @@ public class PessoaCtrl implements Serializable {
     }
 
     public String getUsuarioLogado() {
-        String nome = "";
-        try {
-            UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String detalhes = user.toString();
-            System.out.println(user);
-            if (detalhes.length() > 0) {
-                String[] allDetails = detalhes.split(";");
-                String[] nomeUsr = allDetails[0].split(":");
-                String nomeUsuario = nomeUsr[2].trim();
-                System.out.println(nomeUsuario);
-                nome = PessoaDAO.pesqNomeUsr(nomeUsuario).getNome();
-                System.out.println(nome);
-            }
-            usrLogado = true;
-        } catch (Exception e) {
-            usrLogado = false;
-            System.out.println("Erro: Nenhum usúario logado! " + e);
-            return "Olá Visitante!";
-        }
+        String nome = SessionData.getNomeUsuarioLogado();
+        usrLogado = !"Olá Visitante!".equals(nome);
         return nome;
+    }
+    
+    public boolean ehUserAdmin(){
+        if(usrLogado) {
+            return SessionData.ehUserAdmin();
+        } else {
+            return false;
+        }
     }
 
     private String encriptarSenha(String senha) {

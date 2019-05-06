@@ -49,16 +49,14 @@
 
         </h:form>
 
-        <h:form style="margin-bottom: 10px">  
+        <h:form rendered="#{pessoaCtrl.ehUserAdmin()} " style="margin-bottom: 10px">  
             <p:growl id="messages"/>
-
             <p:menubar>
                 <p:menuitem value="Produtos" url="#{request.contextPath}/admin/produto.xhtml" icon="fa fa-cubes" />
                 <p:menuitem value="Serviços" url="#{request.contextPath}/admin/servico.xhtml" icon="fa fa-wrench" />
                 <p:menuitem value="Formas de Pagamento" url="#{request.contextPath}/admin/forma_pgto.xhtml" icon="fa fa-credit-card" />
                 <p:menuitem value="Usuários" url="#{request.contextPath}/admin/usuarios.xhtml" icon="fa fa-group" />
             </p:menubar>
-
         </h:form>
     </h:body>
 </html>

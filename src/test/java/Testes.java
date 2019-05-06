@@ -1,6 +1,5 @@
 
-import com.waal.uteis.BuscaCEP;
-import com.waal.uteis.CepDTO;
+import com.waal.uteis.SessionData;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
