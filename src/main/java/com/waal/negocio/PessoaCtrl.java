@@ -32,6 +32,7 @@ public class PessoaCtrl implements Serializable {
     private Pessoa pessoa = new Pessoa();
     private Fone fone = new Fone();
     private boolean usrLogado;
+    private boolean usrAdmin;
     private String tipopessoa = "PF";
 
     private boolean editar = false;
@@ -107,7 +108,12 @@ public class PessoaCtrl implements Serializable {
     }
 
     public boolean getUserAdmin() {
-        return SessionData.ehUserAdmin();
+        usrAdmin = SessionData.ehUserAdmin();
+        return usrAdmin;
+    }
+    
+    public boolean getUserNaoEhAdminELogado(){
+        return usrAdmin == false && usrLogado == true;
     }
 
     private String encriptarSenha(String senha) {
