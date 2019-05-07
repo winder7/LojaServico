@@ -39,7 +39,7 @@
                     <p:column headerText="ID" sortBy="f.id" style="text-align: center; width: 12px">
                         <h:outputText value="#{f.id}" />
                     </p:column>
-                    <p:column style="width:270px;" headerText="Nome" sortBy="f.nome">
+                    <p:column style="width:250px;" headerText="Nome" sortBy="f.nome">
                         <h:outputText value="#{f.nome}" />
                     </p:column>
                     <p:column style="width:125px;" headerText="CPF" sortBy="f.cpf">
@@ -54,11 +54,14 @@
                     <p:column style="width:130px;" headerText="Localidade" sortBy="f.cidade">
                         <h:outputText value="#{f.cidade} - #{f.uf.toUpperCase()}"/>
                     </p:column>
-                    <p:column style="width:250px;" headerText="E-mail" sortBy="f.email">
+                    <p:column style="width:220px;" headerText="E-mail" sortBy="f.email">
                         <h:outputText value="#{f.email}" />
                     </p:column>
                     <p:column style="width:100px;" headerText="Tipo">
                         <p:outputLabel value="#{f.tipo == 'ROLE_ADMINISTRADOR' ? 'Administrador' : 'Cliente'}"/>
+                    </p:column>                    
+                    <p:column style="width:60px;" headerText="Situação">
+                        <p:outputLabel value="#{f.situacao == true ? 'Ativo' : 'Inativo'}"/>
                     </p:column>
                     <p:column style="width:32px;text-align: center">
                         <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()"
@@ -77,6 +80,11 @@
                     <h:panelGrid columns="2"  >
                         <h:outputLabel value="Código"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.id}" size="6" readonly="true" />
+                        <h:outputLabel value="Situação"/>
+                        <p:selectOneRadio value="#{pessoaCtrl.pessoa.situacao}" unselectable="true">
+                            <f:selectItem itemLabel="Ativo" itemValue="true" />
+                            <f:selectItem itemLabel="Inativo" itemValue="false" />
+                        </p:selectOneRadio>
                         <h:outputLabel value="Nome"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.nome}" size="60" maxlength="60"/>
                         <h:outputLabel value="CPF"/>
