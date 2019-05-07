@@ -15,9 +15,12 @@
                 <ui:include src="/templates/template.xhtml" />
             </ui:insert>
         </div>
-        <h:form id="form">
+        <h:form id="form" style="padding: 10px 15px 15px 15px">
             <p:growl id="msgs" showDetail="true"/>
-            <p:panel header="Lista de Usuários" style="margin-bottom:20px; margin-top: 20px">
+            <p:panel header="Lista de Usuários">
+                <f:facet name="header">
+                    <i class="fa fa-group"><p:outputLabel value=" Lista de Usuários" style="font-weight: bold"/></i>
+                </f:facet>
                 <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
                                  actionListener="#{pessoaCtrl.actionInserir()}"
                                  oncomplete="PF('cadDialog').show()"
@@ -66,8 +69,10 @@
                 </p:dataTable>
             </p:panel>
 
-            <p:dialog  header="Cadastro de Usuários" widgetVar="cadDialog" modal="true"
-                       showEffect="fade" hideEffect="fade" fitViewport="true" resizable="false">
+            <p:dialog  widgetVar="cadDialog" modal="true" showEffect="fade" hideEffect="fade" fitViewport="true" resizable="false" maximizable="true">
+                <f:facet name="header">
+                    <i class="fa fa-user-circle-o"><p:outputLabel value=" Cadastro de Usuários" style="font-weight: bold"/></i>
+                </f:facet>
                 <p:outputPanel id="cadDetail">
                     <h:panelGrid columns="2"  >
                         <h:outputLabel value="Código"/>

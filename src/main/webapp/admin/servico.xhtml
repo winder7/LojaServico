@@ -16,16 +16,19 @@
                 <ui:include src="/templates/template.xhtml" />
             </ui:insert>
         </div>
-        <h:form id="form">
+        <h:form id="form" style="padding: 10px 15px 15px 15px">
             <p:growl id="msgs" showDetail="true"/>
-            <p:panel id="basic" header="Lista de Serviços" style="margin-bottom:20px; margin-top: 20px">
+            <p:panel id="basic">
+                <f:facet name="header">
+                    <i class="fa fa-wrench"><p:outputLabel value=" Lista de Serviços" style="font-weight: bold"/></i>
+                </f:facet>
                 <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
                                  actionListener="#{servicoCtrl.actionInserir()}"
                                  oncomplete="PF('cadDialog').show()"
                                  update=":form:cadDetail">
                 </p:commandButton>
                 <p:row>
-                    <p:inputText value="#{servicoCtrl.filtro}" label="Pesquisar" >
+                    <p:inputText value="#{servicoCtrl.filtro}" placeholder="Pesquisar" >
                         <f:ajax event="keyup" immediate="true" render="tbl"/>
                     </p:inputText>
                 </p:row>
@@ -57,20 +60,22 @@
                 </p:dataTable>
             </p:panel>
 
-            <p:dialog  header="Cadastro de Serviços" widgetVar="cadDialog" modal="true"
-                       showEffect="fade" hideEffect="fade" resizable="false">
+            <p:dialog  widgetVar="cadDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <f:facet name="header">
+                    <i class="fa fa-wrench"><p:outputLabel value=" Cadastro de Serviços" style="font-weight: bold"/></i>
+                </f:facet>
                 <p:outputPanel id="cadDetail" style="text-align: center;">
                     <h:panelGrid columns="2" style="text-align: Left;" >
-                        <h:outputLabel value="Código"/>
-                        <p:inputText value="#{servicoCtrl.servico.id}" size="6" maxlength="10" readonly="true" />
-                        <h:outputLabel value="Nome"/>
-                        <p:inputText value="#{servicoCtrl.servico.nome}" size="30" maxlength="20"/>
-                        <h:outputLabel value="Descrição"/>
-                        <p:inputText value="#{servicoCtrl.servico.descricao}" size="30" maxlength="20"/>
-                        <h:outputLabel value="Unidade"/>
-                        <p:inputText value="#{servicoCtrl.servico.und}" size="30" maxlength="20"/>
-                        <h:outputLabel value="Valor"/>
-                        <p:inputText value="#{servicoCtrl.servico.valor}" size="30" maxlength="20"/>
+                        <h:outputLabel value="Código:" rendered="#{servicoCtrl.servico.id !=0}"/>
+                        <p:inputText value="#{servicoCtrl.servico.id}" size="6" maxlength="10" disabled="true" rendered="#{servicoCtrl.servico.id !=0}"/>
+                        <h:outputLabel value="Nome:"/>
+                        <p:inputText value="#{servicoCtrl.servico.nome}" size="20" maxlength="20"/>
+                        <h:outputLabel value="Descrição:"/>
+                        <p:inputText value="#{servicoCtrl.servico.descricao}" size="60" maxlength="60"/>
+                        <h:outputLabel value="Unidade:"/>
+                        <p:inputText value="#{servicoCtrl.servico.und}" size="20" maxlength="20"/>
+                        <h:outputLabel value="Valor:"/>
+                        <p:inputNumber value="#{servicoCtrl.servico.valor}" size="20" maxlength="20" symbol="R$ "/>
                     </h:panelGrid>
                     <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{servicoCtrl.actionExcluir}" update="form"/>
                     <p:commandButton value="Gravar" icon="fa fa-save" class="botaoGravar" action="#{servicoCtrl.actionGravar}" update="form"/>

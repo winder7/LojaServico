@@ -15,66 +15,71 @@
                 <ui:include src="/templates/template.xhtml" />
             </ui:insert>
         </div>
-        <h:form id="form">
+        <h:form id="form" style="padding: 10px 15px 15px 15px">
             <p:growl id="msgs" showDetail="true"/>
-            <p:panel header="Lista de Formas de Pagamento" style="margin-bottom:20px; margin-top: 20px">
-                    <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
-                                     actionListener="#{formaPgtoCtrl.actionInserir()}"
-                                     oncomplete="PF('cadDialog').show()"
-                                     update=":form:cadDetail">
-                    </p:commandButton>
-                    <p:row>
-                        <p:inputText value="#{formaPgtoCtrl.filtro}" label="Pesquisar" >
-                            <f:ajax event="keyup" immediate="true" render="tbl"/>
-                        </p:inputText>
-                    </p:row>
-                    <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{formaPgtoCtrl.listagem}"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                                 {PageLinks} {NextPageLink} {LastPageLink}"
-                                 paginator="true" rows="10" style="margin-bottom:20px">
-                        <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
-                            <h:outputText value="#{f.id}" />
-                        </p:column>
-                        <p:column headerText="Descricão" sortBy="f.descricao">
-                            <h:outputText value="#{f.descricao}" />
-                        </p:column>
-                        <p:column headerText="Nº Máximo de Parcelas" sortBy="f.numMaxParc">
-                            <h:outputText value="#{f.numMaxParc}" />
-                        </p:column>
-                        <p:column headerText="Padrão de Parcelas" sortBy="f.numMaxParc">
-                            <h:outputText value="#{f.numPadraoParc}" />
-                        </p:column>
-                        <p:column headerText="Intervalo de Dias" sortBy="f.numMaxParc">
-                            <h:outputText value="#{f.intervaloDias}" />
-                        </p:column>
-                        <p:column headerText="Percentual de Acréscimo" sortBy="f.numMaxParc">
-                            <h:outputText value="#{formaPgtoCtrl.formatarNumero(f.percentualAcres)}" />
-                        </p:column>
-                        <p:column style="width:32px;text-align: center">
-                            <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()"
-                                             icon="pi pi-search" title="View">
-                                <f:setPropertyActionListener value="#{f}" target="#{formaPgtoCtrl.formaPgto}" />
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>
+            <p:panel>
+                <f:facet name="header">
+                    <i class="fa fa-credit-card"><p:outputLabel value=" Lista de Formas de Pagamento" style="font-weight: bold"/></i>
+                </f:facet>
+                <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
+                                 actionListener="#{formaPgtoCtrl.actionInserir()}"
+                                 oncomplete="PF('cadDialog').show()"
+                                 update=":form:cadDetail">
+                </p:commandButton>
+                <p:row>
+                    <p:inputText value="#{formaPgtoCtrl.filtro}"  placeholder="Pesquisar" >
+                        <f:ajax event="keyup" immediate="true" render="tbl"/>
+                    </p:inputText>
+                </p:row>
+                <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{formaPgtoCtrl.listagem}"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                             {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true" rows="10" style="margin-bottom:20px">
+                    <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
+                        <h:outputText value="#{f.id}" />
+                    </p:column>
+                    <p:column headerText="Descricão" sortBy="f.descricao">
+                        <h:outputText value="#{f.descricao}" />
+                    </p:column>
+                    <p:column headerText="Máximo de Parcelas" sortBy="f.numMaxParc">
+                        <h:outputText value="#{f.numMaxParc}" />
+                    </p:column>
+                    <p:column headerText="Padrão de Parcelas" sortBy="f.numMaxParc">
+                        <h:outputText value="#{f.numPadraoParc}" />
+                    </p:column>
+                    <p:column headerText="Intervalo de Dias" sortBy="f.numMaxParc">
+                        <h:outputText value="#{f.intervaloDias}" />
+                    </p:column>
+                    <p:column headerText="Percentual de Acréscimo" sortBy="f.numMaxParc">
+                        <h:outputText value="#{formaPgtoCtrl.formatarNumero(f.percentualAcres)}" />
+                    </p:column>
+                    <p:column style="width:32px;text-align: center">
+                        <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()"
+                                         icon="pi pi-search" title="View">
+                            <f:setPropertyActionListener value="#{f}" target="#{formaPgtoCtrl.formaPgto}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
             </p:panel>
 
-            <p:dialog  header="Cadastro de Forma de Pagamento" widgetVar="cadDialog" modal="true"
-                       showEffect="fade" hideEffect="fade" resizable="false">
+            <p:dialog  widgetVar="cadDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+                <f:facet name="header">
+                    <i class="fa fa-credit-card"><p:outputLabel value=" Cadastro de Forma de Pagamento" style="font-weight: bold"/></i>
+                </f:facet>
                 <p:outputPanel id="cadDetail" style="text-align: center;">
                     <h:panelGrid columns="2" style="text-align: Left;" >
-                        <h:outputLabel value="Código"/>
-                        <p:inputText value="#{formaPgtoCtrl.formaPgto.id}" size="6" maxlength="10" readonly="true" />
-                        <h:outputLabel value="Nome"/>
-                        <p:inputText value="#{formaPgtoCtrl.formaPgto.descricao}" size="30" maxlength="60"/>
-                        <h:outputLabel value="Nº Max. Parcelas"/>
-                        <p:inputText value="#{formaPgtoCtrl.formaPgto.numMaxParc}" size="30" maxlength="3"/>
-                        <h:outputLabel value="Nº Padrão de Parcelas"/>
-                        <p:inputText value="#{formaPgtoCtrl.formaPgto.numPadraoParc}" size="30" maxlength="3"/>
-                        <h:outputLabel value="Intervalo (dias)"/>
-                        <p:inputText value="#{formaPgtoCtrl.formaPgto.intervaloDias}" size="30" maxlength="3"/>
-                        <h:outputLabel value="Percen. Acress."/>
-                        <p:inputText value="#{formaPgtoCtrl.formaPgto.percentualAcres}" size="30" maxlength="4"/>
+                        <h:outputLabel value="Código:" rendered="#{formaPgtoCtrl.formaPgto.id != 0}"/>
+                        <p:inputText value="#{formaPgtoCtrl.formaPgto.id}" size="5" maxlength="10" disabled="true" rendered="#{formaPgtoCtrl.formaPgto.id != 0}"/>
+                        <h:outputLabel value="Nome:" rendered="true"/>
+                        <p:inputText value="#{formaPgtoCtrl.formaPgto.descricao}" size="60" maxlength="60" required="true" requiredMessage="Digitar o nome da forma de pagamento!"/>
+                        <h:outputLabel value="Máximo de Parcelas:"/>
+                        <p:inputText value="#{formaPgtoCtrl.formaPgto.numMaxParc}" size="3" maxlength="3" type="number"/>
+                        <h:outputLabel value="Padrão de Parcelas"/>
+                        <p:inputText value="#{formaPgtoCtrl.formaPgto.numPadraoParc}" size="3" maxlength="3" type="number"/>
+                        <h:outputLabel value="Intervalo (dias):"/>
+                        <p:inputText value="#{formaPgtoCtrl.formaPgto.intervaloDias}" size="3" maxlength="3" type="number"/>
+                        <h:outputLabel value="Percen. Acréscimo:"/>
+                        <p:inputNumber value="#{formaPgtoCtrl.formaPgto.percentualAcres}" size="20" maxlength="4" symbol="%"  symbolPosition="s" required="true" emptyValue="empty"/>
                     </h:panelGrid>
                     <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{formaPgtoCtrl.actionExcluir}" update="form"/>
                     <p:commandButton value="Gravar" icon="fa fa-save" class="botaoGravar" action="#{formaPgtoCtrl.actionGravar}" update="form"/>

@@ -47,7 +47,7 @@ public class FormaPgtoCtrl implements Serializable {
     }
     
     public String formatarNumero(double num) {
-        return String.format("%,.1f", num) + " %";
+        return String.format("%,.2f", num) + " %";
     }
 
     //GET-SET
