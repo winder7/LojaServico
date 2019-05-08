@@ -37,7 +37,7 @@
                     </h:panelGrid>                   
                     
                     <b:panelGrid columns="2">
-                        <b:commandButton id="btnLogin" class="btnLogin" title="Entrar no sistema" look="success" value="Login" onclick="document.getElementById('loginForm').submit()"/>
+                        <b:commandButton id="btnLogin" class="btnLogin" title="Entrar no sistema" look="success" value="Entrar" onclick="document.getElementById('loginForm').submit()"/>
                         <b:button id="btnCadastro" class="btnLogin" title="Entrar no sistema" look="primary" value="Cadastrar" href="#{request.contextPath}/publico/cadastro.xhtml"/>
                     </b:panelGrid>
                     
@@ -46,7 +46,7 @@
                     </div>
                     
                     <h:panelGroup rendered="#{!empty param.login_error}">
-                        <p:staticMessage severity="error" summary="Erro ao efetuar o login!" detail="#{SPRING_SECURITY_LAST_EXCEPTION.message}" />
+                        <p:staticMessage severity="error" summary="Erro ao efetuar login!" detail="#{pessoaCtrl.erroLoin(SPRING_SECURITY_LAST_EXCEPTION.message)}" />
                     </h:panelGroup>
                 </h:panelGrid>
                 <script>

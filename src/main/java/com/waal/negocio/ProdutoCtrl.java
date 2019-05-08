@@ -15,7 +15,7 @@ import javax.faces.bean.ViewScoped;
  * @Data 27/02/2019, 20:45:21
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class ProdutoCtrl implements Serializable {
 
     private static final long serialVersionUID = 1L;

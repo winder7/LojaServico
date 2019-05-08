@@ -1,7 +1,8 @@
 package com.waal.negocio;
 
+import com.waal.persistencia.PessoaDAO;
 import java.io.Serializable;
-import javax.annotation.ManagedBean;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -13,7 +14,7 @@ import javax.faces.bean.SessionScoped;
 public class TemaCtrl implements Serializable {
 
     private String tema = "omega";
-    
+
     public String formatarNumero(double num) {
         return String.format("R$ " + "%,.2f", num);
     }
@@ -36,5 +37,9 @@ public class TemaCtrl implements Serializable {
             "overcast", "pepper-grinder", "redmond", "rocket", "sam",
             "smoothness", "south-street", "start", "sunny", "swanky-purse",
             "trontastic", "ui-darkness", "ui-lightness", "vader"};
+    }
+
+    public void teste() {
+        System.out.println(PessoaDAO.pesqNomeUsr("windergt@gmail.com").getNome());
     }
 }

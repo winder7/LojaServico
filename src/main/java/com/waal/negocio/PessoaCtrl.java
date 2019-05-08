@@ -46,6 +46,7 @@ public class PessoaCtrl implements Serializable {
             pessoa.setSenha(encriptarSenha(pessoa.getSenha()));
             if (!usrLogado) {
                 pessoa.setTipo("ROLE_CLIENTE");
+                pessoa.setSituacao(true);
             }
             PessoaDAO.inserir(pessoa);
             context.addMessage(null, new FacesMessage("Sucesso", "Inserido com sucesso!"));
@@ -108,6 +109,15 @@ public class PessoaCtrl implements Serializable {
 
     public boolean getUserAdmin() {
         return SessionData.ehUserAdmin();
+    }
+    
+    public String erroLoin(String erro){
+        if (erro.contains("User is disabled")) {
+            erro = "Seu usuário foi desabilitado...";
+        } else if (erro.contains("Bad credentials")) {
+            erro = "Credenciais inválidas..";
+        }
+        return erro;
     }
     
     private String encriptarSenha(String senha) {
