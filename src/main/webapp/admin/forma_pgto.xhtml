@@ -71,7 +71,7 @@
                         <h:outputLabel value="Código:" rendered="#{formaPgtoCtrl.formaPgto.id != 0}"/>
                         <p:inputText value="#{formaPgtoCtrl.formaPgto.id}" size="5" maxlength="10" disabled="true" rendered="#{formaPgtoCtrl.formaPgto.id != 0}"/>
                         <h:outputLabel value="Nome:" rendered="true"/>
-                        <p:inputText value="#{formaPgtoCtrl.formaPgto.descricao}" size="60" maxlength="60" required="true" requiredMessage="Digitar o nome da forma de pagamento!"/>
+                        <p:inputText value="#{formaPgtoCtrl.formaPgto.descricao}" size="60" maxlength="60"/>
                         <h:outputLabel value="Máximo de Parcelas:"/>
                         <p:inputText value="#{formaPgtoCtrl.formaPgto.numMaxParc}" size="3" maxlength="3" type="number"/>
                         <h:outputLabel value="Padrão de Parcelas"/>
@@ -81,7 +81,7 @@
                         <h:outputLabel value="Percen. Acréscimo:"/>
                         <p:inputNumber value="#{formaPgtoCtrl.formaPgto.percentualAcres}" size="20" maxlength="4" symbol="%"  symbolPosition="s" required="true" emptyValue="empty"/>
                     </h:panelGrid>
-                    <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{formaPgtoCtrl.actionExcluir}" update="form"/>
+                    <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{formaPgtoCtrl.actionExcluir}" update="form" rendered="#{formaPgtoCtrl.formaPgto.id != 0}"/>
                     <p:commandButton value="Gravar" icon="fa fa-save" class="botaoGravar" action="#{formaPgtoCtrl.actionGravar}" update="form"/>
                     <p:commandButton value="Cancelar" icon="fa fa-close" class="botaoCancelar" oncomplete="PF('cadDialog').hide()"/>
                 </p:outputPanel>

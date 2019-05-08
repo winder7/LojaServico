@@ -1,6 +1,9 @@
 package com.waal.uteis;
 
 import com.waal.persistencia.PessoaDAO;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,38 +13,54 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class SessionData {
 
-    public static String getNomeUsuarioLogado() {
-        String nome = "";
+    public static String encriptarSenha(String senha) {
+        String hash = null;
         try {
-            UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String detalhes = user.toString();
-            if (detalhes.length() > 0) {
-                String[] allDetails = detalhes.split(";");
-                String[] nomeUsr = allDetails[0].split(":");
-                String nomeUsuario = nomeUsr[2].trim();
-                nome = PessoaDAO.pesqNomeUsr(nomeUsuario).getNome();
+            MessageDigest algorithm = MessageDigest.getInstance("sha-256");
+            byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                hexString.append(String.format("%02x", 0xFF & b));
+            }
+            hash = hexString.toString();
+
+            System.out.println(hash);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
+            System.out.println("Erro ao encriptar senha:\n" + ex);
+            return null;
+        }
+        return hash;
+    }
+
+    public static String getNomeUsuarioLogado() {
+        try {
+            Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            System.out.println("Usuário: " + user);
+            if (!user.toString().equals("anonymousUser")) {
+                String nomeUsuario = ((UserDetails) user).getUsername();
+                return PessoaDAO.pesqNomeUsr(nomeUsuario).getNome();
+            } else {
+                return "Olá Visitante!";
             }
         } catch (Exception e) {
-            System.out.println("Erro getNomeUsuarioLogado: Nenhum usúario logado! " + e);
-            return "Olá Visitante!";
+            System.out.println("Erro getNomeUsuarioLogado: " + e);
+            return "Erro";
         }
-        return nome;
     }
 
     public static boolean ehUserAdmin() {
-        boolean role = false;
         try {
-            UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String detalhes = user.toString();
-            System.out.println(user);
-            if (detalhes.length() > 0) {
-                String[] allDetails = detalhes.split(":");
-                role = "ROLE_ADMINISTRADOR".equals(allDetails[allDetails.length-1].trim());
-                System.out.println("ehUserAdmin " + role);
+            Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (!user.toString().equals("anonymousUser")) {
+                String userDetails = ((UserDetails) user).toString();
+                return userDetails.contains("ROLE_ADMINISTRADOR");
+            } else {
+                return false;
             }
         } catch (Exception e) {
-            System.out.println("Erro getRole: Nenhum usúario logado! " + e);
+            System.out.println("Erro ehUserAdmin: " + e);
+            return false;
         }
-        return role;
     }
 }

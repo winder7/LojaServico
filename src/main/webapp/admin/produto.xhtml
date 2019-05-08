@@ -64,7 +64,7 @@
                         <h:outputLabel value="Código:" rendered="#{produtoCtrl.produto.id != 0}"/>
                         <p:inputText value="#{produtoCtrl.produto.id}" size="6" maxlength="10" disabled="true" rendered="#{produtoCtrl.produto.id != 0}"/>
                         <p:outputLabel value="Nome:"/>
-                        <p:inputText value="#{produtoCtrl.produto.nome}" size="60" maxlength="60" required="true" requiredMessage="Digitar o nome do produto!"/>
+                        <p:inputText value="#{produtoCtrl.produto.nome}" size="60" maxlength="60"/>
                         <p:outputLabel value="Preço:"/>
                         <p:inputNumber value="#{produtoCtrl.produto.preco}" size="20" maxlength="20" symbol="R$ "/>
                     </h:panelGrid>

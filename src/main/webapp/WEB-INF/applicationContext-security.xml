@@ -21,8 +21,8 @@
         <authentication-provider>
             <password-encoder hash="sha-256"/>
             <jdbc-user-service data-source-ref="bdlojaservicoDataSource" 
-                               authorities-by-username-query="SELECT pes_nome, pes_tipo FROM pessoa WHERE pes_email = ?"
-                               users-by-username-query="SELECT pes_email, pes_senha, pes_situacao, '1' FROM pessoa WHERE pes_email = ?" />
+                               authorities-by-username-query="SELECT pes_nome, pes_tipo FROM pessoa WHERE LOWER(pes_email) = LOWER(?)"
+                               users-by-username-query="SELECT pes_email, pes_senha, pes_situacao, '1' FROM pessoa WHERE LOWER(pes_email) = LOWER(?)" />
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

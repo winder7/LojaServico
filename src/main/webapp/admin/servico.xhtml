@@ -77,7 +77,7 @@
                         <h:outputLabel value="Valor:"/>
                         <p:inputNumber value="#{servicoCtrl.servico.valor}" size="20" maxlength="20" symbol="R$ "/>
                     </h:panelGrid>
-                    <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{servicoCtrl.actionExcluir}" update="form"/>
+                    <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{servicoCtrl.actionExcluir}" update="form" rendered="#{servicoCtrl.servico.id !=0}"/>
                     <p:commandButton value="Gravar" icon="fa fa-save" class="botaoGravar" action="#{servicoCtrl.actionGravar}" update="form"/>
                     <p:commandButton value="Cancelar" icon="fa fa-close" class="botaoCancelar" oncomplete="PF('cadDialog').hide()"/>
                 </p:outputPanel>

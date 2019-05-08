@@ -79,7 +79,7 @@
                 <p:outputPanel id="cadDetail">
                     <h:panelGrid columns="2"  >
                         <h:outputLabel value="Código"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.id}" size="6" readonly="true" />
+                        <p:inputText value="#{pessoaCtrl.pessoa.id}" size="6" disabled="true" />
                         <h:outputLabel value="Situação"/>
                         <p:selectOneRadio value="#{pessoaCtrl.pessoa.situacao}" unselectable="true">
                             <f:selectItem itemLabel="Ativo" itemValue="true" />
@@ -150,7 +150,7 @@
                         </h:dataTable>
                     </h:panelGrid>
                     <h:panelGrid columns="3">
-                        <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{pessoaCtrl.actionExcluir}" update="form"/>
+                        <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{pessoaCtrl.actionExcluir}" rendered="#{pessoaCtrl.pessoa.id != 0}" update="form"/>
                         <p:commandButton value="Gravar" icon="fa fa-save" class="botaoGravar" action="#{pessoaCtrl.actionGravar}" update="form"/>
                         <p:commandButton value="Cancelar" icon="fa fa-close" class="botaoCancelar" oncomplete="PF('cadDialog').hide()"/>
                     </h:panelGrid>

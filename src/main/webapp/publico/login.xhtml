@@ -42,7 +42,7 @@
                     </b:panelGrid>
                     
                     <div class="divAlterarSenha">
-                        <b:commandLink class="alterarSenha" value="Esqueceu a senha?" />
+                        <b:commandLink class="alterarSenha" value="Esqueceu a senha?" href="#{request.contextPath}/publico/alteracao.xhtml" />
                     </div>
                     
                     <h:panelGroup rendered="#{!empty param.login_error}">

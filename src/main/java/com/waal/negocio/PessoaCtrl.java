@@ -43,7 +43,7 @@ public class PessoaCtrl implements Serializable {
     public void actionGravar() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (pessoa.getId() == 0) {
-            pessoa.setSenha(encriptarSenha(pessoa.getSenha()));
+            pessoa.setSenha(SessionData.encriptarSenha(pessoa.getSenha()));
             if (!usrLogado) {
                 pessoa.setTipo("ROLE_CLIENTE");
                 pessoa.setSituacao(true);
@@ -51,7 +51,7 @@ public class PessoaCtrl implements Serializable {
             PessoaDAO.inserir(pessoa);
             context.addMessage(null, new FacesMessage("Sucesso", "Inserido com sucesso!"));
         } else {
-            pessoa.setSenha(encriptarSenha(pessoa.getSenha()));
+            pessoa.setSenha(SessionData.encriptarSenha(pessoa.getSenha()));
             PessoaDAO.alterar(pessoa);
             context.addMessage(null, new FacesMessage("Sucesso", "Alterado com sucesso!"));
         }
@@ -110,8 +110,8 @@ public class PessoaCtrl implements Serializable {
     public boolean getUserAdmin() {
         return SessionData.ehUserAdmin();
     }
-    
-    public String erroLoin(String erro){
+
+    public String erroLoin(String erro) {
         if (erro.contains("User is disabled")) {
             erro = "Seu usuário foi desabilitado...";
         } else if (erro.contains("Bad credentials")) {
@@ -119,25 +119,12 @@ public class PessoaCtrl implements Serializable {
         }
         return erro;
     }
-    
-    private String encriptarSenha(String senha) {
-        String hash = null;
-        try {
-            MessageDigest algorithm = MessageDigest.getInstance("sha-256");
-            byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
 
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : messageDigest) {
-                hexString.append(String.format("%02x", 0xFF & b));
-            }
-            hash = hexString.toString();
-
-            System.out.println(hash);
-        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
-            System.out.println("Erro ao encriptar senha:\n" + ex);
-            return null;
-        }
-        return hash;
+    public String teste(String nomeUsuario) {
+        String nome = "";
+        System.out.println(nomeUsuario);
+        System.out.println("nome: " + PessoaDAO.verifEmail(nomeUsuario));
+        return nome;
     }
 
     public String onFlowProcess(FlowEvent event) {

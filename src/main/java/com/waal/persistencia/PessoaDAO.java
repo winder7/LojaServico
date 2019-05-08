@@ -70,4 +70,14 @@ public class PessoaDAO implements Serializable {
         sessao.close();
         return pessoa;
     }
+    
+    public static boolean verifEmail(String valor) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Query consulta = sessao.createQuery("from Pessoa " + "where pes_email = :parametro");
+        consulta.setString("parametro", valor);
+        System.out.println(consulta.getFirstResult());
+        boolean t = false;
+        sessao.close();
+        return t;
+    }
 }

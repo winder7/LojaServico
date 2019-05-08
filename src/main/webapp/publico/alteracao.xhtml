@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <link rel="shortcut icon" href="../resources/img/favicon.png"/>
+        <title>Login</title>
+        <link rel="StyleSheet" type="text/css" href="../resources/css/login.css" media="screen" />
+    </h:head>
+    <h:body style="background-image: url('../resources/img/back.png')">
+        <div id="header">
+            <ui:insert name="template" >
+                <ui:include src="/templates/template.xhtml" />
+            </ui:insert>
+        </div>
+        <form id="atlForm">
+            <b:form>
+                <h:panelGrid class="painel" columns="1">
+                    <center><img class="img" src="../resources/img/login1.png" /></center>
+                    <b:inputText id="login" placeholder="E-mail" required="true" >
+                        <f:facet name="prepend">
+                            <b:iconAwesome name="user" size="lg"/>
+                        </f:facet>
+                    </b:inputText>          
+
+                    <b:panelGrid columns="2">
+                        <b:commandButton id="btnLogin" class="btnLogin" title="Enviar Senha Temporária" look="warning" value="Verificar E-mail" action="#{pessoaCtrl.teste('windergt@gmail.com')}"/>
+                        <b:button id="btnCadastro" class="btnLogin" title="Voltar ao login" look="danger" value="Cancelar" href="#{request.contextPath}/publico/login.xhtml"/>
+                    </b:panelGrid>
+
+                </h:panelGrid>
+            </b:form>
+        </form>
+    </h:body>
+</html>
