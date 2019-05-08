@@ -22,7 +22,7 @@
             <password-encoder hash="sha-256"/>
             <jdbc-user-service data-source-ref="bdlojaservicoDataSource" 
                                authorities-by-username-query="SELECT pes_nome, pes_tipo FROM pessoa WHERE pes_email = ?"
-                               users-by-username-query="SELECT pes_email, pes_senha, '1' FROM pessoa WHERE pes_email = ?" />
+                               users-by-username-query="SELECT pes_email, pes_senha, pes_situacao, '1' FROM pessoa WHERE pes_email = ?" />
         </authentication-provider>
     </authentication-manager>
 </beans:beans>
