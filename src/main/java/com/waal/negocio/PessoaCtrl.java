@@ -1,6 +1,5 @@
 package com.waal.negocio;
 
-import com.ibm.icu.text.SimpleDateFormat;
 import com.waal.beans.Fone;
 import com.waal.beans.Pessoa;
 import java.io.Serializable;
@@ -12,6 +11,7 @@ import com.waal.persistencia.PessoaDAO;
 import com.waal.uteis.BuscaCEP;
 import com.waal.uteis.CepDTO;
 import com.waal.uteis.SessionData;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.faces.bean.SessionScoped;
 import org.primefaces.event.FlowEvent;

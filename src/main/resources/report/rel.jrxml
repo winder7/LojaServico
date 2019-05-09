@@ -19,81 +19,75 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font size="22"/>
+					<font fontName="Arial" size="20"/>
 				</textElement>
 				<text><![CDATA[Lista de Produtos]]></text>
 			</staticText>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="31" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="185" height="30" uuid="193a2671-df27-48ef-82f5-26e453365dfd">
+				<reportElement x="0" y="0" width="185" height="20" uuid="193a2671-df27-48ef-82f5-26e453365dfd">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50de3f3a-29c3-459b-9812-7add2e70d0bc"/>
 				</reportElement>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="185" y="0" width="185" height="30" uuid="90f023c5-d813-4510-86a5-914e75102f8c">
+				<reportElement x="185" y="0" width="185" height="20" uuid="90f023c5-d813-4510-86a5-914e75102f8c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="370e116b-f9e8-40c8-9772-7240af762140"/>
 				</reportElement>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="370" y="0" width="185" height="30" uuid="9868da69-378e-4824-8796-76e394d16a0d">
+				<reportElement x="370" y="0" width="185" height="20" uuid="9868da69-378e-4824-8796-76e394d16a0d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b0ab3d76-a297-4e4b-8852-f2eb14973a96"/>
 				</reportElement>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Preço]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="185" height="30" uuid="2b8024a0-2eb0-43f5-828c-4a459ce67d0c">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50de3f3a-29c3-459b-9812-7add2e70d0bc"/>
+				<reportElement x="0" y="0" width="185" height="20" uuid="1403b96b-4fac-4aab-97cd-d1668ca5e294">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ab0491d6-3211-4a2a-8cbe-cd708da992f0"/>
 				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="185" y="0" width="185" height="30" uuid="adb809ff-ae9d-4add-b700-1bfcadfa76fb">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="370e116b-f9e8-40c8-9772-7240af762140"/>
+				<reportElement x="185" y="0" width="185" height="20" uuid="05dbfc11-f8f6-485e-ae0d-ccd04b349c14">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8d212c9d-de78-4c18-9d29-bfe7cb0c9031"/>
 				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="370" y="0" width="185" height="30" uuid="67a90c6e-072f-40e5-a31f-0fa8550d3a82">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b0ab3d76-a297-4e4b-8852-f2eb14973a96"/>
+				<reportElement x="370" y="0" width="185" height="20" uuid="9d05a1f9-1084-4df9-9e44-1959803197b1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c787785f-8939-47cd-b692-51717f46b953"/>
 				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{preco}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
-			<textField>
-				<reportElement x="273" y="0" width="150" height="30" uuid="ae4a8cfb-ddc8-4f03-820b-a0ddeb913813"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="424" y="0" width="128" height="30" uuid="a7b27533-1759-4713-bec5-e6e54765e539"/>
-				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="2" y="0" width="100" height="30" uuid="847cef1e-eca1-4f65-b18c-d6e03efa0fb8"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="83" splitType="Stretch"/>
 	</pageFooter>
 </jasperReport>

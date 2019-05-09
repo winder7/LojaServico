@@ -10,7 +10,6 @@ import javax.faces.context.FacesContext;
 import com.waal.persistencia.ProdutoDAO;
 import com.waal.uteis.Relatorio;
 import java.util.ArrayList;
-import javax.faces.bean.ViewScoped;
 
 /**
  * @Autor Winder Rezende
@@ -23,9 +22,11 @@ public class ProdutoCtrl implements Serializable {
     private static final long serialVersionUID = 1L;
     private String filtro = "";
     private Produto produto = new Produto();
+    private List<Produto> listaProdutos = new ArrayList<>();
 
     public List<Produto> getListagem() {
-        return ProdutoDAO.listagem(filtro);
+        listaProdutos = ProdutoDAO.listagem(filtro);
+        return listaProdutos;
     }
 
     public String actionGravar() {
@@ -53,17 +54,8 @@ public class ProdutoCtrl implements Serializable {
     }
 
     public void gerarRelatorio() {
-
-        List<Produto> prod = getListagem();
-        for (Produto pr : prod) {
-            System.out.println(pr.getNome());
-        }
-        try {
-            Relatorio gerar = new Relatorio();
-            gerar.getRelatorio(prod);
-        } catch (Exception e) {
-            System.out.println("Erro: " + e);
-        }
+        Relatorio gerar = new Relatorio();
+        gerar.getRelatorio(listaProdutos);
     }
 
     public String formatarNumero(double num) {

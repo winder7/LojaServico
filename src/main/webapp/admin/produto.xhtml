@@ -34,7 +34,7 @@
                         <f:ajax event="keyup" immediate="true" render="tbl"/>
                     </p:inputText>
                 </p:row>
-                <p:commandButton value="Gerar Relatório" title="Gerar Relatório PDF" action="#{produtoCtrl.gerarRelatorio()}"/>
+                <p:commandButton value="Gerar Relatório" title="Gerar Relatório PDF" action="#{produtoCtrl.gerarRelatorio()}"  ajax="false" onclick="this.form.target = '_blank'"/>
                 <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{produtoCtrl.listagem}"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                              {PageLinks} {NextPageLink} {LastPageLink}"
