@@ -12,9 +12,6 @@ import com.waal.persistencia.PessoaDAO;
 import com.waal.uteis.BuscaCEP;
 import com.waal.uteis.CepDTO;
 import com.waal.uteis.SessionData;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import javax.faces.bean.SessionScoped;
 import org.primefaces.event.FlowEvent;
@@ -33,6 +30,7 @@ public class PessoaCtrl implements Serializable {
     private Fone fone = new Fone();
     private boolean usrLogado;
     private String tipopessoa = "PF";
+    private String usrEmail;
 
     private boolean editar = false;
 
@@ -120,10 +118,10 @@ public class PessoaCtrl implements Serializable {
         return erro;
     }
 
-    public String teste(String nomeUsuario) {
+    public String teste() {
         String nome = "";
-        System.out.println(nomeUsuario);
-        System.out.println("nome: " + PessoaDAO.verifEmail(nomeUsuario));
+        System.out.println(usrEmail);
+        System.out.println("nome: " + PessoaDAO.verifEmail(usrEmail));
         return nome;
     }
 
@@ -178,5 +176,13 @@ public class PessoaCtrl implements Serializable {
 
     public void setEditar(boolean editar) {
         this.editar = editar;
+    }
+
+    public String getUsrEmail() {
+        return usrEmail;
+    }
+
+    public void setUsrEmail(String usrEmail) {
+        this.usrEmail = usrEmail;
     }
 }

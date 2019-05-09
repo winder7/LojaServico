@@ -1,6 +1,7 @@
 package com.waal.uteis;
 
 
+import com.waal.beans.Produto;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -31,8 +32,8 @@ public class Relatorio {
         this.response = (HttpServletResponse) context.getExternalContext().getResponse();
     }
 
-    public void getRelatorio(List<String> lista) {
-        stream = this.getClass().getResourceAsStream("/report/UsuarioReport.jasper");
+    public void getRelatorio(List<Produto> lista) {
+        stream = this.getClass().getResourceAsStream("/report/Blank_A4.jasper");
         Map<String, Object> params = new HashMap<>();
         baos = new ByteArrayOutputStream();
 

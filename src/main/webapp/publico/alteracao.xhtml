@@ -21,14 +21,14 @@
             <b:form>
                 <h:panelGrid class="painel" columns="1">
                     <center><img class="img" src="../resources/img/login1.png" /></center>
-                    <b:inputText id="login" placeholder="E-mail" required="true" >
+                    <b:inputText id="login" value="#{pessoaCtrl.usrEmail}" placeholder="E-mail" required="true" >
                         <f:facet name="prepend">
                             <b:iconAwesome name="user" size="lg"/>
                         </f:facet>
                     </b:inputText>          
 
                     <b:panelGrid columns="2">
-                        <b:commandButton id="btnLogin" class="btnLogin" title="Enviar Senha Temporária" look="warning" value="Verificar E-mail" action="#{pessoaCtrl.teste('windergt@gmail.com')}"/>
+                        <b:commandButton id="btnLogin" class="btnLogin" title="Enviar Senha Temporária" look="warning" value="Verificar E-mail" action="#{pessoaCtrl.teste()}"/>
                         <b:button id="btnCadastro" class="btnLogin" title="Voltar ao login" look="danger" value="Cancelar" href="#{request.contextPath}/publico/login.xhtml"/>
                     </b:panelGrid>
 

@@ -1,4 +1,4 @@
-package  com.waal.negocio;
+package com.waal.negocio;
 
 import com.waal.beans.Produto;
 import java.io.Serializable;
@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.waal.persistencia.ProdutoDAO;
+import com.waal.uteis.Relatorio;
+import java.util.ArrayList;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -49,7 +51,21 @@ public class ProdutoCtrl implements Serializable {
         context.addMessage(null, new FacesMessage("Sucesso", "Excluído com sucesso!"));
         return "lista_produto";
     }
-    
+
+    public void gerarRelatorio() {
+
+        List<Produto> prod = getListagem();
+        for (Produto pr : prod) {
+            System.out.println(pr.getNome());
+        }
+        try {
+            Relatorio gerar = new Relatorio();
+            gerar.getRelatorio(prod);
+        } catch (Exception e) {
+            System.out.println("Erro: " + e);
+        }
+    }
+
     public String formatarNumero(double num) {
         return String.format("R$ " + "%,.2f", num);
     }
