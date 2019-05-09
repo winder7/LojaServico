@@ -2,17 +2,50 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <link rel="shortcut icon" href="../resources/img/favicon.png"/>
+        <link rel="StyleSheet" type="text/css" href="../resources/css/login.css" media="screen" />
         <title>Inicio</title>
     </h:head>
-    <h:body style="background-image: url('../resources/img/back.png')">
+    <h:body>
         <div id="header">
             <ui:insert name="template" >
                 <ui:include src="/templates/template.xhtml" />
             </ui:insert>
         </div>
-        <center><img class="img" src="../resources/img/index1.png" style="margin-top: 15px" /></center>
+        <div id="conteudo-index">
+            <h:form id="form">
+                <center>
+                    <b:carousel interval="5000">
+                        <b:carouselItem>
+                            <img class="carousel-imagem" src="../resources/img/cano.jpg"/>  
+                            <b:commandButton style="margin-top: 10px;" value="Ver detalhes" class="btn btn-info">
+                                <b:iconAwesome name="fa-search" spin="false" size="sm" />
+                            </b:commandButton>
+                        </b:carouselItem>
+                        <b:carouselItem>
+                            <img class="carousel-imagem" src="../resources/img/eletricista.jpg"/>   
+                            <b:commandButton style="margin-top: 10px;" value="Ver detalhes" class="btn btn-info">
+                                <b:iconAwesome name="fa-search" spin="false" size="sm" />
+                            </b:commandButton>
+                        </b:carouselItem>                   
+                        <b:carouselItem>
+                            <img class="carousel-imagem" src="../resources/img/encanador.jpg"/>  
+                            <b:commandButton style="margin-top: 10px;" value="Ver detalhes" class="btn btn-info">
+                                <b:iconAwesome name="fa-search" spin="false" size="sm" />
+                            </b:commandButton>
+                        </b:carouselItem>                  
+                        <b:carouselItem>
+                            <img class="carousel-imagem" src="../resources/img/tijolo.jpg"/> 
+                            <b:commandButton style="margin-top: 10px;" value="Ver detalhes" class="btn btn-info">
+                                <b:iconAwesome name="fa-search" spin="false" size="sm" />
+                            </b:commandButton>
+                        </b:carouselItem>
+                    </b:carousel>
+                </center>
+            </h:form>
+        </div>
     </h:body>
 </html>

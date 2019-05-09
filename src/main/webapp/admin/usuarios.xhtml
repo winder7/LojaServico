@@ -7,6 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <link rel="shortcut icon" href="../resources/img/favicon.png"/>
+        <link rel="StyleSheet" type="text/css" href="../resources/css/login.css" media="screen" />
         <title>Lista de Usuários</title>
     </h:head>
     <h:body >       
@@ -90,7 +91,7 @@
                         <h:outputLabel value="CPF"/>
                         <p:inputMask size="13" mask="999.999.999-99" id="cpf" value="#{pessoaCtrl.pessoa.cpf}" />
                         <h:outputLabel value="RG"/>
-                        <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="10" maxlength="10"/>
+                        <p:inputNumber value="#{pessoaCtrl.pessoa.rg}" type="number" size="10"/>
                         <h:outputLabel value="Data de Nascimento"/>
                         <p:calendar value="#{pessoaCtrl.pessoa.dataNasc}" size="11" id="popup" pattern="dd/MM/yyyy"/>
                     </h:panelGrid>
