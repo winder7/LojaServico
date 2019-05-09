@@ -118,3 +118,11 @@ body .ui-panelgrid .ui-panelgrid-cell {
     height: 32px;
     width: 100px;
 }
+.carousel-imagem {
+    max-width: 500px;
+    max-height:240px;
+    min-width: 500px;
+    min-height:240px;
+    width: auto;
+    height: auto;
+}
