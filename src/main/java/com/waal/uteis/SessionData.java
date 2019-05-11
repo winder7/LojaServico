@@ -25,7 +25,7 @@ public class SessionData {
             }
             hash = hexString.toString();
 
-            System.out.println(hash);
+            //System.out.println(hash);
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             System.out.println("Erro ao encriptar senha:\n" + ex);
             return null;
@@ -36,7 +36,7 @@ public class SessionData {
     public static String getNomeUsuarioLogado() {
         try {
             Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            System.out.println("Usuário: " + user);
+            //System.out.println("Usuário: " + user);
             if (!user.toString().equals("anonymousUser")) {
                 String nomeUsuario = ((UserDetails) user).getUsername();
                 return PessoaDAO.pesqNomeUsr(nomeUsuario).getNome();

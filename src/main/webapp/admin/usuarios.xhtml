@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <link rel="shortcut icon" href="../resources/img/favicon.png"/>
+        <link rel="shortcut icon" href="../resources/img/favicon3.png"/>
         <link rel="StyleSheet" type="text/css" href="../resources/css/login.css" media="screen" />
         <title>Lista de Usuários</title>
     </h:head>
@@ -43,13 +43,13 @@
                     <p:column style="width:250px;" headerText="Nome" sortBy="f.nome">
                         <h:outputText value="#{f.nome}" />
                     </p:column>
-                    <p:column style="width:125px;" headerText="CPF" sortBy="f.cpf">
+                    <p:column style="width:125px;" headerText="CPF/CNPJ" sortBy="f.cpf">
                         <h:outputText value="#{f.cpf}"/>
                     </p:column>
-                    <p:column style="width:80px;" headerText="RG" sortBy="f.rg">
+                    <p:column style="width:80px;" headerText="RG/Insc. Estad." sortBy="f.rg">
                         <h:outputText value="#{f.rg}" />
                     </p:column>
-                    <p:column style="width:70px;" headerText="Dt. Nasc." sortBy="f.dataNasc">
+                    <p:column style="width:70px;" headerText="Dt. Nascimento" sortBy="f.dataNasc">
                         <h:outputLabel value="#{pessoaCtrl.formatarData(f.dataNasc)}"/>
                     </p:column>
                     <p:column style="width:130px;" headerText="Localidade" sortBy="f.cidade">
@@ -82,16 +82,16 @@
                         <h:outputLabel value="Código"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.id}" size="6" disabled="true" />
                         <h:outputLabel value="Situação"/>
-                        <p:selectOneRadio value="#{pessoaCtrl.pessoa.situacao}" unselectable="true">
+                        <p:selectOneRadio value="#{pessoaCtrl.pessoa.situacao}">
                             <f:selectItem itemLabel="Ativo" itemValue="true" />
                             <f:selectItem itemLabel="Inativo" itemValue="false" />
                         </p:selectOneRadio>
                         <h:outputLabel value="Nome"/>
                         <p:inputText value="#{pessoaCtrl.pessoa.nome}" size="60" maxlength="60"/>
                         <h:outputLabel value="CPF"/>
-                        <p:inputMask size="13" mask="999.999.999-99" id="cpf" value="#{pessoaCtrl.pessoa.cpf}" />
+                        <p:inputMask size="20" mask="#{pessoaCtrl.pessoa.cpf.length() >14 ? '99.999.999/9999-99' : '999.999.999-99'}" id="cpf" value="#{pessoaCtrl.pessoa.cpf}" />
                         <h:outputLabel value="RG"/>
-                        <p:inputNumber value="#{pessoaCtrl.pessoa.rg}" type="number" size="10"/>
+                        <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="10" type="number" maxlength="10"/>
                         <h:outputLabel value="Data de Nascimento"/>
                         <p:calendar value="#{pessoaCtrl.pessoa.dataNasc}" size="11" id="popup" pattern="dd/MM/yyyy"/>
                     </h:panelGrid>
@@ -125,26 +125,30 @@
                             <f:selectItem itemLabel="Administrador" itemValue="ROLE_ADMINISTRADOR" />
                         </p:selectOneMenu>
                     </h:panelGrid>
-                    <h:panelGrid columns="2" >
+                    <h:panelGrid id="fones" columns="2" style="text-align: left">
                         <h:dataTable id="listaFones" value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows">
                             <f:facet name="header">
-                                <p:commandButton value="Adicionar Fone" update=":form:cadDetail" icon="fa fa-phone"
-                                                 actionListener="#{pessoaCtrl.actionInserirFone()}"/>
+                                <p:commandButton value="Adicionar Fone" update=":form:fones" icon="fa fa-phone" actionListener="#{pessoaCtrl.actionInserirFone()}"/>
                             </f:facet>
                             <h:column>
                                 <f:facet name="header">
                                     <h:outputLabel value="Número"/>
                                 </f:facet>
-                                <p:inputMask value="#{f.numero}" mask="(99)99999-9999"/>
+                                <p:inputMask value="#{f.numero}" mask="#{f.descricao == 'Fixo' ? '(99)9999-9999' : '(99)99999-9999'}"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">
-                                    <h:outputLabel value="Descrição"/>
+                                    <h:outputLabel value="Tipo"/>
                                 </f:facet>
-                                <p:inputText value="#{f.descricao}" size="30" maxlength="30"/>
+                                <p:selectOneMenu value="#{f.descricao}" style="margin-top: 3px; width: 110px">
+                                    <f:selectItem itemLabel="Celular" itemValue="#{f.descricao}" />
+                                    <f:selectItem itemLabel="Fixo" itemValue="Fixo" />
+                                    <f:selectItem itemLabel="Celular" itemValue="Celular" />
+                                    <p:ajax event="change" update=":form:fones"/>
+                                </p:selectOneMenu>
                             </h:column>
                             <h:column>
-                                <p:commandButton value="Remover" update=":form:cadDetail" actionListener="#{pessoaCtrl.actionExcluirFone()}">
+                                <p:commandButton value="Remover" update=":form:fones" actionListener="#{pessoaCtrl.actionExcluirFone()}">
                                     <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.fone}"/>
                                 </p:commandButton>
                             </h:column>

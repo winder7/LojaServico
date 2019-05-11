@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <link rel="shortcut icon" href="../resources/img/favicon.png"/>
+        <link rel="shortcut icon" href="../resources/img/favicon3.png"/>
         <title>Lista de Formas de Pagamento</title>
     </h:head>
     <h:body >
@@ -47,7 +47,7 @@
         <h:form id="form" style="padding: 10px 15px 15px 15px">
             <p:growl id="growl" sticky="true" showDetail="true"/>
 
-            <p:wizard flowListener="#{pessoaCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
+            <p:wizard id="cadDetail" flowListener="#{pessoaCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
                 <p:tab id="login" title="Login">
                     <p:panel header="Dados de Login">
                         <p:messages />
@@ -85,15 +85,15 @@
                                 <f:selectItem itemLabel="Pessoa Jurídica" itemValue="PJ" />
                                 <p:ajax event="change" update="panel"/>
                             </p:selectOneRadio>
-                            <h:outputText value="Nome Completo: *" />
+                            <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'Nome Completo: *' : 'Razão Social: *'}" />
                             <p:inputText value="#{pessoaCtrl.pessoa.nome}" size="30" required="true" label="Nome Completo"/>
 
                             <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}" />
-                            <p:inputText value="#{pessoaCtrl.pessoa.cpf}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}"/>
-
+                            <p:inputMask value="#{pessoaCtrl.pessoa.cpf}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}"
+                                         mask="#{pessoaCtrl.tipopessoa == 'PF' ? '999.999.999-99' : '99.999.999/9999-99'}"/>
                             <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}" />
                             <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}"/>
-                            <h:outputText value="Data de Nascimento: *" />
+                            <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'Data de Nascimento: *' : 'Data da Fundação: *'}" />
                             <p:calendar value="#{pessoaCtrl.pessoa.dataNasc}" size="11" pattern="dd/MM/yyyy"/>
                         </h:panelGrid>
                     </p:panel>
@@ -126,26 +126,30 @@
                 <p:tab id="contact" title="Contato">
                     <p:panel header="Telefones de Contato">
                         <p:messages />
-                        <h:panelGrid columns="2" >
+                        <h:panelGrid id="fones" columns="2" style="text-align: left">
                             <h:dataTable id="listaFones" value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows">
                                 <f:facet name="header">
-                                    <p:commandButton value="Adicionar Telefone" update=":form"
-                                                     actionListener="#{pessoaCtrl.actionInserirFone()}"/>
+                                    <p:commandButton value="Adicionar Fone" update=":form:fones" icon="fa fa-phone" actionListener="#{pessoaCtrl.actionInserirFone()}"/>
                                 </f:facet>
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputLabel value="Número"/>
                                     </f:facet>
-                                    <p:inputMask value="#{f.numero}" mask="(99)9999-9999"/>
+                                    <p:inputMask value="#{f.numero}" mask="#{f.descricao == 'Fixo' ? '(99)9999-9999' : '(99)99999-9999'}"/>
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel value="Descrição"/>
+                                        <h:outputLabel value="Tipo"/>
                                     </f:facet>
-                                    <p:inputText value="#{f.descricao}" size="30" maxlength="30"/>
+                                    <p:selectOneMenu value="#{f.descricao}" style="margin-top: 3px; width: 110px">
+                                        <f:selectItem itemLabel="Celular" itemValue="#{f.descricao}" />
+                                        <f:selectItem itemLabel="Fixo" itemValue="Fixo" />
+                                        <f:selectItem itemLabel="Celular" itemValue="Celular" />
+                                        <p:ajax event="change" update=":form:fones"/>
+                                    </p:selectOneMenu>
                                 </h:column>
                                 <h:column>
-                                    <p:commandButton value="Remover" update=":form" actionListener="#{pessoaCtrl.actionExcluirFone()}">
+                                    <p:commandButton value="Remover" update=":form:fones" actionListener="#{pessoaCtrl.actionExcluirFone()}">
                                         <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.fone}"/>
                                     </p:commandButton>
                                 </h:column>
@@ -164,11 +168,6 @@
                                 <h:outputText value="Senha: " />
                                 <h:outputText value="#{pessoaCtrl.pessoa.senha != null ? 'OK' : 'Falha'}" styleClass="outputLabel"/>
 
-                                <h:outputText value="Confirmação Senha: " />
-                                <h:outputText value="#{pessoaCtrl.pessoa.senha != null ? 'OK' : 'Falha'}" styleClass="outputLabel"/>
-                            </h:panelGrid>
-
-                            <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Nome: " />
                                 <h:outputText value="#{pessoaCtrl.pessoa.nome}" styleClass="outputLabel"/>
 
@@ -180,9 +179,7 @@
 
                                 <h:outputText value="Data de Nascimento:" />
                                 <h:outputText value="#{pessoaCtrl.formatarData(pessoaCtrl.pessoa.dataNasc)}" styleClass="outputLabel"/>
-                            </h:panelGrid>
 
-                            <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Rua: " />
                                 <h:outputText value="#{pessoaCtrl.pessoa.rua}" styleClass="outputLabel"/>
 
@@ -197,9 +194,22 @@
 
                                 <h:outputText value="UF: " />
                                 <h:outputText value="#{pessoaCtrl.pessoa.uf}" styleClass="outputLabel"/>
+
+                                <h:dataTable value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows" >
+                                    <p:column>
+                                        <h:outputText value="Telefone " />
+                                        <h:outputText value="#{f.descricao}: "/>
+                                    </p:column>
+                                </h:dataTable>
+                                <h:dataTable value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows" styleClass="outputLabel">
+                                    <p:column>
+                                        <h:outputText value="#{f.numero}"/>
+                                    </p:column>
+                                </h:dataTable>
                             </h:panelGrid>
                         </h:panelGrid>
-
+                        <hr></hr>
+                        <b><p:outputLabel value="Ao clicar em Criar conta, você concorda com nosso Termos e confirma que leu a Declaração de Privacidade."/></b>
                         <h:panelGrid columns="2" >
                             <p:commandButton value="Criar Conta" actionListener="#{pessoaCtrl.actionGravar}" update="form" action="login.xhtml?faces-redirect=true"/>
                             <p:button value="Cancelar" href="#{request.contextPath}/publico/index.xhtml"/>
