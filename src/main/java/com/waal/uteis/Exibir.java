@@ -9,8 +9,13 @@ import javax.faces.context.FacesContext;
  */
 public class Exibir {
 
-    public static void Mensagem(String mensagem){
+    public static void Mensagem(String mensagem) {
         FacesMessage fm = new FacesMessage(mensagem);
+        FacesContext.getCurrentInstance().addMessage(null, fm);
+    }
+
+    public static void MensagemErro(String mensagem) {
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, mensagem, null);
         FacesContext.getCurrentInstance().addMessage(null, fm);
     }
 }

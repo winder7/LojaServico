@@ -31,6 +31,7 @@ public class PessoaCtrl implements Serializable {
     private boolean usrLogado;
     private String tipopessoa = "PF";
     private String usrEmail;
+    private String confirSenha;
 
     private boolean editar = false;
 
@@ -184,5 +185,13 @@ public class PessoaCtrl implements Serializable {
 
     public void setUsrEmail(String usrEmail) {
         this.usrEmail = usrEmail;
+    }
+
+    public String getConfirSenha() {
+        return confirSenha;
+    }
+
+    public void setConfirSenha(String confirSenha) {
+        this.confirSenha = confirSenha;
     }
 }

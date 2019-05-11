@@ -44,7 +44,7 @@
             }
         </style>
 
-        <h:form id="form">
+        <h:form id="form" style="padding: 10px 15px 15px 15px">
             <p:growl id="growl" sticky="true" showDetail="true"/>
 
             <p:wizard flowListener="#{pessoaCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
@@ -57,14 +57,21 @@
                                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                             </p:inputText>
 
-                            <h:outputText value="Senha: *" />
-                            <p:password required="true" value="#{pessoaCtrl.pessoa.senha}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
-                                        weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Inserir sua senha"/>
+                            <h:outputLabel for="senha" value="Senha: *" />
+                            <p:password id="senha" required="true" value="#{pessoaCtrl.pessoa.senha}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
+                                        weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Inserir sua senha">
+                                <f:validator validatorId="senhaValidador" />
+                                <f:attribute name="confirm" value="#{confirmPassword.submittedValue}" />
+                                <f:ajax event="blur" execute="password confirm" render="m_password" />
+                            </p:password>
 
-                            <h:outputText value="Repetir Senha: *" />
-                            <p:password required="true" value="#{pessoaCtrl.pessoa.senha}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
-                                        weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Confirme sua senha"/>
+                            <h:outputLabel for="confirm" value="Repetir Senha: *" />
+                            <p:password id="confirm" required="true" binding="#{confirmPassword}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
+                                        weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Confirme sua senha">
+                                <f:ajax event="blur" execute="password confirm" render="m_password m_confirm" />
+                            </p:password>
                         </h:panelGrid>
+                        <b><p:outputLabel value="A senha precisa conter pelo menos 8 caracteres e também deve incluir pelo menos 1 letra minúscula (abc), 1 maiúscula (ABC) e 1 número (123)."/></b>
                     </p:panel>
                 </p:tab>
 
@@ -147,7 +154,7 @@
                     </p:panel>
                 </p:tab>
 
-                <p:tab id="confirm" title="Confirmação">
+                <p:tab id="confirmacao" title="Confirmação">
                     <p:panel header="Confirmação dos Dados Informados">
                         <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
                             <h:panelGrid columns="2" columnClasses="label, value">
