@@ -108,9 +108,9 @@
                         <p:messages />
                         <h:panelGrid columns="2" id="endereco" columnClasses="label, value">
                             <h:outputText value="CEP: " />
-                            <p:inputText value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9">
+                            <p:inputMask value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9" mask="99999-999">
                                 <p:ajax event="blur" update="endereco" listener="#{pessoaCtrl.BuscaCep()}"/>
-                            </p:inputText>
+                            </p:inputMask>
 
                             <h:outputText value="Rua: " />
                             <p:inputText value="#{pessoaCtrl.pessoa.rua}" size="60" maxlength="60"/>
@@ -123,8 +123,6 @@
 
                             <h:outputText value="UF: " />
                             <p:inputText value="#{pessoaCtrl.pessoa.uf}" size="2" maxlength="2"/>
-                            <h:outputText value="Pular para a confirmação: " rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
-                            <h:selectBooleanCheckbox value="#{wizardCtrl.skip}" rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>

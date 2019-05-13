@@ -97,9 +97,9 @@
                     </h:panelGrid>
                     <h:panelGrid columns="2" id="endereco" >
                         <h:outputText value="CEP " />
-                        <p:inputText style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9">
+                        <p:inputMask style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9" mask="99999-999">
                             <p:ajax event="blur" update="endereco" listener="#{pessoaCtrl.BuscaCep()}"/>
-                        </p:inputText>
+                        </p:inputMask>
                         <h:outputLabel value="Rua"/>
                         <p:inputText style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.rua}" size="60" maxlength="60"/>
                         <h:outputLabel value="Bairro"/>
@@ -107,7 +107,7 @@
                         <h:outputLabel value="Cidade"/>
                         <p:inputText style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.cidade}" size="30" maxlength="30"/>
                         <h:outputLabel value="UF"/>
-                        <p:inputText style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.uf}" size="9" maxlength="9"/>
+                        <p:inputText style="margin-left: 87px;" value="#{pessoaCtrl.pessoa.uf}" size="2" maxlength="2"/>
                     </h:panelGrid>
                     <h:panelGrid columns="2" style="text-align: Left;" >
                         <h:outputLabel value="E-mail"/>
