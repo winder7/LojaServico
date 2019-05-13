@@ -10,7 +10,7 @@ import com.waal.persistencia.PessoaDAO;
 import com.waal.uteis.Enviar;
 import com.waal.uteis.Gerar;
 import com.waal.uteis.SessionData;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -18,7 +18,7 @@ import javax.faces.bean.ViewScoped;
  * @Data 03/06/2019, 20:57:21
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class LoginCtrl implements Serializable {
 
     private static final long serialVersionUID = 1L;
