@@ -18,7 +18,7 @@
             </ui:insert>
         </div>
         <form id="loginForm" method="post" action="#{request.contextPath}/j_spring_security_check">
-            <b:form>
+            <b:form id="form">
                 <h:panelGrid class="painel" columns="1">
                     <center><img class="img" src="../resources/img/login1.png" /></center>
                     <b:inputText id="login" name='j_username' placeholder="E-mail" required="true" requiredMessage="Digite o Usuário">

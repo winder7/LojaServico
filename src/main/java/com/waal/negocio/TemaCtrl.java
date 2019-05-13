@@ -4,6 +4,8 @@ import com.waal.persistencia.PessoaDAO;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Autor Winder Rezende
@@ -41,5 +43,18 @@ public class TemaCtrl implements Serializable {
 
     public void teste() {
         System.out.println(PessoaDAO.pesqNomeUsr("windergt@gmail.com").getNome());
+    }
+
+    public boolean obterUrl() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpServletRequest servletRequest = (HttpServletRequest) fc.getExternalContext().getRequest();
+        String fullURI = servletRequest.getRequestURI();
+        System.out.println(fullURI);
+        
+        if (fullURI.contains("produto")) {
+            return true;
+        }else {
+            return false;
+        }
     }
 }

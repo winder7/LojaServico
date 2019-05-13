@@ -18,8 +18,9 @@
                 </p:menuitem>
                 <p:menuitem url="#{request.contextPath}/publico/index.xhtml"><b>Waal Service</b></p:menuitem>
                 <f:facet name="options">
-                    <p:inputText style="margin:5px 10px 1px 1px;  width: 750px;" placeholder="O que você deseja buscar?">
+                    <p:inputText value="#{produtoCtrl.filtro}" style="margin:5px 10px 1px 1px;  width: 750px;" placeholder="O que você deseja buscar?">
                         <a href="#"><i class="imagem-busca fa fa-search"></i></a>
+                        <p:ajax event="keyup" immediate="true" update="form"/>
                     </p:inputText>
                 </f:facet>
                 <p:submenu icon="fa fa-question-circle" style="float: right;margin-top:4px">

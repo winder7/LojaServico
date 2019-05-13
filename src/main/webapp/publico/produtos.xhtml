@@ -38,7 +38,7 @@
                         <h:panelGrid columns="1" style="width:100%">
 
                             <h:outputText value="#{prod.nome}" />
-                            <h:outputText value="#{prod.preco}" />
+                            <h:outputText value="#{produtoCtrl.formatarNumero(prod.preco)}" />
 
                             <b:row>
                                 <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
@@ -69,11 +69,11 @@
                             <h:outputText value="#{produtoCtrl.produto.nome}" />
                             
                             <h:outputText value="Preço:" />
-                            <h:outputText value="#{produtoCtrl.produto.preco}" />
+                            <h:outputText value="#{produtoCtrl.formatarNumero(produtoCtrl.produto.preco)}" />
                         </p:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
             </h:form>
-        </div>        
+        </div>
     </h:body>
 </html>
