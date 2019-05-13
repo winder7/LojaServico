@@ -14,9 +14,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class JavaMailApp {
+public class Enviar {
 
-    public void enviarEmail(final String emailUsr, final String novaSenha, final String menssagem) {
+    public static void Email(final String usrEmail, final String novaSenha, final String menssagem) {
         new Thread(new Runnable() {
 
             @Override
@@ -43,10 +43,10 @@ public class JavaMailApp {
                     MimeMessage message = new MimeMessage(session);
                     message.setFrom(new InternetAddress("isoinformaticati@gmail.com")); //Remetente
 
-                    Address[] toUser = InternetAddress.parse(emailUsr); //Destinatário(s)
+                    Address[] toUser = InternetAddress.parse(usrEmail); //Destinatário(s)
 
                     message.setRecipients(Message.RecipientType.TO, toUser);
-                    message.setSubject("Recuperação de Senha Controle Academico"); //Assunto
+                    message.setSubject("Recuperação de Senha Waal Service"); //Assunto
                     message.setText("<!DOCTYPE html><html> " + menssagem + " " + novaSenha + " </html>", "utf-8", "html");
 
                     Transport.send(message);//Método para enviar a mensagem criada

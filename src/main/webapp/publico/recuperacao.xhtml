@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <link rel="shortcut icon" href="../resources/img/favicon3.png"/>
+        <title>Login</title>
+        <link rel="StyleSheet" type="text/css" href="../resources/css/login.css" media="screen" />
+    </h:head>
+    <h:body style="background-image: url('../resources/img/back.png')">
+        <div id="header">
+            <ui:insert name="template" >
+                <ui:include src="/templates/template.xhtml" />
+            </ui:insert>
+        </div>
+        <h:form>
+            <h:panelGrid class="painel" columns="1">
+                <center><img class="img" src="../resources/img/login1.png" /></center>
+                <center><h2 style="color: white">Recuperar Acesso</h2></center>
+                <b:inputText id="login" value="#{loginCtrl.usrEmail}" placeholder="E-mail" required="true" requiredMessage="Favor inserir o e-mail">
+                    <f:facet name="prepend">
+                        <b:iconAwesome name="user" size="lg"/>
+                    </f:facet>
+                </b:inputText>          
+
+                <b:panelGrid columns="2">
+                    <p:commandButton class="botaoCancelar" title="Enviar Senha Temporária" value="Verificar E-mail" actionListener="#{loginCtrl.verificarUsrValido()}" oncomplete="PF('verifDialog').show()"/>
+                    <p:button class="botaoExcluir" title="Voltar ao login" value="Cancelar" href="#{request.contextPath}/publico/login.xhtml" style="width: 100%"/>
+                </b:panelGrid>
+            </h:panelGrid>
+            <p:dialog  header="Verificação" widgetVar="verifDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false" minWidth="350">
+                <p:outputPanel id="verif">
+                    <h:outputLabel value="#{loginCtrl.msgVerif}"/>
+                    <hr/>
+                    <b:panelGrid columns="2">
+                        <b:commandButton class="btnLogin" value="Enviar E-mail" look="success" action="#{loginCtrl.actionGravar()}" rendered="#{loginCtrl.verificao}"/>
+                        <b:button class="btnLogin" value="Cancelar" look="danger" href="#{request.contextPath}/publico/recuperacao.xhtml"/>
+                    </b:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>

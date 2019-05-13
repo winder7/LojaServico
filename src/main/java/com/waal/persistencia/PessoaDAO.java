@@ -45,8 +45,8 @@ public class PessoaDAO implements Serializable {
         if (filtro.trim().length() == 0) {
             consulta = sessao.createQuery("from Pessoa order by pes_id");
         } else {
-            consulta = sessao.createQuery("from Pessoa " + "where pes_nome like :parametro order by pes_id");
-            consulta.setString("parametro", "%" + filtro + "%");
+            consulta = sessao.createQuery("from Pessoa " + "where upper(pes_nome) like :parametro order by pes_id");
+            consulta.setString("parametro", "%" + filtro.toUpperCase() + "%");
         }
         List lista = consulta.list();
         sessao.close();
@@ -75,9 +75,10 @@ public class PessoaDAO implements Serializable {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         Query consulta = sessao.createQuery("from Pessoa " + "where pes_email = :parametro");
         consulta.setString("parametro", valor);
-        System.out.println(consulta.getFirstResult());
-        boolean t = false;
+        List lista = consulta.list();
+        System.out.println(lista.size());
+        boolean verificado = lista.size() > 0;
         sessao.close();
-        return t;
+        return verificado;
     }
 }

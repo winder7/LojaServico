@@ -45,8 +45,8 @@ public class FormaPgtoDAO implements Serializable {
         if (filtro.trim().length() == 0) {
             consulta = sessao.createQuery("from FormaPgto order by fpg_id");
         } else {
-            consulta = sessao.createQuery("from FormaPgto " + "where fpg_descricao like :parametro order by fpg_id");
-            consulta.setString("parametro", "%" + filtro + "%");
+            consulta = sessao.createQuery("from FormaPgto " + "where upper(fpg_descricao) like :parametro order by fpg_id");
+            consulta.setString("parametro", "%" + filtro.toUpperCase() + "%");
         }
         List lista = consulta.list();
         sessao.close();

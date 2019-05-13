@@ -14,7 +14,6 @@ import com.waal.uteis.SessionData;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.faces.bean.SessionScoped;
-import org.primefaces.event.FlowEvent;
 
 /**
  * @Autor Winder Rezende
@@ -30,10 +29,7 @@ public class PessoaCtrl implements Serializable {
     private Fone fone = new Fone();
     private boolean usrLogado;
     private String tipopessoa = "PF";
-    private String usrEmail;
-
     private boolean editar = false;
-
     public List<Pessoa> getListagem() {
         return PessoaDAO.listagem(filtro);
     }
@@ -44,7 +40,6 @@ public class PessoaCtrl implements Serializable {
             pessoa.setSenha(SessionData.encriptarSenha(pessoa.getSenha()));
             if (!usrLogado) {
                 pessoa.setTipo("ROLE_CLIENTE");
-                pessoa.setSituacao(true);
             }
             PessoaDAO.inserir(pessoa);
             context.addMessage(null, new FacesMessage("Sucesso", "Inserido com sucesso!"));
@@ -84,6 +79,7 @@ public class PessoaCtrl implements Serializable {
     public void actionInserirFone() {
         fone = new Fone();
         fone.setPessoa(pessoa);
+        fone.setDescricao("Celular");
         pessoa.getFones().add(fone);
     }
 
@@ -116,17 +112,6 @@ public class PessoaCtrl implements Serializable {
             erro = "Credenciais inválidas..";
         }
         return erro;
-    }
-
-    public String teste() {
-        String nome = "";
-        System.out.println(usrEmail);
-        System.out.println("nome: " + PessoaDAO.verifEmail(usrEmail));
-        return nome;
-    }
-
-    public String onFlowProcess(FlowEvent event) {
-        return event.getNewStep();
     }
 
     //GET-SET
@@ -176,13 +161,5 @@ public class PessoaCtrl implements Serializable {
 
     public void setEditar(boolean editar) {
         this.editar = editar;
-    }
-
-    public String getUsrEmail() {
-        return usrEmail;
-    }
-
-    public void setUsrEmail(String usrEmail) {
-        this.usrEmail = usrEmail;
     }
 }

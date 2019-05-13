@@ -15,7 +15,7 @@ public class Gerar {
 
         String armazenaChaves = "";
         int index = -1;
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 4; i++) {
             index = random.nextInt(caracteres.length());
             armazenaChaves += caracteres.substring(index, index + 1);
         }

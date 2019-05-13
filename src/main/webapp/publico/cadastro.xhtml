@@ -39,7 +39,7 @@
             }
 
             .grid {
-                width:33%;
+                width:35%;
                 padding:4px;
             }
         </style>
@@ -47,7 +47,7 @@
         <h:form id="form" style="padding: 10px 15px 15px 15px">
             <p:growl id="growl" sticky="true" showDetail="true"/>
 
-            <p:wizard id="cadDetail" flowListener="#{pessoaCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
+            <p:wizard id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
                 <p:tab id="login" title="Login">
                     <p:panel header="Dados de Login">
                         <p:messages />
@@ -70,6 +70,8 @@
                                         weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Confirme sua senha">
                                 <f:ajax event="blur" execute="password confirm" render="m_password m_confirm" />
                             </p:password>
+                            <h:outputText value="Pular para a confirmação: " rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
+                            <h:selectBooleanCheckbox value="#{wizardCtrl.skip}" rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
                         </h:panelGrid>
                         <b><p:outputLabel value="A senha precisa conter pelo menos 8 caracteres e também deve incluir pelo menos 1 letra minúscula (abc), 1 maiúscula (ABC) e 1 número (123)."/></b>
                     </p:panel>
@@ -91,10 +93,12 @@
                             <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}" />
                             <p:inputMask value="#{pessoaCtrl.pessoa.cpf}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}"
                                          mask="#{pessoaCtrl.tipopessoa == 'PF' ? '999.999.999-99' : '99.999.999/9999-99'}"/>
-                            <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}" />
-                            <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}"/>
+                            <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}"/>
+                            <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}" type="number"/>
                             <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'Data de Nascimento: *' : 'Data da Fundação: *'}" />
                             <p:calendar value="#{pessoaCtrl.pessoa.dataNasc}" size="11" pattern="dd/MM/yyyy"/>
+                            <h:outputText value="Pular para a confirmação: " rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
+                            <h:selectBooleanCheckbox value="#{wizardCtrl.skip}" rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -119,6 +123,8 @@
 
                             <h:outputText value="UF: " />
                             <p:inputText value="#{pessoaCtrl.pessoa.uf}" size="2" maxlength="2"/>
+                            <h:outputText value="Pular para a confirmação: " rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
+                            <h:selectBooleanCheckbox value="#{wizardCtrl.skip}" rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -161,7 +167,7 @@
                 <p:tab id="confirmacao" title="Confirmação">
                     <p:panel header="Confirmação dos Dados Informados">
                         <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
-                            <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:panelGrid columns="2" columnClasses="grid, value">
                                 <h:outputText value="Email: " />
                                 <h:outputText value="#{pessoaCtrl.pessoa.email}" styleClass="outputLabel"/>
 
@@ -209,14 +215,29 @@
                             </h:panelGrid>
                         </h:panelGrid>
                         <hr></hr>
-                        <b><p:outputLabel value="Ao clicar em Criar conta, você concorda com nosso Termos e confirma que leu a Declaração de Privacidade."/></b>
+                        <b><p:outputLabel value="Ao clicar em Criar conta, você concorda com nossos "/></b> 
+                        <b><p:commandLink value="Termos" oncomplete="PF('termosServico').show()"/></b>
+                        <b><p:outputLabel value="e confirma que leu a "/></b>
+                        <b><p:commandLink value="Política de Privacidade." oncomplete="PF('politicaPrivacidade').show()"/></b>
                         <h:panelGrid columns="2" >
-                            <p:commandButton value="Criar Conta" actionListener="#{pessoaCtrl.actionGravar}" update="form" action="login.xhtml?faces-redirect=true"/>
+                            <p:commandButton value="Criar Conta" actionListener="#{pessoaCtrl.actionGravar}" update="form" oncomplete="PF('contaDialog').show()"/>
                             <p:button value="Cancelar" href="#{request.contextPath}/publico/index.xhtml"/>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
             </p:wizard>
+            <p:dialog  header="Criar Conta" widgetVar="contaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false">
+                <p:outputPanel id="criarConta">
+                    <b><p>A conta foi criada com sucesso. O que deseja fazer?</p></b>
+                    <hr/>
+                    <h:panelGrid columns="2">
+                        <p:button value="Fazer Login" href="#{request.contextPath}/publico/login.xhtml"/>
+                        <p:button value="Continuar Navegando" href="#{request.contextPath}/publico/index.xhtml"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
         </h:form>
     </h:body>
 </html>
+
+<!--action="login.xhtml?faces-redirect=true"-->
