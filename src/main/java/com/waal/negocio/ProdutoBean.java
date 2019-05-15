@@ -45,7 +45,6 @@ public class ProdutoBean implements Serializable {
         } finally {
             produto = new Produto();
             produtos = ProdutoDAO.listagem("");
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Produto adicionado", "Produto adicionado"));
         }
     }
@@ -58,10 +57,8 @@ public class ProdutoBean implements Serializable {
             ex.printStackTrace();
         } finally {
             imagen = new Imagem();
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Imagem adicionada", "Imagem adicionada"));
         }
-
     }
 
     public void processFileUpload(FileUploadEvent uploadEvent) {
@@ -72,14 +69,12 @@ public class ProdutoBean implements Serializable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 
     public void listaImagemsProduto() {
 
         try {
-            ServletContext sContext = (ServletContext) FacesContext
-                    .getCurrentInstance().getExternalContext().getContext();
+            ServletContext sContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
             imagens = ImagemDAO.listByProdutos(produtoSelecionado.getId());
 
@@ -90,8 +85,7 @@ public class ProdutoBean implements Serializable {
 
             for (Imagem f : imagens) {
                 String nomeArquivo = f.getId() + ".jpg";
-                String arquivo = sContext.getRealPath("/temp") + File.separator
-                        + nomeArquivo;
+                String arquivo = sContext.getRealPath("/temp") + File.separator + nomeArquivo;
 
                 criaArquivo(f.getImg(), arquivo);
             }

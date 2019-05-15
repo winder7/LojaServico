@@ -1,11 +1,16 @@
 package com.waal.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -24,6 +29,9 @@ public class Produto implements Serializable {
     private String nome;
     @Column(name = "pro_preco", nullable = true)
     private float preco;
+    
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<Imagem> imagens = new ArrayList<Imagem>();
 
     public int getId() {
         return id;
@@ -47,5 +55,13 @@ public class Produto implements Serializable {
 
     public void setPreco(float preco) {
         this.preco = preco;
+    }
+
+    public List<Imagem> getImagens() {
+        return imagens;
+    }
+
+    public void setImagens(List<Imagem> imagens) {
+        this.imagens = imagens;
     }
 }

@@ -24,7 +24,7 @@
         <!-- Maoeamento das Classes -->
         <mapping class="com.waal.beans.Fone"/>
         <mapping class="com.waal.beans.FormaPgto"/>
-        <mapping class="com.waal.beans.Imagens"/>
+        <mapping class="com.waal.beans.Imagem"/>
         <mapping class="com.waal.beans.ItensPed"/>
         <mapping class="com.waal.beans.Pedido"/> 
         <mapping class="com.waal.beans.Pessoa"/>

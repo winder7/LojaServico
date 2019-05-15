@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "fone")
+@Table(name = "imagens")
 public class Imagem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,7 @@ public class Imagem implements Serializable {
     private int id;
     @Column(name = "imagem", length = 20, nullable = true)
     private byte[] img;
+    
     @ManyToOne
     @JoinColumn(name = "fk_pro_id")
     private Produto produto;

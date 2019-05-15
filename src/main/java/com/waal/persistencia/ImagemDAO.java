@@ -32,7 +32,7 @@ public class ImagemDAO implements Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<Imagem> listByProdutos(long ID) {
+    public static List<Imagem> listByProdutos(int ID) {
         session = HibernateUtil.getSessionFactory().openSession();
 
         try {

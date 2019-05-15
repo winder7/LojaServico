@@ -37,10 +37,14 @@
                         <p:panel header="#{prod.nome}" style="text-align:center">
                             <h:panelGrid columns="1" style="width:100%">
 
+                                <p:dataGrid id="gridImg" var="f" value="#{prod.imagens}" emptyMessage="Sem imagem">
+                                    <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" />
+                                </p:dataGrid>
+
                                 <h:outputText value="#{prod.nome}" />
                                 <h:outputText value="#{produtoCtrl.formatarNumero(prod.preco)}" />
 
-                                <b:row>
+                                <p:column>
                                     <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
                                         <h:outputText styleClass="fa fa-search" style="margin:0 auto;"/>
                                         <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
@@ -49,7 +53,7 @@
                                         <h:outputText styleClass="fa fa-shopping-basket" style="margin:0 auto;"/>
                                         <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
                                     </p:commandLink>
-                                </b:row>
+                                </p:column>
                             </h:panelGrid>
                         </p:panel>
 

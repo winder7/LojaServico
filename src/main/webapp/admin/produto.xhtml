@@ -48,11 +48,8 @@
                     <p:column headerText="Preço" sortBy="f.preco">
                         <h:outputText value="#{produtoCtrl.formatarNumero(f.preco)}"/>
                     </p:column>
-                    <p:column headerText="Preço" sortBy="f.preco">
-                        <h:graphicImage value="../resources/img/favicon3.png"/>
-                    </p:column>
                     <p:column style="width:32px;text-align: center">
-                        <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()" icon="pi pi-search" title="View">
+                        <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()" icon="pi pi-search" title="View" action="#{produtoCtrl.listaImagemsProduto()}">
                             <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.produto}"/>
                         </p:commandButton>
                     </p:column>
@@ -71,6 +68,20 @@
                         <p:inputText value="#{produtoCtrl.produto.nome}" size="60" maxlength="60"/>
                         <p:outputLabel value="Preço:"/>
                         <p:inputNumber value="#{produtoCtrl.produto.preco}" size="20" maxlength="20" symbol="R$ "/>
+                        <p:outputLabel value="Carregar:"/>
+                        <p:fileUpload fileUploadListener="#{produtoCtrl.processFileUpload}" mode="advanced" dragDropSupport="false" 
+                                      label="Escolher" cancelLabel="Cancelar" sizeLimit="400000" fileLimit="1"
+                                      invalidSizeMessage="Imagem muito grande" auto="false"
+                                      invalidFileMessage="Tipo de imagem não suportado"
+                                      allowTypes="/(\.|\/)(jpe?g|png)$/" />
+
+                        <p:outputLabel value="Imagem:"/>
+                        <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
+                            <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" />
+                            <p:commandButton value="Remover" update=":form:gridImg" actionListener="#{produtoCtrl.actionExcluirImagem()}">
+                                <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.imagen}"/>
+                            </p:commandButton>
+                        </p:dataGrid>
                     </h:panelGrid>
                     <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{produtoCtrl.actionExcluir}" rendered="#{produtoCtrl.produto.id != 0}" immediate="true" update="form"/>
                     <p:commandButton value="Gravar" icon="fa fa-save" class="botaoGravar" action="#{produtoCtrl.actionGravar}" update="form"/>
