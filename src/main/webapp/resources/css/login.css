@@ -129,16 +129,24 @@ body .ui-panelgrid .ui-panelgrid-cell {
 .imagens-vitrine {
     max-width: 380px;
     max-height:250px;
-    min-width: 380px;
+    min-width: 266px;
     min-height:250px;
     width: auto;
     height: auto;
 }
 .imagens-detalhe {
-    max-width: 500px;
-    max-height:240px;
-    min-width: 500px;
-    min-height:240px;
+    max-width: 494px;
+    max-height:325px;
+    min-width: 494px;
+    min-height:325px;
     width: auto;
     height: auto;
+}
+.icon-vitrine {
+    margin:0 auto; 
+    font-size: 22px;
+    
+}
+#gridImg {
+    height: 180px;
 }

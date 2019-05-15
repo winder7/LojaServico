@@ -26,31 +26,30 @@
         <div id="conteudo-produtos">
             <h:form id="form">
                 <center><p:dataGrid var="prod" value="#{produtoCtrl.listagem}" columns="3" layout="grid"
-                                    rows="6" paginator="true" id="cars" paginatorPosition="top"
-                                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                    rowsPerPageTemplate="6,12,24">
+                                    rows="12" paginator="true" id="cars" paginatorPosition="top" rowsPerPageTemplate="12,24,48"
+                                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
                         <f:facet name="header">
                             Produtos
                         </f:facet>
 
                         <p:panel header="#{prod.nome}" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
-
+                            <h:panelGrid columns="1" style="width:100%; height: 390px">
                                 <p:dataGrid id="gridImg" var="f" value="#{prod.imagens}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
+                                    <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
+                                        <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
+                                    </p:commandLink>
                                 </p:dataGrid>
-
+                                
                                 <h:outputText value="#{prod.nome}" />
                                 <h:outputText value="#{produtoCtrl.formatarNumero(prod.preco)}" />
-
                                 <p:column>
                                     <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
-                                        <h:outputText styleClass="fa fa-search" style="margin:0 auto;"/>
+                                        <h:outputText styleClass="icon-vitrine fa fa-search"/>
                                         <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
                                     </p:commandLink>
                                     <p:commandLink style="margin-left: 10px" title="Adicionar na cesta">
-                                        <h:outputText styleClass="fa fa-shopping-basket" style="margin:0 auto;"/>
+                                        <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
                                         <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
                                     </p:commandLink>
                                 </p:column>
@@ -62,7 +61,7 @@
                 <p:dialog header="Detalhes do produto" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="prodDetalhe" style="text-align:center;">
                         <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
-                            <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
+                            <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" class="imagens-detalhe"/>
                         </p:dataGrid><br/>
                         <p:panelGrid  columns="2" rendered="#{not empty produtoCtrl.produto}" columnClasses="label,value">
 
