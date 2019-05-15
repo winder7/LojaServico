@@ -48,6 +48,9 @@
                     <p:column headerText="Preço" sortBy="f.preco">
                         <h:outputText value="#{produtoCtrl.formatarNumero(f.preco)}"/>
                     </p:column>
+                    <p:column headerText="Preço" sortBy="f.preco">
+                        <h:graphicImage value="../resources/img/favicon3.png"/>
+                    </p:column>
                     <p:column style="width:32px;text-align: center">
                         <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()" icon="pi pi-search" title="View">
                             <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.produto}"/>

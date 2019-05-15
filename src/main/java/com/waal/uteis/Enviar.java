@@ -2,7 +2,7 @@ package com.waal.uteis;
 
 /**
  * @Data: 27/04/2018
- * @Autor: m159255
+ * @Autor Winder Rezende
  */
 import java.util.Properties;
 import javax.mail.Address;
@@ -16,7 +16,7 @@ import javax.mail.internet.MimeMessage;
 
 public class Enviar {
 
-    public static void Email(final String usrEmail, final String novaSenha, final String menssagem) {
+    public static void Email(final String usrEmail, final String novaSenha) {
         new Thread(new Runnable() {
 
             @Override
@@ -37,7 +37,7 @@ public class Enviar {
                     }
                 });
 
-                session.setDebug(true); //Ativa Debug para sessão
+                session.setDebug(false); //Ativa Debug para sessão
 
                 try {
                     MimeMessage message = new MimeMessage(session);
@@ -47,7 +47,11 @@ public class Enviar {
 
                     message.setRecipients(Message.RecipientType.TO, toUser);
                     message.setSubject("Recuperação de Senha Waal Service"); //Assunto
-                    message.setText("<!DOCTYPE html><html> " + menssagem + " " + novaSenha + " </html>", "utf-8", "html");
+                    message.setText(
+                            "<!DOCTYPE html><html> <b><h1>Olá usuário!</h1></b><br> Sua nova senha de acesso é: " + novaSenha + ""
+                            + "<p> <b>OBS: </b> Favor alterar a senha no cadastro após efetuar login no site.</p> </html>",
+                            "utf-8", "html"
+                    );
 
                     Transport.send(message);//Método para enviar a mensagem criada
 

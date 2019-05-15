@@ -49,7 +49,7 @@ public class TemaCtrl implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest servletRequest = (HttpServletRequest) fc.getExternalContext().getRequest();
         String fullURI = servletRequest.getRequestURI();
-        System.out.println(fullURI);
+        //System.out.println(fullURI);
         
         if (fullURI.contains("produto")) {
             return true;

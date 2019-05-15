@@ -71,10 +71,11 @@ public class PessoaDAO implements Serializable {
         return pessoa;
     }
     
-    public static boolean verifEmail(String valor) {
+    public static boolean verifUsrCad(String email, String cpf) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-        Query consulta = sessao.createQuery("from Pessoa " + "where pes_email = :parametro");
-        consulta.setString("parametro", valor);
+        Query consulta = sessao.createQuery("from Pessoa " + "where pes_email = :parametro1 and pes_cpf = :parametro2");
+        consulta.setString("parametro1", email);
+        consulta.setString("parametro2", cpf);
         List lista = consulta.list();
         System.out.println(lista.size());
         boolean verificado = lista.size() > 0;

@@ -50,7 +50,7 @@ public class Relatorio {
 
             context.responseComplete();
         } catch (Exception ex) {
-            Exibir.Mensagem("Erro ao Gerar Relatório: " + ex);
+            Exibir.MensagemErro("Erro ao Gerar Relatório: " , ex.getMessage());
         }
     }
 }
