@@ -38,7 +38,7 @@
                             <h:panelGrid columns="1" style="width:100%">
 
                                 <p:dataGrid id="gridImg" var="f" value="#{prod.imagens}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
+                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
                                 </p:dataGrid>
 
                                 <h:outputText value="#{prod.nome}" />
@@ -62,7 +62,7 @@
                 <p:dialog header="Detalhes do produto" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="prodDetalhe" style="text-align:center;">
                         <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
-                            <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
+                            <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
                         </p:dataGrid><br/>
                         <p:panelGrid  columns="2" rendered="#{not empty produtoCtrl.produto}" columnClasses="label,value">
 

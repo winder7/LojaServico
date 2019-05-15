@@ -33,7 +33,7 @@ public class ServicoCtrl implements Serializable {
         return ServicoDAO.listagem(filtro);
     }
 
-    public String actionGravar() {
+    public void actionGravar() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (servico.getId() == 0) {
             ServicoDAO.inserir(servico);
@@ -42,19 +42,16 @@ public class ServicoCtrl implements Serializable {
             ServicoDAO.alterar(servico);
             context.addMessage(null, new FacesMessage("Sucesso", "Alterado com sucesso!"));
         }
-        return "lista_servico";
     }
 
-    public String actionInserir() {
+    public void actionInserir() {
         servico = new Servico();
-        return "lista_servico";
     }
 
-    public String actionExcluir() {
+    public void actionExcluir() {
         ServicoDAO.excluir(servico);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Excluído com sucesso!"));
-        return "lista_servico";
     }
 
     public void processFileUpload(FileUploadEvent uploadEvent) {
@@ -78,16 +75,16 @@ public class ServicoCtrl implements Serializable {
         try {
             ServletContext sContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
 
-            imagens = ImagemDAO.listByProdutos(servico.getId());
+            imagens = ImagemDAO.listByServicos(servico.getId());
 
-            File folder = new File(sContext.getRealPath("/tempServImg"));
+            File folder = new File(sContext.getRealPath("/resources/prod_Serv"));
             if (!folder.exists()) {
                 folder.mkdirs();
             }
 
             for (Imagem f : imagens) {
                 String nomeArquivo = f.getId() + ".jpg";
-                String arquivo = sContext.getRealPath("/tempServImg") + File.separator + nomeArquivo;
+                String arquivo = sContext.getRealPath("/resources/prod_Serv") + File.separator + nomeArquivo;
 
                 criaArquivo(f.getImg(), arquivo);
             }

@@ -105,14 +105,14 @@ public class ProdutoCtrl implements Serializable {
 
             imagens = ImagemDAO.listByProdutos(produto.getId());
 
-            File folder = new File(sContext.getRealPath("/temp"));
+            File folder = new File(sContext.getRealPath("/resources/prod_Serv"));
             if (!folder.exists()) {
                 folder.mkdirs();
             }
 
             for (Imagem f : imagens) {
                 String nomeArquivo = f.getId() + ".jpg";
-                String arquivo = sContext.getRealPath("/temp") + File.separator + nomeArquivo;
+                String arquivo = sContext.getRealPath("/resources/prod_Serv") + File.separator + nomeArquivo;
 
                 criaArquivo(f.getImg(), arquivo);
             }

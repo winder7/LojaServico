@@ -47,4 +47,21 @@ public class ImagemDAO implements Serializable {
 
         return null;
     }
+    
+    @SuppressWarnings("unchecked")
+    public static List<Imagem> listByServicos(int ID) {
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        try {
+            return session.createCriteria(Imagem.class, "f")
+                    .createAlias("servico", "s")
+                    .add(Restrictions.eq("s.id", ID)).list();
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return null;
+    }
 }

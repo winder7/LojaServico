@@ -77,14 +77,14 @@
                         <p:inputNumber value="#{servicoCtrl.servico.valor}" size="20" maxlength="20" symbol="R$ "/>
                         <p:outputLabel value="Carregar:"/>
                         <p:fileUpload fileUploadListener="#{servicoCtrl.processFileUpload}" mode="advanced" dragDropSupport="false" 
-                                      label="Escolher" cancelLabel="Cancelar" uploadLabel="Carregar" sizeLimit="400000" fileLimit="1"
+                                      label="Escolher" cancelLabel="Cancelar" uploadLabel="Carregar" sizeLimit="1000000" fileLimit="1"
                                       invalidSizeMessage="Imagem muito grande" auto="false"
                                       invalidFileMessage="Tipo de imagem não suportado"
                                       allowTypes="/(\.|\/)(jpe?g|png)$/" />
 
                         <p:outputLabel value="Imagem:"/>
                         <p:dataGrid id="gridImg" var="f" value="#{servicoCtrl.servico.imagens}" emptyMessage="Sem imagem">
-                            <p:graphicImage value="../tempServImg/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
+                            <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
                             <p:commandButton value="Remover" update=":form:gridImg" actionListener="#{servicoCtrl.actionExcluirImagem()}">
                                 <f:setPropertyActionListener value="#{f}" target="#{servicoCtrl.imagem}"/>
                             </p:commandButton>
