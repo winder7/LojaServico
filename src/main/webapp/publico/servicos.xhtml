@@ -30,6 +30,10 @@
                     <p:panel header="#{serv.nome}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
 
+                            <p:dataGrid id="gridImg" var="f" value="#{serv.imagens}" emptyMessage="Sem imagem">
+                                <p:graphicImage value="../tempServImg/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
+                            </p:dataGrid>
+
                             <h:outputText value="#{serv.nome}" />
                             <h:outputText value="#{produtoCtrl.formatarNumero(serv.valor)}" />
 
@@ -50,11 +54,10 @@
 
                 <p:dialog header="Detalhes do produto" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="prodDetalhe" style="text-align:center;">
+                        <p:dataGrid id="gridImg" var="f" value="#{servicoCtrl.servico.imagens}" emptyMessage="Sem imagem">
+                            <p:graphicImage value="../tempServImg/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
+                        </p:dataGrid><br/>
                         <p:panelGrid  columns="2" rendered="#{not empty servicoCtrl.servico}" columnClasses="label,value">
-                            <f:facet name="header">
-                                <p:graphicImage url="../resources/img/cano.jpg"/> 
-                            </f:facet>
-
                             <h:outputText value="Id:" />
                             <h:outputText value="#{servicoCtrl.servico.id}" />
 

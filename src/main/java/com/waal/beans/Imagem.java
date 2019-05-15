@@ -28,6 +28,10 @@ public class Imagem implements Serializable {
     @ManyToOne
     @JoinColumn(name = "fk_pro_id")
     private Produto produto;
+    
+    @ManyToOne
+    @JoinColumn(name = "fk_ser_id")
+    private Servico servico;
 
     public int getId() {
         return id;
@@ -51,5 +55,13 @@ public class Imagem implements Serializable {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public Servico getServico() {
+        return servico;
+    }
+
+    public void setServico(Servico servico) {
+        this.servico = servico;
     }
 }

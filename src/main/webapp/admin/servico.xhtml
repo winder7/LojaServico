@@ -52,8 +52,7 @@
                         <h:outputText value="#{produtoCtrl.formatarNumero(f.valor)}" />
                     </p:column>
                     <p:column style="width:32px;text-align: center">
-                        <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()"
-                                         icon="pi pi-search" title="View">
+                        <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()" icon="pi pi-search" title="View" action="#{servicoCtrl.listaImagemsProduto()}">
                             <f:setPropertyActionListener value="#{f}" target="#{servicoCtrl.servico}" />
                         </p:commandButton>
                     </p:column>
@@ -76,6 +75,20 @@
                         <p:inputText value="#{servicoCtrl.servico.und}" size="20" maxlength="20"/>
                         <h:outputLabel value="Valor:"/>
                         <p:inputNumber value="#{servicoCtrl.servico.valor}" size="20" maxlength="20" symbol="R$ "/>
+                        <p:outputLabel value="Carregar:"/>
+                        <p:fileUpload fileUploadListener="#{servicoCtrl.processFileUpload}" mode="advanced" dragDropSupport="false" 
+                                      label="Escolher" cancelLabel="Cancelar" uploadLabel="Carregar" sizeLimit="400000" fileLimit="1"
+                                      invalidSizeMessage="Imagem muito grande" auto="false"
+                                      invalidFileMessage="Tipo de imagem não suportado"
+                                      allowTypes="/(\.|\/)(jpe?g|png)$/" />
+
+                        <p:outputLabel value="Imagem:"/>
+                        <p:dataGrid id="gridImg" var="f" value="#{servicoCtrl.servico.imagens}" emptyMessage="Sem imagem">
+                            <p:graphicImage value="../tempServImg/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
+                            <p:commandButton value="Remover" update=":form:gridImg" actionListener="#{servicoCtrl.actionExcluirImagem()}">
+                                <f:setPropertyActionListener value="#{f}" target="#{servicoCtrl.imagem}"/>
+                            </p:commandButton>
+                        </p:dataGrid>
                     </h:panelGrid>
                     <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{servicoCtrl.actionExcluir}" update="form" rendered="#{servicoCtrl.servico.id !=0}"/>
                     <p:commandButton value="Gravar" icon="fa fa-save" class="botaoGravar" action="#{servicoCtrl.actionGravar}" update="form"/>

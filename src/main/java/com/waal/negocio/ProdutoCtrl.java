@@ -1,14 +1,5 @@
 package com.waal.negocio;
 
-import com.waal.beans.Imagem;
-import com.waal.beans.Produto;
-import java.io.Serializable;
-import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import com.waal.persistencia.ProdutoDAO;
 import com.waal.uteis.Relatorio;
 import java.util.ArrayList;
 import com.waal.beans.Imagem;
@@ -39,7 +30,7 @@ public class ProdutoCtrl implements Serializable {
     private Produto produto = new Produto();
     private List<Produto> listaProdutos = new ArrayList<>();
     private List<Imagem> imagens;
-    private Imagem imagen = new Imagem();
+    private Imagem imagem = new Imagem();
 
     public List<Produto> getListagem() {
         listaProdutos = ProdutoDAO.listagem(filtro);
@@ -82,11 +73,11 @@ public class ProdutoCtrl implements Serializable {
     public void salvaImagem() {
 
         try {
-            ImagemDAO.save(imagen);
+            ImagemDAO.save(imagem);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            imagen = new Imagem();
+            imagem = new Imagem();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Imagem adicionada", "Imagem adicionada"));
         }
     }
@@ -94,17 +85,17 @@ public class ProdutoCtrl implements Serializable {
     public void processFileUpload(FileUploadEvent uploadEvent) {
         System.out.println("Entrou");
         try {
-            imagen = new Imagem();
-            imagen.setProduto(produto);
-            imagen.setImg(uploadEvent.getFile().getContents());
-            produto.getImagens().add(imagen);
+            imagem = new Imagem();
+            imagem.setProduto(produto);
+            imagem.setImg(uploadEvent.getFile().getContents());
+            produto.getImagens().add(imagem);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
     
     public void actionExcluirImagem() {
-        produto.getImagens().remove(imagen);
+        produto.getImagens().remove(imagem);
     }
 
     public void listaImagemsProduto() {
@@ -177,11 +168,11 @@ public class ProdutoCtrl implements Serializable {
         this.imagens = imagens;
     }
 
-    public Imagem getImagen() {
-        return imagen;
+    public Imagem getImagem() {
+        return imagem;
     }
 
-    public void setImagen(Imagem imagen) {
-        this.imagen = imagen;
+    public void setImagem(Imagem imagem) {
+        this.imagem = imagem;
     }
 }

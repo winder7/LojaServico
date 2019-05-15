@@ -25,10 +25,10 @@
         </div>
         <div id="conteudo-produtos">
             <h:form id="form">
-                <center><p:dataGrid var="prod" value="#{produtoCtrl.listagem}" columns="2" layout="grid"
+                <center><p:dataGrid var="prod" value="#{produtoCtrl.listagem}" columns="3" layout="grid"
                                     rows="6" paginator="true" id="cars" paginatorPosition="top"
                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                    rowsPerPageTemplate="6,12,24" style="max-width: 800px">
+                                    rowsPerPageTemplate="6,12,24">
 
                         <f:facet name="header">
                             Produtos
@@ -38,7 +38,7 @@
                             <h:panelGrid columns="1" style="width:100%">
 
                                 <p:dataGrid id="gridImg" var="f" value="#{prod.imagens}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" />
+                                    <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
                                 </p:dataGrid>
 
                                 <h:outputText value="#{prod.nome}" />
@@ -56,15 +56,15 @@
                                 </p:column>
                             </h:panelGrid>
                         </p:panel>
-
-                    </p:dataGrid></center>>
+                    </p:dataGrid>
+                </center>
 
                 <p:dialog header="Detalhes do produto" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="prodDetalhe" style="text-align:center;">
+                        <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
+                            <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
+                        </p:dataGrid><br/>
                         <p:panelGrid  columns="2" rendered="#{not empty produtoCtrl.produto}" columnClasses="label,value">
-                            <f:facet name="header">
-                                <p:graphicImage url="../resources/img/cano.jpg"/> 
-                            </f:facet>
 
                             <h:outputText value="Id:" />
                             <h:outputText value="#{produtoCtrl.produto.id}" />

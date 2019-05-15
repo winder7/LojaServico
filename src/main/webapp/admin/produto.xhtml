@@ -70,16 +70,16 @@
                         <p:inputNumber value="#{produtoCtrl.produto.preco}" size="20" maxlength="20" symbol="R$ "/>
                         <p:outputLabel value="Carregar:"/>
                         <p:fileUpload fileUploadListener="#{produtoCtrl.processFileUpload}" mode="advanced" dragDropSupport="false" 
-                                      label="Escolher" cancelLabel="Cancelar" sizeLimit="400000" fileLimit="1"
+                                      label="Escolher" cancelLabel="Cancelar" uploadLabel="Carregar" sizeLimit="400000" fileLimit="1"
                                       invalidSizeMessage="Imagem muito grande" auto="false"
                                       invalidFileMessage="Tipo de imagem não suportado"
                                       allowTypes="/(\.|\/)(jpe?g|png)$/" />
 
                         <p:outputLabel value="Imagem:"/>
                         <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
-                            <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" />
+                            <p:graphicImage value="../temp/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
                             <p:commandButton value="Remover" update=":form:gridImg" actionListener="#{produtoCtrl.actionExcluirImagem()}">
-                                <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.imagen}"/>
+                                <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.imagem}"/>
                             </p:commandButton>
                         </p:dataGrid>
                     </h:panelGrid>
