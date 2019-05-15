@@ -70,7 +70,7 @@
                         <p:inputNumber value="#{produtoCtrl.produto.preco}" size="20" maxlength="20" symbol="R$ "/>
                         <p:outputLabel value="Carregar:"/>
                         <p:fileUpload fileUploadListener="#{produtoCtrl.processFileUpload}" mode="advanced" dragDropSupport="false" 
-                                      label="Escolher" cancelLabel="Cancelar" uploadLabel="Carregar" sizeLimit="400000" fileLimit="1"
+                                      label="Escolher" cancelLabel="Cancelar" uploadLabel="Carregar" sizeLimit="1000000" fileLimit="1"
                                       invalidSizeMessage="Imagem muito grande" auto="false"
                                       invalidFileMessage="Tipo de imagem não suportado"
                                       allowTypes="/(\.|\/)(jpe?g|png)$/" />
