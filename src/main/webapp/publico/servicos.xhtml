@@ -30,7 +30,7 @@
                         <h:panelGrid columns="1" style="width:100%">
                             <p:dataGrid id="gridImg" var="f" value="#{serv.imagens}" emptyMessage="Sem imagem">
                                 <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
-                                    <p:graphicImage value="../tempServImg/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
+                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
                                 </p:commandLink>
                             </p:dataGrid>
 
@@ -54,7 +54,7 @@
                 <p:dialog header="Detalhes do produto" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="prodDetalhe" style="text-align:center;">
                         <p:dataGrid id="gridImg" var="f" value="#{servicoCtrl.servico.imagens}" emptyMessage="Sem imagem">
-                            <p:graphicImage value="../tempServImg/#{f.id}.jpg" cache="false" class="imagens-detalhe"/>
+                            <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-detalhe"/>
                         </p:dataGrid><br/>
                         <p:panelGrid  columns="2" rendered="#{not empty servicoCtrl.servico}" columnClasses="label,value">
                             <h:outputText value="Id:" />
