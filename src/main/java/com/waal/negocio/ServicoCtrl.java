@@ -107,8 +107,11 @@ public class ServicoCtrl implements Serializable {
         }
     }
 
-    //GET-SET
+    public String formatarNumero(double num) {
+        return String.format("R$ " + "%,.2f", num);
+    }
 
+    //GET-SET
     public String getFiltro() {
         return filtro;
     }

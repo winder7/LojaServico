@@ -3,6 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui">
     <h:head>
         <link rel="shortcut icon" href="../resources/img/favicon3.png"/>
@@ -16,36 +18,150 @@
             </ui:insert>
         </div>
         <div id="conteudo-index">
-            <h:form id="form">
+            <h:form id="formcarousel">
                 <center>
-                    <b:carousel interval="5000">
-                        <b:carouselItem>
-                            <img class="carousel-imagem" src="../resources/img/cano.jpg"/>  
-                            <b:commandButton style="margin-top: 10px;" value="Ver detalhes" class="btn btn-info">
-                                <b:iconAwesome name="fa-search" spin="false" size="sm" />
-                            </b:commandButton>
-                        </b:carouselItem>
-                        <b:carouselItem>
-                            <img class="carousel-imagem" src="../resources/img/eletricista.jpg"/>   
-                            <b:commandButton style="margin-top: 10px;" value="Ver detalhes" class="btn btn-info">
-                                <b:iconAwesome name="fa-search" spin="false" size="sm" />
-                            </b:commandButton>
-                        </b:carouselItem>                   
-                        <b:carouselItem>
-                            <img class="carousel-imagem" src="../resources/img/encanador.jpg"/>  
-                            <b:commandButton style="margin-top: 10px;" value="Ver detalhes" class="btn btn-info">
-                                <b:iconAwesome name="fa-search" spin="false" size="sm" />
-                            </b:commandButton>
-                        </b:carouselItem>                  
-                        <b:carouselItem>
-                            <img class="carousel-imagem" src="../resources/img/tijolo.jpg"/> 
-                            <b:commandButton style="margin-top: 10px;" value="Ver detalhes" class="btn btn-info">
-                                <b:iconAwesome name="fa-search" spin="false" size="sm" />
-                            </b:commandButton>
-                        </b:carouselItem>
-                    </b:carousel>
+                    <p:carousel value="#{produtoCtrl.listagem}" headerText="Produtos" var="prodCarousel" 
+                                itemStyle="text-align:center" responsive="true">
+                        <p:panelGrid columns="1" style="width:100%;margin:10px 0px" columnClasses="label,value" 
+                                     layout="grid" styleClass="ui-panelgrid-blank">
+                            <p:dataGrid id="gridImgProd" var="f" value="#{prodCarousel.imagens}" emptyMessage="Sem imagem">
+                                <p:commandLink update=":formcarousel:prodDetalheCarousel" oncomplete="PF('prodDetalheCarousel').show()" title="Ver detalhes">
+                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
+                                    <f:setPropertyActionListener value="#{prodCarousel}" target="#{produtoCtrl.produto}" />
+                                </p:commandLink>
+                            </p:dataGrid>
+                            <h:outputText class="carouselNome" value="#{prodCarousel.nome}" />
+                            <h:outputText class="carouselPreco"  value="#{produtoCtrl.formatarNumero(prodCarousel.preco)}" />
+                        </p:panelGrid>
+                    </p:carousel>
                 </center>
+                <p:dialog header="Detalhes do produto" widgetVar="prodDetalheCarousel" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="prodDetalheCarousel" style="text-align:center;">
+                        <p:dataGrid id="gridImgProdCarousel" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
+                            <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-detalhe"/>
+                        </p:dataGrid><br/>
+                        <p:panelGrid  columns="2" rendered="#{not empty produtoCtrl.produto}" columnClasses="label,value">
+
+                            <h:outputText value="Id:" />
+                            <h:outputText value="#{produtoCtrl.produto.id}" />
+
+                            <h:outputText value="Nome:" />
+                            <h:outputText value="#{produtoCtrl.produto.nome}" />
+
+                            <h:outputText value="Preço:" />
+                            <h:outputText value="#{produtoCtrl.formatarNumero(produtoCtrl.produto.preco)}" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
             </h:form>
         </div>
+
+        <div id="conteudo-produtos">
+            <h:form id="form">
+                <center>
+                    <p:dataGrid var="prod" value="#{produtoCtrl.listagem}" columns="3" layout="grid"
+                                rows="6" paginator="true" id="produto" paginatorPosition="top" rowsPerPageTemplate="6,12,24,48"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+                        <p:panel header="#{prod.nome}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:dataGrid id="gridImgProd" var="f" value="#{prod.imagens}" emptyMessage="Sem imagem">
+                                    <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
+                                        <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
+                                        <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
+                                    </p:commandLink>
+                                </p:dataGrid>
+
+                                <h:outputText value="#{prod.nome}" />
+                                <h:outputText value="#{produtoCtrl.formatarNumero(prod.preco)}" />
+                                <p:column>
+                                    <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
+                                        <h:outputText styleClass="icon-vitrine fa fa-search"/>
+                                        <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
+                                    </p:commandLink>
+                                    <p:commandLink style="margin-left: 10px" title="Adicionar na cesta">
+                                        <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
+                                        <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
+                                    </p:commandLink>
+                                </p:column>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </center>
+
+                <center>
+                    <p:dataGrid var="serv" value="#{servicoCtrl.listagem}" columns="3" layout="grid"
+                                rows="6" paginator="true" id="cars" paginatorPosition="top" rowsPerPageTemplate="6,12,24,48"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+                        <f:facet name="header">
+                            Serviços
+                        </f:facet>
+
+                        <p:panel header="#{serv.nome}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:dataGrid id="gridImgServ" var="f" value="#{serv.imagens}" emptyMessage="Sem imagem">
+                                    <p:commandLink update=":form:servDetalhe" oncomplete="PF('servDetalhe').show()" title="Ver detalhes">
+                                        <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
+                                        <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
+                                    </p:commandLink>
+                                </p:dataGrid>
+
+                                <h:outputText value="#{serv.nome}" />
+                                <h:outputText value="#{produtoCtrl.formatarNumero(serv.valor)}" />
+                                <b:row>
+                                    <p:commandLink update=":form:servDetalhe" oncomplete="PF('servDetalhe').show()" title="Ver detalhes">
+                                        <h:outputText styleClass="icon-vitrine fa fa-search"/>
+                                        <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
+                                    </p:commandLink>
+                                    <p:commandLink style="margin-left: 10px" title="Adicionar na cesta">
+                                        <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
+                                        <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
+                                    </p:commandLink>
+                                </b:row>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:dataGrid>
+                </center>
+
+                <p:dialog header="Detalhes do produto" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="prodDetalhe" style="text-align:center;">
+                        <p:dataGrid id="gridImgProd" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
+                            <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-detalhe"/>
+                        </p:dataGrid><br/>
+                        <p:panelGrid  columns="2" rendered="#{not empty produtoCtrl.produto}" columnClasses="label,value">
+
+                            <h:outputText value="Id:" />
+                            <h:outputText value="#{produtoCtrl.produto.id}" />
+
+                            <h:outputText value="Nome:" />
+                            <h:outputText value="#{produtoCtrl.produto.nome}" />
+
+                            <h:outputText value="Preço:" />
+                            <h:outputText value="#{produtoCtrl.formatarNumero(produtoCtrl.produto.preco)}" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+                <p:dialog header="Detalhes do serviço" widgetVar="servDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="servDetalhe" style="text-align:center;">
+                        <p:dataGrid id="gridImg" var="f" value="#{servicoCtrl.servico.imagens}" emptyMessage="Sem imagem">
+                            <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-detalhe"/>
+                        </p:dataGrid><br/>
+                        <p:panelGrid  columns="2" rendered="#{not empty servicoCtrl.servico}" columnClasses="label,value">
+                            <h:outputText value="Id:" />
+                            <h:outputText value="#{servicoCtrl.servico.id}" />
+
+                            <h:outputText value="Nome:" />
+                            <h:outputText value="#{servicoCtrl.servico.nome}" />
+
+                            <h:outputText value="Preço:" />
+                            <h:outputText value="#{produtoCtrl.formatarNumero(servicoCtrl.servico.valor)}" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+            </h:form>
+        </div> 
+
     </h:body>
 </html>
