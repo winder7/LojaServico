@@ -1,0 +1,106 @@
+
+#top {
+    margin: 0px 0px 10px 0px;
+    position: fixed;
+    z-index: 1050;
+    width: 100%;
+    top: 0
+}
+
+#bottom {
+    position: relative;
+    background-color: #67BC48;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+    font-weight: bold;
+}
+
+#left {
+    float: left;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 8.4%;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 8.4%;
+}
+
+.center_content {
+    margin: 0px 9% 0px 9%;
+    margin-top: 92px
+}
+
+.left_content {
+    padding: 5px;
+    margin-left: 170px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    margin: 0px 9% 0px 9%;
+    margin-top: 92px
+}
+
+#top a:link, #top a:visited {
+    font-weight : bold;
+    text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+@media only screen and (max-width:1400px) {
+    /* For HD Notebooks: */
+    #right {
+        width: 0%;
+        padding: 0px;
+        visibility: hidden;
+    }
+    .center_content {
+        margin: 0px 9% 0px 0px;
+        width: 100%;
+        margin-top: 94px
+    }
+}
+
+@media only screen and (max-width:800px) {
+    /* For tablets: */
+    #left {
+        width: 0%;
+        padding: 0px;
+        visibility: hidden;
+    }
+    #right {
+        width: 0%;
+        padding: 0px;
+        visibility: hidden;
+    }
+    .center_content {
+        margin: 0px 0px 0px 0px;
+        width: 100%;
+        margin-top: 120px
+    }
+}
+
+@media only screen and (max-width:500px) {
+    /* For mobile phones: */
+    #left, #right {
+        width: 0%;
+        padding: 0px;
+        visibility: hidden;
+    }
+    .center_content {
+        margin: 0px 0px 0px 0px;
+        width: 100%;
+        margin-top: 140px
+    }
+}
+
+
