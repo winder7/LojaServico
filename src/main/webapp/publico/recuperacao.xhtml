@@ -6,39 +6,35 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <link rel="shortcut icon" href="../resources/img/favicon3.png"/>
-        <title>Login</title>
-        <link rel="StyleSheet" type="text/css" href="../resources/css/login.css" media="screen" />
-    </h:head>
-    <h:body style="background-image: url('../resources/img/back.png')">
-        <div id="header">
-            <ui:insert name="template" >
-                <ui:include src="/templates/template.xhtml" />
-            </ui:insert>
-        </div>
-        <h:form id="form">
-            <h:panelGrid class="painel" columns="1">
-                <center><img class="img" src="../resources/img/login1.png" /></center>
-                <center><h2 style="color: white">Recuperar Acesso</h2></center>
-                <b:inputText value="#{loginCtrl.usrEmail}" placeholder="E-mail cadastrado" required="true" requiredMessage="Favor inserir o e-mail que cadastrado na criação da conta!">
-                    <f:facet name="prepend">
-                        <b:iconAwesome name="user" size="lg"/>
-                    </f:facet>
-                </b:inputText> 
-                
-                <b:inputText value="#{loginCtrl.cpf}" placeholder="CPF cadastrado" required="true" mask="999.999.999-99" requiredMessage="Favor inserir o CPF cadastrado na criação da conta!">
-                    <f:facet name="prepend">
-                        <b:iconAwesome name="id-card" size="sm"/>
-                    </f:facet>
-                </b:inputText>
 
-                <b:panelGrid columns="2">
-                    <b:commandButton class="btnLogin" title="Enviar Senha Temporária" look="warning" value="Verificar Dados" actionListener="#{loginCtrl.verificarUsrValido()}"/>
-                    <b:button class="btnLogin" title="Voltar ao login" value="Cancelar" look="danger" href="#{request.contextPath}/publico/login.xhtml" style="width: 100%"/>
-                </b:panelGrid>
-                <b:messages/>
-            </h:panelGrid>
-        </h:form>
+    <h:body>
+        <ui:composition template="/templates/templatePublico.xhtml">
+            <ui:define name="title">Recuperação</ui:define>
+            <ui:define name="content">
+                <h:form id="form">
+                    <h:panelGrid class="painel" columns="1">
+                        <center><img class="img" src="../resources/img/login1.png" /></center>
+                        <center><h2 style="color: white">Recuperar Acesso</h2></center>
+                        <b:inputText value="#{loginCtrl.usrEmail}" placeholder="E-mail cadastrado" required="true" requiredMessage="Favor inserir o e-mail que cadastrado na criação da conta!">
+                            <f:facet name="prepend">
+                                <b:iconAwesome name="user" size="lg"/>
+                            </f:facet>
+                        </b:inputText> 
+
+                        <b:inputText value="#{loginCtrl.cpf}" placeholder="CPF cadastrado" required="true" mask="999.999.999-99" requiredMessage="Favor inserir o CPF cadastrado na criação da conta!">
+                            <f:facet name="prepend">
+                                <b:iconAwesome name="id-card" size="sm"/>
+                            </f:facet>
+                        </b:inputText>
+
+                        <b:panelGrid columns="2">
+                            <b:commandButton class="btnLogin" title="Enviar Senha Temporária" look="warning" value="Verificar Dados" actionListener="#{loginCtrl.verificarUsrValido()}"/>
+                            <b:button class="btnLogin" title="Voltar ao login" value="Cancelar" look="danger" href="#{request.contextPath}/publico/login.xhtml" style="width: 100%"/>
+                        </b:panelGrid>
+                        <b:messages/>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>

@@ -10,203 +10,203 @@
         <link rel="StyleSheet" type="text/css" href="../resources/css/cadastro.css" media="screen" />
         <title>Lista de Formas de Pagamento</title>
     </h:head>
-    <h:body >
-        <div id="header">
-            <ui:insert name="template" >
-                <ui:include src="/templates/template.xhtml" />
-            </ui:insert>
-        </div>
-        <h:form id="form" style="padding: 10px 15px 15px 15px">
-            <p:growl id="growl" sticky="true" showDetail="true"/>
+    <h:body>
+        <ui:composition template="/templates/template.xhtml">
+            <ui:define name="title">Cadastro</ui:define>
+            <ui:define name="content">
+                <h:form id="form" style="padding: 10px 15px 15px 15px">
+                    <p:growl id="growl" sticky="true" showDetail="true"/>
 
-            <p:wizard id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
-                <p:tab id="login" title="Login">
-                    <p:panel header="Dados de Login">
-                        <p:messages />
-                        <h:panelGrid columns="2" columnClasses="label, value">
-                            <h:outputText value="Email: *" />
-                            <p:inputText required="true" size="30"  value="#{pessoaCtrl.pessoa.email}" requiredMessage="Por favor insira o email."  validatorMessage="E-mail invalido">
-                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
-                            </p:inputText>
+                    <p:wizard id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
+                        <p:tab id="login" title="Login">
+                            <p:panel header="Dados de Login">
+                                <p:messages />
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <h:outputText value="Email: *" />
+                                    <p:inputText required="true" size="30"  value="#{pessoaCtrl.pessoa.email}" requiredMessage="Por favor insira o email."  validatorMessage="E-mail invalido">
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                                    </p:inputText>
 
-                            <h:outputLabel for="senha" value="Senha: *" />
-                            <p:password id="senha" required="true" value="#{pessoaCtrl.pessoa.senha}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
-                                        weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Inserir sua senha">
-                                <f:validator validatorId="senhaValidador" />
-                                <f:attribute name="confirm" value="#{confirmPassword.submittedValue}" />
-                                <f:ajax event="blur" execute="password confirm" render="m_password" />
-                            </p:password>
+                                    <h:outputLabel for="senha" value="Senha: *" />
+                                    <p:password id="senha" required="true" value="#{pessoaCtrl.pessoa.senha}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
+                                                weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Inserir sua senha">
+                                        <f:validator validatorId="senhaValidador" />
+                                        <f:attribute name="confirm" value="#{confirmPassword.submittedValue}" />
+                                        <f:ajax event="blur" execute="password confirm" render="m_password" />
+                                    </p:password>
 
-                            <h:outputLabel for="confirm" value="Repetir Senha: *" />
-                            <p:password id="confirm" required="true" binding="#{confirmPassword}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
-                                        weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Confirme sua senha">
-                                <f:ajax event="blur" execute="password confirm" render="m_password m_confirm" />
-                            </p:password>
-                            <h:outputText value="Pular para a confirmação: " rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
-                            <h:selectBooleanCheckbox value="#{wizardCtrl.skip}" rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
-                        </h:panelGrid>
-                        <b><p:outputLabel value="A senha precisa conter pelo menos 8 caracteres e também deve incluir pelo menos 1 letra minúscula (abc), 1 maiúscula (ABC) e 1 número (123)."/></b>
-                    </p:panel>
-                </p:tab>
+                                    <h:outputLabel for="confirm" value="Repetir Senha: *" />
+                                    <p:password id="confirm" required="true" binding="#{confirmPassword}" maxlength="32" feedback="true" promptLabel="Insira sua senha"
+                                                weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Confirme sua senha">
+                                        <f:ajax event="blur" execute="password confirm" render="m_password m_confirm" />
+                                    </p:password>
+                                    <h:outputText value="Pular para a confirmação: " rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
+                                    <h:selectBooleanCheckbox value="#{wizardCtrl.skip}" rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
+                                </h:panelGrid>
+                                <b><p:outputLabel value="A senha precisa conter pelo menos 8 caracteres e também deve incluir pelo menos 1 letra minúscula (abc), 1 maiúscula (ABC) e 1 número (123)."/></b>
+                            </p:panel>
+                        </p:tab>
 
-                <p:tab id="personal" title="Pessoal">
-                    <p:panel header="Dados Pessoais">
-                        <p:messages />
-                        <h:panelGrid id="panel" columns="2" columnClasses="label, value">
-                            <p:outputLabel for="perfil" value="Perfil:" />
-                            <p:selectOneRadio id="perfil" value="#{pessoaCtrl.tipopessoa}" unselectable="true">
-                                <f:selectItem itemLabel="Pessoa Física" itemValue="PF" />
-                                <f:selectItem itemLabel="Pessoa Jurídica" itemValue="PJ" />
-                                <p:ajax event="change" update="panel"/>
-                            </p:selectOneRadio>
-                            <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'Nome Completo: *' : 'Razão Social: *'}" />
-                            <p:inputText value="#{pessoaCtrl.pessoa.nome}" size="30" required="true" label="Nome Completo"/>
+                        <p:tab id="personal" title="Pessoal">
+                            <p:panel header="Dados Pessoais">
+                                <p:messages />
+                                <h:panelGrid id="panel" columns="2" columnClasses="label, value">
+                                    <p:outputLabel for="perfil" value="Perfil:" />
+                                    <p:selectOneRadio id="perfil" value="#{pessoaCtrl.tipopessoa}" unselectable="true">
+                                        <f:selectItem itemLabel="Pessoa Física" itemValue="PF" />
+                                        <f:selectItem itemLabel="Pessoa Jurídica" itemValue="PJ" />
+                                        <p:ajax event="change" update="panel"/>
+                                    </p:selectOneRadio>
+                                    <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'Nome Completo: *' : 'Razão Social: *'}" />
+                                    <p:inputText value="#{pessoaCtrl.pessoa.nome}" size="30" required="true" label="Nome Completo"/>
 
-                            <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}" />
-                            <p:inputMask value="#{pessoaCtrl.pessoa.cpf}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}"
-                                         mask="#{pessoaCtrl.tipopessoa == 'PF' ? '999.999.999-99' : '99.999.999/9999-99'}"/>
-                            <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}"/>
-                            <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}" type="number"/>
-                            <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'Data de Nascimento: *' : 'Data da Fundação: *'}" />
-                            <p:calendar value="#{pessoaCtrl.pessoa.dataNasc}" size="11" pattern="dd/MM/yyyy"/>
-                            <h:outputText value="Pular para a confirmação: " rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
-                            <h:selectBooleanCheckbox value="#{wizardCtrl.skip}" rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
-                        </h:panelGrid>
-                    </p:panel>
-                </p:tab>
+                                    <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}" />
+                                    <p:inputMask value="#{pessoaCtrl.pessoa.cpf}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}"
+                                                 mask="#{pessoaCtrl.tipopessoa == 'PF' ? '999.999.999-99' : '99.999.999/9999-99'}"/>
+                                    <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}"/>
+                                    <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}" type="number"/>
+                                    <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'Data de Nascimento: *' : 'Data da Fundação: *'}" />
+                                    <p:calendar value="#{pessoaCtrl.pessoa.dataNasc}" size="11" pattern="dd/MM/yyyy"/>
+                                    <h:outputText value="Pular para a confirmação: " rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
+                                    <h:selectBooleanCheckbox value="#{wizardCtrl.skip}" rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
 
-                <p:tab id="address" title="Endereço">
-                    <p:panel header="Dados de Endereço">
-                        <p:messages />
-                        <h:panelGrid columns="2" id="endereco" columnClasses="label, value">
-                            <h:outputText value="CEP: " />
-                            <p:inputMask value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9" mask="99999-999">
-                                <p:ajax event="blur" update="endereco" listener="#{pessoaCtrl.BuscaCep()}"/>
-                            </p:inputMask>
+                        <p:tab id="address" title="Endereço">
+                            <p:panel header="Dados de Endereço">
+                                <p:messages />
+                                <h:panelGrid columns="2" id="endereco" columnClasses="label, value">
+                                    <h:outputText value="CEP: " />
+                                    <p:inputMask value="#{pessoaCtrl.pessoa.cep}" size="9" maxlength="9" mask="99999-999">
+                                        <p:ajax event="blur" update="endereco" listener="#{pessoaCtrl.BuscaCep()}"/>
+                                    </p:inputMask>
 
-                            <h:outputText value="Rua: " />
-                            <p:inputText value="#{pessoaCtrl.pessoa.rua}" size="60" maxlength="60"/>
+                                    <h:outputText value="Rua: " />
+                                    <p:inputText value="#{pessoaCtrl.pessoa.rua}" size="60" maxlength="60"/>
 
-                            <h:outputText value="Bairro: " />
-                            <p:inputText value="#{pessoaCtrl.pessoa.bairro}" size="30" maxlength="30"/>
+                                    <h:outputText value="Bairro: " />
+                                    <p:inputText value="#{pessoaCtrl.pessoa.bairro}" size="30" maxlength="30"/>
 
-                            <h:outputText value="Cidade: " />
-                            <p:inputText value="#{pessoaCtrl.pessoa.cidade}" size="30" maxlength="30"/>
+                                    <h:outputText value="Cidade: " />
+                                    <p:inputText value="#{pessoaCtrl.pessoa.cidade}" size="30" maxlength="30"/>
 
-                            <h:outputText value="UF: " />
-                            <p:inputText value="#{pessoaCtrl.pessoa.uf}" size="2" maxlength="2"/>
-                        </h:panelGrid>
-                    </p:panel>
-                </p:tab>
+                                    <h:outputText value="UF: " />
+                                    <p:inputText value="#{pessoaCtrl.pessoa.uf}" size="2" maxlength="2"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
 
-                <p:tab id="contact" title="Contato">
-                    <p:panel header="Telefones de Contato">
-                        <p:messages />
-                        <h:panelGrid id="fones" columns="2" style="text-align: left">
-                            <h:dataTable id="listaFones" value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows">
-                                <f:facet name="header">
-                                    <p:commandButton value="Adicionar Fone" update=":form:fones" icon="fa fa-phone" actionListener="#{pessoaCtrl.actionInserirFone()}"/>
-                                </f:facet>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputLabel value="Número"/>
-                                    </f:facet>
-                                    <p:inputMask value="#{f.numero}" mask="#{f.descricao == 'Fixo' ? '(99)9999-9999' : '(99)99999-9999'}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputLabel value="Tipo"/>
-                                    </f:facet>
-                                    <p:selectOneMenu value="#{f.descricao}" style="margin-top: 3px; width: 110px">
-                                        <f:selectItem itemLabel="Celular" itemValue="#{f.descricao}" />
-                                        <f:selectItem itemLabel="Fixo" itemValue="Fixo" />
-                                        <f:selectItem itemLabel="Celular" itemValue="Celular" />
-                                        <p:ajax event="change" update=":form:fones"/>
-                                    </p:selectOneMenu>
-                                </h:column>
-                                <h:column>
-                                    <p:commandButton value="Remover" update=":form:fones" actionListener="#{pessoaCtrl.actionExcluirFone()}">
-                                        <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.fone}"/>
-                                    </p:commandButton>
-                                </h:column>
-                            </h:dataTable>
-                        </h:panelGrid>
-                    </p:panel>
-                </p:tab>
+                        <p:tab id="contact" title="Contato">
+                            <p:panel header="Telefones de Contato">
+                                <p:messages />
+                                <h:panelGrid id="fones" columns="2" style="text-align: left">
+                                    <h:dataTable id="listaFones" value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows">
+                                        <f:facet name="header">
+                                            <p:commandButton value="Adicionar Fone" update=":form:fones" icon="fa fa-phone" actionListener="#{pessoaCtrl.actionInserirFone()}"/>
+                                        </f:facet>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputLabel value="Número"/>
+                                            </f:facet>
+                                            <p:inputMask value="#{f.numero}" mask="#{f.descricao == 'Fixo' ? '(99)9999-9999' : '(99)99999-9999'}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputLabel value="Tipo"/>
+                                            </f:facet>
+                                            <p:selectOneMenu value="#{f.descricao}" style="margin-top: 3px; width: 110px">
+                                                <f:selectItem itemLabel="Celular" itemValue="#{f.descricao}" />
+                                                <f:selectItem itemLabel="Fixo" itemValue="Fixo" />
+                                                <f:selectItem itemLabel="Celular" itemValue="Celular" />
+                                                <p:ajax event="change" update=":form:fones"/>
+                                            </p:selectOneMenu>
+                                        </h:column>
+                                        <h:column>
+                                            <p:commandButton value="Remover" update=":form:fones" actionListener="#{pessoaCtrl.actionExcluirFone()}">
+                                                <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.fone}"/>
+                                            </p:commandButton>
+                                        </h:column>
+                                    </h:dataTable>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
 
-                <p:tab id="confirmacao" title="Confirmação">
-                    <p:panel header="Confirmação dos Dados Informados">
-                        <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
-                            <h:panelGrid columns="2" columnClasses="grid, value">
-                                <h:outputText value="Email: " />
-                                <h:outputText value="#{pessoaCtrl.pessoa.email}" styleClass="outputLabel"/>
+                        <p:tab id="confirmacao" title="Confirmação">
+                            <p:panel header="Confirmação dos Dados Informados">
+                                <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+                                    <h:panelGrid columns="2" columnClasses="grid, value">
+                                        <h:outputText value="Email: " />
+                                        <h:outputText value="#{pessoaCtrl.pessoa.email}" styleClass="outputLabel"/>
 
-                                <h:outputText value="Senha: " />
-                                <h:outputText value="#{pessoaCtrl.pessoa.senha != null ? 'OK' : 'Falha'}" styleClass="outputLabel"/>
+                                        <h:outputText value="Senha: " />
+                                        <h:outputText value="#{pessoaCtrl.pessoa.senha != null ? 'OK' : 'Falha'}" styleClass="outputLabel"/>
 
-                                <h:outputText value="Nome: " />
-                                <h:outputText value="#{pessoaCtrl.pessoa.nome}" styleClass="outputLabel"/>
+                                        <h:outputText value="Nome: " />
+                                        <h:outputText value="#{pessoaCtrl.pessoa.nome}" styleClass="outputLabel"/>
 
-                                <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF:' : 'CNPJ:'}" />
-                                <h:outputText value="#{pessoaCtrl.pessoa.cpf}" styleClass="outputLabel"/>
+                                        <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF:' : 'CNPJ:'}" />
+                                        <h:outputText value="#{pessoaCtrl.pessoa.cpf}" styleClass="outputLabel"/>
 
-                                <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG:' : 'Inscrição Estadual:'}" />
-                                <h:outputText value="#{pessoaCtrl.pessoa.rg}" styleClass="outputLabel"/>
+                                        <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG:' : 'Inscrição Estadual:'}" />
+                                        <h:outputText value="#{pessoaCtrl.pessoa.rg}" styleClass="outputLabel"/>
 
-                                <h:outputText value="Data de Nascimento:" />
-                                <h:outputText value="#{pessoaCtrl.formatarData(pessoaCtrl.pessoa.dataNasc)}" styleClass="outputLabel"/>
+                                        <h:outputText value="Data de Nascimento:" />
+                                        <h:outputText value="#{pessoaCtrl.formatarData(pessoaCtrl.pessoa.dataNasc)}" styleClass="outputLabel"/>
 
-                                <h:outputText value="Rua: " />
-                                <h:outputText value="#{pessoaCtrl.pessoa.rua}" styleClass="outputLabel"/>
+                                        <h:outputText value="Rua: " />
+                                        <h:outputText value="#{pessoaCtrl.pessoa.rua}" styleClass="outputLabel"/>
 
-                                <h:outputText value="Bairro: " />
-                                <h:outputText value="#{pessoaCtrl.pessoa.bairro}" styleClass="outputLabel"/>
+                                        <h:outputText value="Bairro: " />
+                                        <h:outputText value="#{pessoaCtrl.pessoa.bairro}" styleClass="outputLabel"/>
 
-                                <h:outputText value="CEP: " />
-                                <h:outputText value="#{pessoaCtrl.pessoa.cep}" styleClass="outputLabel"/>
+                                        <h:outputText value="CEP: " />
+                                        <h:outputText value="#{pessoaCtrl.pessoa.cep}" styleClass="outputLabel"/>
 
-                                <h:outputText value="Cidade: " />
-                                <h:outputText value="#{pessoaCtrl.pessoa.cidade}" styleClass="outputLabel"/>
+                                        <h:outputText value="Cidade: " />
+                                        <h:outputText value="#{pessoaCtrl.pessoa.cidade}" styleClass="outputLabel"/>
 
-                                <h:outputText value="UF: " />
-                                <h:outputText value="#{pessoaCtrl.pessoa.uf}" styleClass="outputLabel"/>
+                                        <h:outputText value="UF: " />
+                                        <h:outputText value="#{pessoaCtrl.pessoa.uf}" styleClass="outputLabel"/>
 
-                                <h:dataTable value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows" >
-                                    <p:column>
-                                        <h:outputText value="Telefone " />
-                                        <h:outputText value="#{f.descricao}: "/>
-                                    </p:column>
-                                </h:dataTable>
-                                <h:dataTable value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows" styleClass="outputLabel">
-                                    <p:column>
-                                        <h:outputText value="#{f.numero}"/>
-                                    </p:column>
-                                </h:dataTable>
+                                        <h:dataTable value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows" >
+                                            <p:column>
+                                                <h:outputText value="Telefone " />
+                                                <h:outputText value="#{f.descricao}: "/>
+                                            </p:column>
+                                        </h:dataTable>
+                                        <h:dataTable value="#{pessoaCtrl.pessoa.fones}" var="f" rules="rows" styleClass="outputLabel">
+                                            <p:column>
+                                                <h:outputText value="#{f.numero}"/>
+                                            </p:column>
+                                        </h:dataTable>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <hr></hr>
+                                <b><p:outputLabel value="Ao clicar em Criar conta, você concorda com nossos "/></b> 
+                                <b><p:commandLink value="Termos" oncomplete="PF('termosServico').show()"/></b>
+                                <b><p:outputLabel value="e confirma que leu a "/></b>
+                                <b><p:commandLink value="Política de Privacidade." oncomplete="PF('politicaPrivacidade').show()"/></b>
+                                <h:panelGrid columns="2" >
+                                    <p:commandButton value="Criar Conta" actionListener="#{pessoaCtrl.actionGravar}" update="form" oncomplete="PF('contaDialog').show()"/>
+                                    <p:button value="Cancelar" href="#{request.contextPath}/publico/index.xhtml"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+                    </p:wizard>
+                    <p:dialog  header="Criar Conta" widgetVar="contaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false">
+                        <p:outputPanel id="criarConta">
+                            <b><p>A conta foi criada com sucesso. O que deseja fazer?</p></b>
+                            <hr/>
+                            <h:panelGrid columns="2">
+                                <p:button value="Fazer Login" href="#{request.contextPath}/publico/login.xhtml"/>
+                                <p:button value="Continuar Navegando" href="#{request.contextPath}/publico/index.xhtml"/>
                             </h:panelGrid>
-                        </h:panelGrid>
-                        <hr></hr>
-                        <b><p:outputLabel value="Ao clicar em Criar conta, você concorda com nossos "/></b> 
-                        <b><p:commandLink value="Termos" oncomplete="PF('termosServico').show()"/></b>
-                        <b><p:outputLabel value="e confirma que leu a "/></b>
-                        <b><p:commandLink value="Política de Privacidade." oncomplete="PF('politicaPrivacidade').show()"/></b>
-                        <h:panelGrid columns="2" >
-                            <p:commandButton value="Criar Conta" actionListener="#{pessoaCtrl.actionGravar}" update="form" oncomplete="PF('contaDialog').show()"/>
-                            <p:button value="Cancelar" href="#{request.contextPath}/publico/index.xhtml"/>
-                        </h:panelGrid>
-                    </p:panel>
-                </p:tab>
-            </p:wizard>
-            <p:dialog  header="Criar Conta" widgetVar="contaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" closable="false">
-                <p:outputPanel id="criarConta">
-                    <b><p>A conta foi criada com sucesso. O que deseja fazer?</p></b>
-                    <hr/>
-                    <h:panelGrid columns="2">
-                        <p:button value="Fazer Login" href="#{request.contextPath}/publico/login.xhtml"/>
-                        <p:button value="Continuar Navegando" href="#{request.contextPath}/publico/index.xhtml"/>
-                    </h:panelGrid>
-                </p:outputPanel>
-            </p:dialog>
-        </h:form>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

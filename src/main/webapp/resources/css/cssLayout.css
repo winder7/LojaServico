@@ -9,6 +9,9 @@
 
 #bottom {
     position: relative;
+    bottom:0;
+    z-index: 1050;
+    width: 100%;
     background-color: #67BC48;
     padding: 5px;
     margin: 10px 0px 0px 0px;
@@ -17,14 +20,14 @@
 
 #left {
     float: left;
-    background-color: #ece3a5;
+/*    background-color: #ece3a5;*/
     padding: 5px;
     width: 8.4%;
 }
 
 #right {
     float: right;
-    background-color: #ece3a5;
+/*    background-color: #ece3a5;*/
     padding: 5px;
     width: 8.4%;
 }

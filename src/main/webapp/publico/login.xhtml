@@ -6,53 +6,49 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <link rel="shortcut icon" href="../resources/img/favicon3.png"/>
-        <title>Login</title>
-        <link rel="StyleSheet" type="text/css" href="../resources/css/styles.css" media="screen" />
-    </h:head>
-    <h:body style="background-image: url('../resources/img/back.png')">
-        <div id="header">
-            <ui:insert name="template" >
-                <ui:include src="/templates/template.xhtml" />
-            </ui:insert>
-        </div>
-        <form id="loginForm" method="post" action="#{request.contextPath}/j_spring_security_check">
-            <b:form id="form">
-                <h:panelGrid class="painel" columns="1">
-                    <center><img class="img" src="../resources/img/login1.png" /></center>
-                    <b:inputText id="login" name='j_username' placeholder="E-mail" required="true" requiredMessage="Digite o Usuário">
-                        <f:facet name="prepend">
-                            <b:iconAwesome name="user" size="lg"/>
-                        </f:facet>
-                    </b:inputText>
-                    <b:inputSecret id="senha" name='j_password' placeholder="Senha" required="true" requiredMessage="Digite a Senha">
-                        <f:facet name="prepend">
-                            <b:iconAwesome name="lock" size="lg"/>
-                        </f:facet>
-                    </b:inputSecret>
-                    <h:panelGrid columns="2" class="alterarSenha">
-                        <b:selectBooleanCheckbox value='_spring_security_remember_me'/>
-                        <h:outputLabel value="Mantenha-me conectado." />
-                    </h:panelGrid>                   
-                    
-                    <b:panelGrid columns="2">
-                        <b:commandButton id="btnLogin" class="btnLogin" title="Entrar no sistema" look="success" value="Entrar" onclick="document.getElementById('loginForm').submit()"/>
-                        <b:button id="btnCadastro" class="btnLogin" title="Entrar no sistema" look="primary" value="Cadastrar" href="#{request.contextPath}/publico/cadastro.xhtml"/>
-                    </b:panelGrid>
-                    
-                    <div class="divAlterarSenha">
-                        <b:commandLink class="alterarSenha" value="Esqueceu a senha?" href="#{request.contextPath}/publico/recuperacao.xhtml" />
-                    </div>
-                    
-                    <h:panelGroup rendered="#{!empty param.login_error}">
-                        <p:staticMessage severity="error" summary="Erro ao efetuar login!" detail="#{pessoaCtrl.erroLoin(SPRING_SECURITY_LAST_EXCEPTION.message)}" />
-                    </h:panelGroup>
-                </h:panelGrid>
-                <script>
-                    document.getElementById("loginForm").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
-                </script>
-            </b:form>
-        </form>
+    
+    <h:body>
+        <ui:composition template="/templates/templatePublico.xhtml">
+            <ui:define name="title">Login</ui:define>
+            <ui:define name="content">
+                <form id="loginForm" method="post" action="#{request.contextPath}/j_spring_security_check">
+                    <b:form id="form">
+                        <h:panelGrid class="painel" columns="1">
+                            <center><img class="img" src="../resources/img/login1.png" /></center>
+                            <b:inputText id="login" name='j_username' placeholder="E-mail" required="true" requiredMessage="Digite o Usuário">
+                                <f:facet name="prepend">
+                                    <b:iconAwesome name="user" size="lg"/>
+                                </f:facet>
+                            </b:inputText>
+                            <b:inputSecret id="senha" name='j_password' placeholder="Senha" required="true" requiredMessage="Digite a Senha">
+                                <f:facet name="prepend">
+                                    <b:iconAwesome name="lock" size="lg"/>
+                                </f:facet>
+                            </b:inputSecret>
+                            <h:panelGrid columns="2" class="alterarSenha">
+                                <b:selectBooleanCheckbox value='_spring_security_remember_me'/>
+                                <h:outputLabel value="Mantenha-me conectado." />
+                            </h:panelGrid>                   
+
+                            <b:panelGrid columns="2">
+                                <b:commandButton id="btnLogin" class="btnLogin" title="Entrar no sistema" look="success" value="Entrar" onclick="document.getElementById('loginForm').submit()"/>
+                                <b:button id="btnCadastro" class="btnLogin" title="Entrar no sistema" look="primary" value="Cadastrar" href="#{request.contextPath}/publico/cadastro.xhtml"/>
+                            </b:panelGrid>
+
+                            <div class="divAlterarSenha">
+                                <b:commandLink class="alterarSenha" value="Esqueceu a senha?" href="#{request.contextPath}/publico/recuperacao.xhtml" />
+                            </div>
+
+                            <h:panelGroup rendered="#{!empty param.login_error}">
+                                <p:staticMessage severity="error" summary="Erro ao efetuar login!" detail="#{pessoaCtrl.erroLoin(SPRING_SECURITY_LAST_EXCEPTION.message)}" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <script>
+                            document.getElementById("loginForm").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
+                        </script>
+                    </b:form>
+                </form>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
