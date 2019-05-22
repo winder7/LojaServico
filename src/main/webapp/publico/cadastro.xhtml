@@ -7,6 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <link rel="shortcut icon" href="../resources/img/favicon3.png"/>
+        <link rel="StyleSheet" type="text/css" href="../resources/css/cadastro.css" media="screen" />
         <title>Lista de Formas de Pagamento</title>
     </h:head>
     <h:body >
@@ -15,35 +16,6 @@
                 <ui:include src="/templates/template.xhtml" />
             </ui:insert>
         </div>
-        <style type="text/css">
-            .label {
-                width:20%;
-                padding:4px;
-            }
-
-            .value {
-                width:80%;
-                padding:4px;
-            }
-
-            .grid {
-                width:100%;
-            }
-
-            .error {
-                color: red;
-            }
-
-            .outputLabel {
-                font-weight: bold;
-            }
-
-            .grid {
-                width:35%;
-                padding:4px;
-            }
-        </style>
-
         <h:form id="form" style="padding: 10px 15px 15px 15px">
             <p:growl id="growl" sticky="true" showDetail="true"/>
 
