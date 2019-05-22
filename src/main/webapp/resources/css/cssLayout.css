@@ -8,7 +8,7 @@
 }
 
 #bottom {
-    position: relative;
+    position: fixed;
     bottom:0;
     z-index: 1050;
     width: 100%;
