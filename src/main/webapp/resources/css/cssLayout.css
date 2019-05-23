@@ -63,8 +63,18 @@
     text-decoration : underline;
 }
 
-@media only screen and (max-width:1400px) {
+@media only screen and (max-width:1369px) {
     /* For HD Notebooks: */
+    #right {
+        width: 0%;
+        padding: 0px;
+        visibility: hidden;
+    }
+    #left {
+        width: 0%;
+        padding: 0px;
+        visibility: hidden;
+    }
     .center_content {
         margin: 0px 9% 0px 0px;
         width: 100%;
