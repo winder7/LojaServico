@@ -141,7 +141,12 @@ body .ui-panelgrid .ui-panelgrid-cell {
     margin:0 auto; 
     font-size: 22px;
 }
-
+.icon-fechar-vitrine {
+    margin:0 auto; 
+    font-size: 25px;
+    color: red;
+    margin-bottom: 2px;
+}
 .alertaNenhumCadastro {
     font-size: 30px !important;
     color: ghostwhite;

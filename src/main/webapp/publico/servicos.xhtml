@@ -61,6 +61,18 @@
                                     <h:outputText value="Preço:" />
                                     <h:outputText value="#{produtoCtrl.formatarNumero(servicoCtrl.servico.valor)}" />
                                 </p:panelGrid>
+                                <center>
+                                    <p:column>
+                                        <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').hide()" title="Fechar">
+                                            <h:outputText styleClass="icon-fechar-vitrine fa fa-close"/>
+                                            <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
+                                        </p:commandLink>
+                                        <p:commandLink style="margin-left: 10px" title="Adicionar na cesta">
+                                            <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
+                                            <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
+                                        </p:commandLink>
+                                    </p:column>
+                                </center>
                             </p:outputPanel>
                         </p:dialog>
                     </h:form>
