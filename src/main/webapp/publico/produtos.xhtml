@@ -12,7 +12,7 @@
             <ui:define name="content">
                 <div id="conteudo-produtos">
                     <h:form id="form">
-                        <p:dataGrid var="prod" value="#{produtoCtrl.listagem}" columns="3" layout="grid" style="overflow: hidden"
+                        <p:dataGrid var="prod" value="#{produtoCtrl.listagem}" rendered="#{produtoCtrl.listagem.size()!=0}" columns="3" layout="grid" style="overflow: hidden"
                                     rows="12" paginator="true" id="cars" paginatorPosition="top" rowsPerPageTemplate="12,24,48" 
                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
@@ -40,7 +40,11 @@
                                 </h:panelGrid>
                             </p:panel>
                         </p:dataGrid>
-
+                        <center>
+                            <p:outputLabel class="alertaNenhumCadastro" rendered="#{produtoCtrl.listagem.size()==0}">
+                                Ops! Nenhum produto cadastrado.
+                            </p:outputLabel>
+                        </center>
                         <p:dialog header="Detalhes do produto" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                             <p:outputPanel id="prodDetalhe" style="text-align:center;">
                                 <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">

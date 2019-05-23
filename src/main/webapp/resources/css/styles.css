@@ -140,8 +140,14 @@ body .ui-panelgrid .ui-panelgrid-cell {
 .icon-vitrine {
     margin:0 auto; 
     font-size: 22px;
-
 }
+
+.alertaNenhumCadastro {
+    font-size: 30px !important;
+    color: ghostwhite;
+    font-family: arial;
+}
+
 #gridImg {
     height: 180px;
 }
