@@ -14,75 +14,20 @@
         <h:outputStylesheet name="./css/styles.css"/>
         <title><ui:insert name="title">Loja de Serviços</ui:insert></title>
     </h:head>
-    <h:body class="body">
+    <h:body style="background-image: url('../resources/img/back.png')">
         <div id="top">
             <ui:insert name="top">
-                <h:form>  
-                    <p:growl id="messages"/>
+                
+                <ui:insert name="menu" >
+                    <ui:include src="/templates/menu.xhtml" />
+                </ui:insert>
 
-                    <p:menubar style="background-color: #67BC48; border: none;"> 
-                        <p:menuitem url="#{request.contextPath}/publico/index.xhtml" style="font-size: 15px;margin-right: -15px">
-                            <img style="width: 40px;" src="../resources/img/waal.png"/>
-                        </p:menuitem>
-                        <p:menuitem url="#{request.contextPath}/publico/index.xhtml"><b>Waal Service</b></p:menuitem>
-                        <f:facet name="options">
-                            <p:inputText rendered="#{temaCtrl.obterUrl()}" value="#{produtoCtrl.filtro}" style="margin:5px 10px 1px 1px;  width: 750px;" placeholder="O que você deseja buscar?">
-                                <a href="#"><i class="imagem-busca fa fa-search"></i></a>
-                                <p:ajax event="keyup" immediate="true" update="form"/>
-                            </p:inputText>
-                        </f:facet>
-                        <f:facet name="options">
-                            <p:inputText rendered="#{!temaCtrl.obterUrl()}" value="#{servicoCtrl.filtro}" style="margin:5px 10px 1px 1px;  width: 750px;" placeholder="O que você deseja buscar?">
-                                <a href="#"><i class="imagem-busca fa fa-search"></i></a>
-                                <p:ajax event="keyup" immediate="true" update="form"/>
-                            </p:inputText>
-                        </f:facet>
-                        <p:submenu icon="fa fa-question-circle" style="float: right;margin-top:4px">
-                            <p:menuitem value="Termos de Serviço" icon="fa fa-file-text" oncomplete="PF('termosServico').show()"/>
-                            <p:menuitem value="Política de Privac." icon="fa fa-book" oncomplete="PF('politicaPrivacidade').show()"/>
-                            <p:menuitem value="Sobre" icon="fa fa-info-circle" oncomplete="PF('sobreDialog').show()"/>
-                        </p:submenu>
-
-                        <p:submenu label="Cesta #{carrinhoCtrl.listaProdServ.size()}" icon="fa fa-shopping-basket" style="float: right;margin-top:4px"/>
-
-                        <p:submenu label="#{pessoaCtrl.usuarioLogado}" icon="fa fa-user-circle-o" style="float: right; margin-right: 10px;margin-top:4px;">
-                            <p:menuitem rendered="#{!pessoaCtrl.usrLogado}" actionListener="#{pessoaCtrl.actionInserir()}" action="cadastro.xhtml?faces-redirect=true" value="Crie sua conta" icon="fa fa-address-book-o"/>
-                            <p:menuitem rendered="#{!pessoaCtrl.usrLogado}" value="Entre" url="#{request.contextPath}/publico/login.xhtml" icon="fa fa-sign-in"/>
-                            <p:menuitem rendered="#{pessoaCtrl.usrLogado}" value="Minha Conta" icon="fa fa-id-card-o" url="#{request.contextPath}/cliente/minha_conta.xhtml"/>
-                            <p:menuitem rendered="#{pessoaCtrl.usrLogado}" value="Sair" icon="fa fa-sign-out" url="#{request.contextPath}/j_spring_security_logout"/>
-                        </p:submenu>  
-                    </p:menubar>
-                </h:form>
-
-                <h:form style="margin-bottom: 10px">  
-                    <p:growl id="messages"/>
-                    <!--Menu Admin-->
-                    <center>
-                        <p:menubar rendered="#{pessoaCtrl.userAdmin}">
-                            <p:menuitem value="Produtos" url="#{request.contextPath}/admin/produto.xhtml" icon="fa fa-cubes" />
-                            <p:menuitem value="Serviços" url="#{request.contextPath}/admin/servico.xhtml" icon="fa fa-wrench" />
-                            <p:menuitem value="Formas de Pagamento" url="#{request.contextPath}/admin/forma_pgto.xhtml" icon="fa fa-credit-card" />
-                            <p:menuitem value="Usuários" url="#{request.contextPath}/admin/usuarios.xhtml" icon="fa fa-group" />
-                        </p:menubar>
-                    </center>
-                    <!--Menu Cliente-->
-                    <center>
-                        <p:menubar rendered="#{!pessoaCtrl.userAdmin}">
-                            <p:menuitem value="Início" url="#{request.contextPath}/publico/index.xhtml" icon="fa fa-home" />
-                            <p:menuitem value="Produtos" url="#{request.contextPath}/publico/produtos.xhtml" icon="fa fa-cubes" />
-                            <p:menuitem value="Serviços" url="#{request.contextPath}/publico/servicos.xhtml" icon="fa fa-wrench" />
-                        </p:menubar>
-                    </center>
-                </h:form>
-
-                <h:form>
-                    <ui:insert name="termos" >
-                        <ui:include src="/templates/termos.xhtml" />
-                    </ui:insert>
-                </h:form>
+                <ui:insert name="termos" >
+                    <ui:include src="/templates/termos.xhtml" />
+                </ui:insert>
             </ui:insert>
         </div>
-        <div style="margin-top: 90px">
+        <div class="content">
             <ui:insert name="content" class="content"></ui:insert>
         </div>
     </h:body>
