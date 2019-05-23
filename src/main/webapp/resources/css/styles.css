@@ -157,13 +157,22 @@ body .ui-panelgrid .ui-panelgrid-cell {
     height: 180px;
 }
 
-@media only screen and (max-width:1366px) {
+@media only screen and (max-width:1369px) {
     /* For HD Notebooks: */
     .imagens-vitrine {
         max-width: 300px;
         max-height:197px;
         min-width: 200px;
         min-height:180px;
+        width: auto;
+        height: auto;
+    }
+
+    .imagens-detalhe {
+        max-width: 380px;
+        max-height:250px;
+        min-width: 266px;
+        min-height:250px;
         width: auto;
         height: auto;
     }
