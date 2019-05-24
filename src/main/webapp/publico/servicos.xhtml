@@ -23,6 +23,7 @@
                                     <p:dataGrid id="gridImg" var="f" value="#{serv.imagens}" emptyMessage="Sem imagem">
                                         <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
                                             <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
+                                            <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
                                         </p:commandLink>
                                     </p:dataGrid>
 
@@ -65,7 +66,6 @@
                                     <p:column>
                                         <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').hide()" title="Fechar">
                                             <h:outputText styleClass="icon-fechar-vitrine fa fa-close"/>
-                                            <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
                                         </p:commandLink>
                                         <p:commandLink style="margin-left: 10px" title="Adicionar na cesta">
                                             <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
