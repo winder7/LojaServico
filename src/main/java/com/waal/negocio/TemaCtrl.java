@@ -45,16 +45,19 @@ public class TemaCtrl implements Serializable {
         System.out.println(PessoaDAO.pesqNomeUsr("windergt@gmail.com").getNome());
     }
 
-    public boolean obterUrl() {
+    public String obterUrl() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletRequest servletRequest = (HttpServletRequest) fc.getExternalContext().getRequest();
         String fullURI = servletRequest.getRequestURI();
         //System.out.println(fullURI);
         
-        if (fullURI.contains("produto")) {
-            return true;
-        }else {
-            return false;
+        if (fullURI.contains("produtos")) {
+            return "produtos";
+        }else if(fullURI.contains("servicos")) {
+            return "servicos";
+        }else if(fullURI.contains("index")) {
+            return "index";
         }
+        return "null";
     }
 }

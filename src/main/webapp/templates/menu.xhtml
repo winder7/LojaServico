@@ -14,13 +14,19 @@
                 </p:menuitem>
                 <p:menuitem url="#{request.contextPath}/publico/index.xhtml"><b>Waal Service</b></p:menuitem>
                 <f:facet name="options">
-                    <p:inputText rendered="#{temaCtrl.obterUrl()}" value="#{produtoCtrl.filtro}" style="margin:5px 10px 1px 1px;  width: 750px;" placeholder="O que você deseja buscar?">
+                    <p:inputText rendered="#{temaCtrl.obterUrl() == 'produtos'}" value="#{produtoCtrl.filtro}" style="margin:5px 10px 1px 1px;  width: 750px;" placeholder="O que você deseja buscar?">
                         <a href="#"><i class="imagem-busca fa fa-search"></i></a>
                         <p:ajax event="keyup" immediate="true" update="form"/>
                     </p:inputText>
                 </f:facet>
                 <f:facet name="options">
-                    <p:inputText rendered="#{!temaCtrl.obterUrl()}" value="#{servicoCtrl.filtro}" style="margin:5px 10px 1px 1px;  width: 750px;" placeholder="O que você deseja buscar?">
+                    <p:inputText rendered="#{temaCtrl.obterUrl() == 'servicos'}" value="#{servicoCtrl.filtro}" style="margin:5px 10px 1px 1px;  width: 750px;" placeholder="O que você deseja buscar?">
+                        <a href="#"><i class="imagem-busca fa fa-search"></i></a>
+                        <p:ajax event="keyup" immediate="true" update="form"/>
+                    </p:inputText>
+                </f:facet>
+                <f:facet name="options">
+                    <p:inputText rendered="#{temaCtrl.obterUrl() == 'index'}" value="#{vitrineCtrl.filtro}" style="margin:5px 10px 1px 1px;  width: 750px;" placeholder="O que você deseja buscar?">
                         <a href="#"><i class="imagem-busca fa fa-search"></i></a>
                         <p:ajax event="keyup" immediate="true" update="form"/>
                     </p:inputText>
