@@ -8,44 +8,35 @@
 
     <h:body>
         <ui:composition template="/templates/template_02.xhtml">
-            <ui:define name="title">Cadastro de produtos</ui:define>
+            <ui:define name="title">Cesta</ui:define>
             <ui:define name="content">
                 <h:form id="form" style="padding: 10px 15px 15px 15px">
                     <p:growl id="msgs" showDetail="true"/>
 
                     <p:panel id="basic" header="Lista de Produtos">
                         <f:facet name="header">
-                            <i class="fa fa-cubes"><p:outputLabel value=" Cadastro de Produtos" style="font-weight: bold"/></i>
+                            <i class="fa fa-shopping-basket"><p:outputLabel value=" Cesta" style="font-weight: bold"/></i>
                         </f:facet>
-                        <p:commandButton value="Inserir" icon="fa fa-plus-circle" style="margin-bottom: 5px"
-                                         actionListener="#{produtoCtrl.actionInserir()}"
-                                         oncomplete="PF('cadDialog').show()"
-                                         update=":form:cadDetail">
-                        </p:commandButton>
-                        <p:row>
-                            <p:inputText value="#{produtoCtrl.filtro}" placeholder="Pesquisar">
-                                <f:ajax event="keyup" immediate="true" render="tbl"/>
-                            </p:inputText>
-                        </p:row>
-                        <p:commandButton value="Gerar Relatório" title="Gerar Relatório PDF" action="#{produtoCtrl.gerarRelatorio()}"  ajax="false" onclick="this.form.target = '_blank'"/>
-                        <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{produtoCtrl.listagem}"
+                        <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{cestaCtrl.listaProdServ}"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                      {PageLinks} {NextPageLink} {LastPageLink}"
                                      paginator="true" rows="10" style="margin-bottom:20px">
+
                             <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
-                                <h:outputText value="#{f.id}"/>
+                                <h:outputText value="#{f.produto != null ? f.produto.id : f.servico.id}"/>
                             </p:column>
                             <p:column headerText="Nome" sortBy="f.nome">
-                                <h:outputText value="#{f.nome}"/>
+                                <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}"/>
                             </p:column>
                             <p:column headerText="Preço" sortBy="f.preco">
-                                <h:outputText value="#{produtoCtrl.formatarNumero(f.preco)}"/>
+                                <h:outputText value="#{f.produto != null ? f.produto.preco : f.servico.valor}"/>
                             </p:column>
                             <p:column style="width:32px;text-align: center">
-                                <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()" icon="pi pi-search" title="View" action="#{produtoCtrl.listaImagemsProduto()}">
-                                    <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.produto}"/>
+                                <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()" icon="pi pi-search" title="View" >
+                                    <f:setPropertyActionListener value="#{f}" target="#{cestaCtrl.listaProdServ}"/>
                                 </p:commandButton>
                             </p:column>
+
                         </p:dataTable>
                     </p:panel>
 

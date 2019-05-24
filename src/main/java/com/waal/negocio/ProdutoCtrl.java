@@ -37,7 +37,7 @@ public class ProdutoCtrl implements Serializable {
         return listaProdutos;
     }
 
-    public String actionGravar() {
+    public void actionGravar() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (produto.getId() == 0) {
             ProdutoDAO.inserir(produto);
@@ -46,7 +46,6 @@ public class ProdutoCtrl implements Serializable {
             ProdutoDAO.alterar(produto);
             context.addMessage(null, new FacesMessage("Sucesso", "Alterado com sucesso!"));
         }
-        return "lista_produto";
     }
 
     public void actionInserir() {
@@ -54,11 +53,10 @@ public class ProdutoCtrl implements Serializable {
         //return "lista_produto";
     }
 
-    public String actionExcluir() {
+    public void actionExcluir() {
         ProdutoDAO.excluir(produto);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Excluído com sucesso!"));
-        return "lista_produto";
     }
 
     public void gerarRelatorio() {
