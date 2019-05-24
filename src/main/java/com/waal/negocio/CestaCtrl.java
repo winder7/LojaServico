@@ -21,6 +21,9 @@ public class CestaCtrl implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String filtro = "";
+    private Produto produto = new Produto();
+    private Servico servico = new Servico();
+    private Produto produto2 = new Produto();
     private List<Produto> listaProdutos = new ArrayList<>();
     private List<ProdutoServico> listaProdServ = new ArrayList<>();
 
@@ -29,17 +32,17 @@ public class CestaCtrl implements Serializable {
         imprimeProdServ();
     }
 
+    public void addCesta(Servico servico) {
+        listaProdServ.add(new ProdutoServico(servico));
+        imprimeProdServ();
+    }
+
     public void addCesta(ProdutoServico prodServ) {
-        if(prodServ.getProduto() != null ){
+        if (prodServ.getProduto() != null) {
             addCesta(prodServ.getProduto());
         } else {
             addCesta(prodServ.getServico());
         }
-    }
-
-    public void addCesta(Servico servico) {
-        listaProdServ.add(new ProdutoServico(servico));
-        imprimeProdServ();
     }
 
     public void imprimeProdServ() {
@@ -94,4 +97,29 @@ public class CestaCtrl implements Serializable {
     public void setListaProdServ(List<ProdutoServico> listaProdServ) {
         this.listaProdServ = listaProdServ;
     }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public Servico getServico() {
+        return servico;
+    }
+
+    public void setServico(Servico servico) {
+        this.servico = servico;
+    }
+
+    public Produto getProduto2() {
+        return produto2;
+    }
+
+    public void setProduto2(Produto produto2) {
+        this.produto2 = produto2;
+    }
+    
 }
