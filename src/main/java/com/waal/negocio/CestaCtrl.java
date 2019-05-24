@@ -29,6 +29,14 @@ public class CestaCtrl implements Serializable {
         imprimeProdServ();
     }
 
+    public void addCesta(ProdutoServico prodServ) {
+        if(prodServ.getProduto() != null ){
+            addCesta(prodServ.getProduto());
+        } else {
+            addCesta(prodServ.getServico());
+        }
+    }
+
     public void addCesta(Servico servico) {
         listaProdServ.add(new ProdutoServico(servico));
         imprimeProdServ();
