@@ -20,7 +20,7 @@
                         <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{cestaCtrl.listaProdServ}"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                      {PageLinks} {NextPageLink} {LastPageLink}"
-                                     paginator="true" rows="10" style="margin-bottom:20px">
+                                     paginator="true" rows="10" style="margin-bottom:20px" >
 
                             <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
                                 <h:outputText value="#{f.produto != null ? f.produto.id : f.servico.id}"/>
@@ -32,11 +32,14 @@
                                 <h:outputText value="#{f.produto != null ? f.produto.preco : f.servico.valor}"/>
                             </p:column>
                             <p:column style="width:32px;text-align: center">
-                                <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()" icon="pi pi-search" title="View" >
+                                <p:commandButton update=":form:prodDetalhe" oncomplete="PF('cadDialog').show()" icon="pi pi-search" title="View" >
                                     <f:setPropertyActionListener value="#{f}" target="#{cestaCtrl.listaProdServ}"/>
                                 </p:commandButton>
+                                <p:commandLink update="form" title="Fechar">
+                                    <h:outputText styleClass="icon-fechar-vitrine fa fa-close"/>
+                                    <f:setPropertyActionListener value="#{f}" target="#{cestaCtrl.listaProdServ}" />
+                                </p:commandLink>
                             </p:column>
-
                         </p:dataTable>
                     </p:panel>
 
@@ -44,32 +47,21 @@
                         <f:facet name="header">
                             <i class="fa fa-cubes"><p:outputLabel value=" Cadastro de Produtos" style="font-weight: bold"/></i>
                         </f:facet>
-                        <p:outputPanel id="cadDetail" style="text-align: center;">
-                            <h:panelGrid columns="2" style="text-align: Left;" >
-                                <h:outputLabel value="Código:" rendered="#{produtoCtrl.produto.id != 0}"/>
-                                <p:inputText value="#{produtoCtrl.produto.id}" size="6" maxlength="10" disabled="true" rendered="#{produtoCtrl.produto.id != 0}"/>
-                                <p:outputLabel value="Nome:"/>
-                                <p:inputText value="#{produtoCtrl.produto.nome}" size="60" maxlength="60"/>
-                                <p:outputLabel value="Preço:"/>
-                                <p:inputNumber value="#{produtoCtrl.produto.preco}" size="20" maxlength="20" symbol="R$ "/>
-                                <p:outputLabel value="Carregar:"/>
-                                <p:fileUpload fileUploadListener="#{produtoCtrl.processFileUpload}" mode="advanced" dragDropSupport="false" 
-                                              label="Escolher" cancelLabel="Cancelar" uploadLabel="Carregar" sizeLimit="1000000" fileLimit="1"
-                                              invalidSizeMessage="Imagem muito grande" auto="false"
-                                              invalidFileMessage="Tipo de imagem não suportado"
-                                              allowTypes="/(\.|\/)(jpe?g|png)$/" />
+                        <p:outputPanel id="prodDetalhe" style="text-align:center;">
+                            <p:dataGrid id="gridImg" var="f" value="#{cestaCtrl.listaProdServ}" emptyMessage="Sem imagem">
+                                <p:graphicImage value="../resources/prod_Serv/#{f.produto != null ? f.produto.imagens : f.servico.id}.jpg" cache="false" class="imagens-detalhe"/>
+                            </p:dataGrid><br/>
+                            <p:panelGrid  columns="2" rendered="#{not empty cestaCtrl.listaProdServ}" columnClasses="label,value">
 
-                                <p:outputLabel value="Imagem:"/>
-                                <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
-                                    <p:commandButton value="Remover" update=":form:gridImg" actionListener="#{produtoCtrl.actionExcluirImagem()}">
-                                        <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.imagem}"/>
-                                    </p:commandButton>
-                                </p:dataGrid>
-                            </h:panelGrid>
-                            <p:commandButton value="Excluir" icon="fa fa-trash" class="botaoExcluir" action="#{produtoCtrl.actionExcluir}" rendered="#{produtoCtrl.produto.id != 0}" immediate="true" update="form"/>
-                            <p:commandButton value="Gravar" icon="fa fa-save" class="botaoGravar" action="#{produtoCtrl.actionGravar}" update="form"/>
-                            <p:commandButton value="Cancelar" icon="fa fa-close" class="botaoCancelar" oncomplete="PF('cadDialog').hide()"/>
+                                <h:outputText value="Id:" />
+                                <h:outputText value="#{f.produto != null ? f.produto.id : f.servico.id}" />
+
+                                <h:outputText value="Nome:" />
+                                <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}" />
+
+                                <h:outputText value="Preço:" />
+                                <h:outputText value="#{listaProdServ.formatarNumero(f.produto != null ? f.produto.preco : f.servico.valo)}" />
+                            </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>

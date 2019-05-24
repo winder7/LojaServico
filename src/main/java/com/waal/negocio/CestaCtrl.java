@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import com.waal.beans.Produto;
 import com.waal.beans.ProdutoServico;
 import com.waal.beans.Servico;
-import com.waal.persistencia.ProdutoDAO;
-import com.waal.uteis.Exibir;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -23,37 +21,27 @@ public class CestaCtrl implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String filtro = "";
-    private Produto produto = new Produto();
-    private Servico servico = new Servico();
     private List<Produto> listaProdutos = new ArrayList<>();
     private List<ProdutoServico> listaProdServ = new ArrayList<>();
 
-    public void actionGravar() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        if (produto.getId() == 0) {
-            ProdutoDAO.inserir(produto);
-            context.addMessage(null, new FacesMessage("Sucesso", "Inserido com sucesso!"));
-        } else {
-            ProdutoDAO.alterar(produto);
-            context.addMessage(null, new FacesMessage("Sucesso", "Alterado com sucesso!"));
-        }
+    public void addCesta(Produto produto) {
+        listaProdServ.add(new ProdutoServico(produto));
+        imprimeProdServ();
     }
 
-    public void actionInserir(Object itens) {
+    public void addCesta(Servico servico) {
+        listaProdServ.add(new ProdutoServico(servico));
+        imprimeProdServ();
+    }
 
-        System.out.println(itens);
-        
-        if (itens.toString().contains("Produto")) {
-            listaProdServ.add(new ProdutoServico((Produto) itens));
-        } else if (itens.toString().contains("Servico")) {
-            listaProdServ.add(new ProdutoServico((Servico) itens));
+    public void imprimeProdServ() {
+        for (int i = 0; i < listaProdServ.size(); i++) {
+            if (listaProdServ.get(i).getProduto() != null) {
+                System.out.println(listaProdServ.get(i).getProduto().getNome());
+            } else {
+                System.out.println(listaProdServ.get(i).getServico().getNome());
+            }
         }
-
-//
-//        for (int i = 0; i < listaProdServ.size(); i++) {
-//            System.out.println(listaProdServ.get(i).getProduto().getNome());
-//            System.out.println(listaProdServ.get(i).getServico().getNome());
-//        }
     }
 
     public void actionExcluir(ProdutoServico itens) {
@@ -66,6 +54,14 @@ public class CestaCtrl implements Serializable {
         listaProdServ.clear();
     }
 
+    public int getImagem(Produto produto) {
+        return produto.getImagens().get(0).getId();
+    }
+
+    public int getImagem(Servico servico) {
+        return servico.getImagens().get(0).getId();
+    }
+
     //GET-SET
     public String getFiltro() {
         return filtro;
@@ -73,22 +69,6 @@ public class CestaCtrl implements Serializable {
 
     public void setFiltro(String filtro) {
         this.filtro = filtro;
-    }
-
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    public Servico getServico() {
-        return servico;
-    }
-
-    public void setServico(Servico servico) {
-        this.servico = servico;
     }
 
     public List<Produto> getListaProdutos() {

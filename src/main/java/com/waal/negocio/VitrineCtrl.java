@@ -35,7 +35,6 @@ public class VitrineCtrl implements Serializable {
         listaVitrine.clear();
 
         listaProdutos.forEach((t) -> {
-            System.out.println("entrei nessa bagaça: " + t.getNome());
             listaVitrine.add(new ProdutoServico(t));
         });
 
