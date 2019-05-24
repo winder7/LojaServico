@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:body>
-        <ui:composition template="/templates/templatePublico.xhtml">
+        <ui:composition template="/templates/template_01.xhtml">
             <ui:define name="title">Produtos</ui:define>
             <ui:define name="content">
                 <div id="conteudo-produtos">
@@ -32,7 +32,7 @@
                                             <h:outputText styleClass="icon-vitrine fa fa-search"/>
                                             <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
                                         </p:commandLink>
-                                        <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{carrinhoCtrl.actionInserir(prod)}" update="menu:menubar">
+                                        <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.actionInserir(prod)}" update="menu:menubar">
                                             <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
                                             <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}"/>
                                         </p:commandLink>

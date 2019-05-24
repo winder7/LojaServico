@@ -4,22 +4,17 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <link rel="shortcut icon" href="../resources/img/favicon3.png"/>
-        <link rel="StyleSheet" type="text/css" href="../resources/css/minhaconta.css" media="screen" />
-        <title>Principal</title>
-    </h:head>
-    <h:body style="background-image: url('resources/img/back.png')">
-        <div id="header">
-            <ui:insert name="template" >
-                <ui:include src="/templates/template.xhtml" />
-            </ui:insert>
-        </div>
 
-        <h:form id="form" class="form">
-            <p:panel header="Meus Dados">
-                
-            </p:panel>
-        </h:form>
+    <h:body>
+        <ui:composition template="/templates/template_02.xhtml">
+            <ui:define name="title">Minha Conta</ui:define>
+            <ui:define name="content">
+                <h:form id="form" class="form">
+                    <p:panel header="Meus Dados">
+
+                    </p:panel>
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>

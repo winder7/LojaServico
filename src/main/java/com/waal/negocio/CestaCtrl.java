@@ -2,6 +2,7 @@ package com.waal.negocio;
 
 import java.util.ArrayList;
 import com.waal.beans.Produto;
+import com.waal.beans.ProdutoServico;
 import com.waal.beans.Servico;
 import com.waal.persistencia.ProdutoDAO;
 import com.waal.uteis.Exibir;
@@ -18,18 +19,14 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class CarrinhoCtrl implements Serializable {
+public class CestaCtrl implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String filtro = "";
     private Produto produto = new Produto();
     private Servico servico = new Servico();
     private List<Produto> listaProdutos = new ArrayList<>();
-    private List<Object> listaProdServ = new ArrayList<>();
-
-    public List<Object> getListagem() {
-        return listaProdServ;
-    }
+    private List<ProdutoServico> listaProdServ = new ArrayList<>();
 
     public void actionGravar() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -43,24 +40,28 @@ public class CarrinhoCtrl implements Serializable {
     }
 
     public void actionInserir(Object itens) {
-        listaProdServ.add(itens);
+
+        System.out.println(itens);
         
-        for (int i = 0; i < listaProdServ.size(); i++) {
-            if (listaProdServ.get(i).toString().contains("Produto")) {
-                System.out.println(((Produto) listaProdServ.get(i)).getNome());
-            }
-            if (listaProdServ.get(i).toString().contains("Servico")) {
-                System.out.println(((Servico) listaProdServ.get(i)).getNome());
-            }
+        if (itens.toString().contains("Produto")) {
+            listaProdServ.add(new ProdutoServico((Produto) itens));
+        } else if (itens.toString().contains("Servico")) {
+            listaProdServ.add(new ProdutoServico((Servico) itens));
         }
+
+//
+//        for (int i = 0; i < listaProdServ.size(); i++) {
+//            System.out.println(listaProdServ.get(i).getProduto().getNome());
+//            System.out.println(listaProdServ.get(i).getServico().getNome());
+//        }
     }
 
-    public void actionExcluir(Object itens) {
+    public void actionExcluir(ProdutoServico itens) {
         listaProdServ.remove(itens);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Removido com sucesso!"));
     }
-    
+
     public void actionLimpar() {
         listaProdServ.clear();
     }
@@ -82,6 +83,14 @@ public class CarrinhoCtrl implements Serializable {
         this.produto = produto;
     }
 
+    public Servico getServico() {
+        return servico;
+    }
+
+    public void setServico(Servico servico) {
+        this.servico = servico;
+    }
+
     public List<Produto> getListaProdutos() {
         return listaProdutos;
     }
@@ -90,19 +99,11 @@ public class CarrinhoCtrl implements Serializable {
         this.listaProdutos = listaProdutos;
     }
 
-    public List<Object> getListaProdServ() {
+    public List<ProdutoServico> getListaProdServ() {
         return listaProdServ;
     }
 
-    public void setListaProdServ(List<Object> listaProdServ) {
+    public void setListaProdServ(List<ProdutoServico> listaProdServ) {
         this.listaProdServ = listaProdServ;
-    }
-
-    public Servico getServico() {
-        return servico;
-    }
-
-    public void setServico(Servico servico) {
-        this.servico = servico;
     }
 }
