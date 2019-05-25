@@ -11,24 +11,202 @@
             <ui:define name="title">Minha Conta</ui:define>        
             <ui:define name="left">
                 <p:panel header="Opções" style="height: 100%">
-                    <p:commandLink action="#{minhaContaCtrl.alteraMenu('minhaConta')}" update="form">
-                        <h:outputText styleClass="menu-icon fa fa-user"/>
-                        <h:outputText styleClass="menu-item" value="  Minha Conta"/>
-                    </p:commandLink>
-                    <br></br>
                     <p:commandLink action="#{minhaContaCtrl.alteraMenu('meusPedidos')}" update="form">
                         <h:outputText styleClass="menu-icon fa fa-archive"/>
                         <h:outputText styleClass="menu-item" value="  Meus Pedidos"/>
+                    </p:commandLink><br></br>
+                    <p:commandLink action="#{minhaContaCtrl.alteraMenu('minhaConta')}" update="form">
+                        <h:outputText styleClass="menu-icon fa fa-user"/>
+                        <h:outputText styleClass="menu-item" value="   Minha Conta"/>
+                    </p:commandLink><br></br>
+                    <p:commandLink action="#{minhaContaCtrl.alteraMenu('alterarSenha')}" update="form">
+                        <h:outputText styleClass="menu-icon fa fa-key"/>
+                        <h:outputText styleClass="menu-item" value="  Alterar Senha"/>
                     </p:commandLink>
                 </p:panel>
             </ui:define>
             <ui:define name="content">
                 <h:form id="form" class="form">
                     <p:panel rendered="#{'minhaConta'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Minha Conta">
-                        
-                        
-                        <!--Botão para testes de download de boleto-->
-                        <h:commandLink value="Download Boleto" action="#{pagamentoCtrl.gerarBoletoTeste()}" />
+                        <p:growl id="growl" sticky="true" showDetail="true"/>
+
+                        <p:wizard id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
+
+                            <p:tab id="personal" title="Pessoal">
+                                <p:panel header="Dados Pessoais">
+                                    <p:messages />
+                                    <h:panelGrid id="panel" columns="2" columnClasses="label, value">
+                                        <p:outputLabel for="perfil" value="Perfil:" />
+                                        <p:selectOneRadio id="perfil" value="#{minhaContaCtrl.tipoPessoa}" unselectable="true">
+                                            <f:selectItem itemLabel="Pessoa Física" itemValue="PF" />
+                                            <f:selectItem itemLabel="Pessoa Jurídica" itemValue="PJ" />
+                                            <p:ajax event="change" update="panel"/>
+                                        </p:selectOneRadio>
+                                        <h:outputText value="#{minhaContaCtrl.tipoPessoa == 'PF' ? 'Nome Completo: *' : 'Razão Social: *'}" />
+                                        <p:inputText value="#{minhaContaCtrl.pessoa.nome}" size="30" required="true" label="Nome Completo"/>
+
+                                        <h:outputText value="#{minhaContaCtrl.tipoPessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}" />
+                                        <p:inputMask value="#{minhaContaCtrl.pessoa.cpf}" size="30" required="true" label="#{minhaContaCtrl.tipoPessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}"
+                                                     mask="#{minhaContaCtrl.tipoPessoa == 'PF' ? '999.999.999-99' : '99.999.999/9999-99'}"/>
+                                        <h:outputText value="#{minhaContaCtrl.tipoPessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}"/>
+                                        <p:inputText value="#{minhaContaCtrl.pessoa.rg}" size="30" required="true" label="#{minhaContaCtrl.tipoPessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}" type="number"/>
+                                        <h:outputText value="#{minhaContaCtrl.tipoPessoa == 'PF' ? 'Data de Nascimento: *' : 'Data da Fundação: *'}" />
+                                        <p:calendar value="#{minhaContaCtrl.pessoa.dataNasc}" size="11" pattern="dd/MM/yyyy"/>
+                                        <h:outputText value="Pular para a confirmação: " rendered="#{minhaContaCtrl.pessoa.dataNasc != null}"/>
+                                        <h:selectBooleanCheckbox value="#{wizardCtrl.skip}" rendered="#{minhaContaCtrl.pessoa.dataNasc != null}"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="address" title="Endereço">
+                                <p:panel header="Dados de Endereço">
+                                    <p:messages />
+                                    <h:panelGrid columns="2" id="endereco" columnClasses="label, value">
+                                        <h:outputText value="CEP: " />
+                                        <p:inputMask value="#{minhaContaCtrl.pessoa.cep}" size="9" maxlength="9" mask="99999-999">
+                                            <p:ajax event="blur" update="endereco" listener="#{pessoaCtrl.BuscaCep(minhaContaCtrl.pessoa)}"/>
+                                        </p:inputMask>
+
+                                        <h:outputText value="Rua: " />
+                                        <p:inputText value="#{minhaContaCtrl.pessoa.rua}" size="60" maxlength="60"/>
+
+                                        <h:outputText value="Bairro: " />
+                                        <p:inputText value="#{minhaContaCtrl.pessoa.bairro}" size="30" maxlength="30"/>
+
+                                        <h:outputText value="Cidade: " />
+                                        <p:inputText value="#{minhaContaCtrl.pessoa.cidade}" size="30" maxlength="30"/>
+
+                                        <h:outputText value="UF: " />
+                                        <p:selectOneMenu value="#{minhaContaCtrl.pessoa.uf}" maxlength="2">
+                                            <f:selectItem itemLabel="AC" itemValue="AC" />
+                                            <f:selectItem itemLabel="AL" itemValue="AL" />
+                                            <f:selectItem itemLabel="AM" itemValue="AM" />
+                                            <f:selectItem itemLabel="AP" itemValue="AP" />
+                                            <f:selectItem itemLabel="BA" itemValue="BA" />
+                                            <f:selectItem itemLabel="CE" itemValue="CE" />
+                                            <f:selectItem itemLabel="DF" itemValue="DF" />
+                                            <f:selectItem itemLabel="ES" itemValue="ES" />
+                                            <f:selectItem itemLabel="GO" itemValue="GO" />
+                                            <f:selectItem itemLabel="MA" itemValue="MA" />
+                                            <f:selectItem itemLabel="MG" itemValue="MG" />
+                                            <f:selectItem itemLabel="MS" itemValue="MS" />
+                                            <f:selectItem itemLabel="MT" itemValue="MT" />
+                                            <f:selectItem itemLabel="PA" itemValue="PA" />
+                                            <f:selectItem itemLabel="PB" itemValue="PB" />
+                                            <f:selectItem itemLabel="PE" itemValue="PE" />
+                                            <f:selectItem itemLabel="PI" itemValue="PI" />
+                                            <f:selectItem itemLabel="PR" itemValue="PR" />
+                                            <f:selectItem itemLabel="RJ" itemValue="RJ" />
+                                            <f:selectItem itemLabel="RN" itemValue="RN" />
+                                            <f:selectItem itemLabel="RO" itemValue="RO" />
+                                            <f:selectItem itemLabel="RR" itemValue="RR" />
+                                            <f:selectItem itemLabel="RS" itemValue="RS" />
+                                            <f:selectItem itemLabel="SC" itemValue="SC" />
+                                            <f:selectItem itemLabel="SE" itemValue="SE" />
+                                            <f:selectItem itemLabel="SP" itemValue="SP" />
+                                            <f:selectItem itemLabel="TO" itemValue="TO" />
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="contact" title="Contato">
+                                <p:panel header="Telefones de Contato">
+                                    <p:messages />
+                                    <h:panelGrid id="fones" columns="2" style="text-align: left">
+                                        <h:dataTable id="listaFones" value="#{minhaContaCtrl.pessoa.fones}" var="f" rules="rows">
+                                            <f:facet name="header">
+                                                <p:commandButton value="Adicionar Fone" update=":form:fones" icon="fa fa-phone" actionListener="#{pessoaCtrl.actionInserirFone(minhaContaCtrl.pessoa)}"/>
+                                            </f:facet>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputLabel value="Número"/>
+                                                </f:facet>
+                                                <p:inputMask value="#{f.numero}" mask="#{f.descricao == 'Fixo' ? '(99)9999-9999' : '(99)99999-9999'}"/>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">
+                                                    <h:outputLabel value="Tipo"/>
+                                                </f:facet>
+                                                <p:selectOneMenu value="#{f.descricao}" style="margin-top: 3px; width: 110px">
+                                                    <f:selectItem itemLabel="Celular" itemValue="#{f.descricao}" />
+                                                    <f:selectItem itemLabel="Fixo" itemValue="Fixo" />
+                                                    <f:selectItem itemLabel="Celular" itemValue="Celular" />
+                                                    <p:ajax event="change" update=":form:fones"/>
+                                                </p:selectOneMenu>
+                                            </h:column>
+                                            <h:column>
+                                                <p:commandButton value="Remover" update=":form:fones" actionListener="#{pessoaCtrl.actionExcluirFone()}">
+                                                    <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.fone}"/>
+                                                </p:commandButton>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                            <p:tab id="confirmacao" title="Confirmação">
+                                <p:panel header="Confirmação dos Dados Informados">
+                                    <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+                                        <h:panelGrid columns="2" columnClasses="grid, value">
+                                            <h:outputText value="Email: " />
+                                            <h:outputText value="#{minhaContaCtrl.pessoa.email}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Senha: " />
+                                            <h:outputText value="#{minhaContaCtrl.pessoa.senha != null ? 'OK' : 'Falha'}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Nome: " />
+                                            <h:outputText value="#{minhaContaCtrl.pessoa.nome}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="#{minhaContaCtrl.tipoPessoa == 'PF' ? 'CPF:' : 'CNPJ:'}" />
+                                            <h:outputText value="#{minhaContaCtrl.pessoa.cpf}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="#{minhaContaCtrl.tipoPessoa == 'PF' ? 'RG:' : 'Inscrição Estadual:'}" />
+                                            <h:outputText value="#{minhaContaCtrl.pessoa.rg}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Data de Nascimento:" />
+                                            <h:outputText value="#{pessoaCtrl.formatarData(minhaContaCtrl.pessoa.dataNasc)}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Rua: " />
+                                            <h:outputText value="#{minhaContaCtrl.pessoa.rua}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Bairro: " />
+                                            <h:outputText value="#{minhaContaCtrl.pessoa.bairro}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="CEP: " />
+                                            <h:outputText value="#{minhaContaCtrl.pessoa.cep}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="Cidade: " />
+                                            <h:outputText value="#{minhaContaCtrl.pessoa.cidade}" styleClass="outputLabel"/>
+
+                                            <h:outputText value="UF: " />
+                                            <h:outputText value="#{minhaContaCtrl.pessoa.uf}" styleClass="outputLabel"/>
+
+                                            <h:dataTable value="#{minhaContaCtrl.pessoa.fones}" var="f" rules="rows" >
+                                                <p:column>
+                                                    <h:outputText value="Telefone " />
+                                                    <h:outputText value="#{f.descricao}: "/>
+                                                </p:column>
+                                            </h:dataTable>
+                                            <h:dataTable value="#{minhaContaCtrl.pessoa.fones}" var="f" rules="rows" styleClass="outputLabel">
+                                                <p:column>
+                                                    <h:outputText value="#{f.numero}"/>
+                                                </p:column>
+                                            </h:dataTable>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                    <hr></hr>
+                                    <b><p:outputLabel value="Ao clicar em Criar conta, você concorda com nossos "/></b> 
+                                    <b><p:commandLink value="Termos" oncomplete="PF('termosServico').show()"/></b>
+                                    <b><p:outputLabel value="e confirma que leu a "/></b>
+                                    <b><p:commandLink value="Política de Privacidade." oncomplete="PF('politicaPrivacidade').show()"/></b>
+                                    <h:panelGrid columns="2" >
+                                        <p:commandButton value="Salvar" actionListener="#{pessoaCtrl.alterar(minhaContaCtrl.pessoa)}" update="form" oncomplete="PF('contaDialog').show()"/>
+                                        <p:button value="Cancelar" href="#{request.contextPath}/publico/index.xhtml"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+                        </p:wizard>
                     </p:panel>
 
                     <p:panel rendered="#{'meusPedidos'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Meus Pedidos">
@@ -66,6 +244,9 @@
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
+                    </p:panel>
+                    <p:panel rendered="#{'alterarSenha'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Alterar Senha">
+                        Alterar Senha construir
                     </p:panel>
                 </h:form>
             </ui:define>

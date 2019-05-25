@@ -30,8 +30,17 @@ public class PessoaCtrl implements Serializable {
     private boolean usrLogado;
     private String tipopessoa = "PF";
     private boolean editar = false;
+
     public List<Pessoa> getListagem() {
         return PessoaDAO.listagem(filtro);
+    }
+
+    public void alterar(Pessoa pessoa) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        this.pessoa = pessoa;
+        pessoa.setSenha(pessoa.getSenha());
+        PessoaDAO.alterar(pessoa);
+        context.addMessage(null, new FacesMessage("Sucesso", "Alterado com sucesso!"));
     }
 
     public void actionGravar() {
@@ -50,6 +59,11 @@ public class PessoaCtrl implements Serializable {
         }
     }
 
+    public void BuscaCep(Pessoa pessoa) {
+        this.pessoa = pessoa;
+        BuscaCep();
+    }
+    
     public void BuscaCep() {
         String cep = pessoa.getCep();
         CepDTO cepDto = new CepDTO();
@@ -83,6 +97,18 @@ public class PessoaCtrl implements Serializable {
         pessoa.getFones().add(fone);
     }
 
+    public void actionInserirFone(Pessoa pessoa) {
+        fone = new Fone();
+        fone.setPessoa(pessoa);
+        fone.setDescricao("Celular");
+        pessoa.getFones().add(fone);
+    }
+
+    public void actionExcluirFone(Pessoa pessoa) {
+        this.pessoa = pessoa;
+        actionExcluirFone();
+    }
+
     public void actionExcluirFone() {
         pessoa.getFones().remove(fone);
     }
@@ -100,8 +126,8 @@ public class PessoaCtrl implements Serializable {
         usrLogado = !"Olá Visitante!".equals(nome);
         return nome;
     }
-    
-    public boolean mostrarBotaoMinhaConta(){
+
+    public boolean mostrarBotaoMinhaConta() {
         return (!getUserAdmin() && this.usrLogado);
     }
 

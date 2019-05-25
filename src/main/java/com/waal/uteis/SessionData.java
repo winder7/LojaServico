@@ -1,5 +1,6 @@
 package com.waal.uteis;
 
+import com.waal.beans.Pessoa;
 import com.waal.persistencia.PessoaDAO;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -47,6 +48,20 @@ public class SessionData {
             System.out.println("Erro getNomeUsuarioLogado: " + e);
             return "Erro";
         }
+    }
+
+    public static Pessoa getUsuarioLogado() {
+        try {
+            Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (!user.toString().equals("anonymousUser")) {
+                String nomeUsuario = ((UserDetails) user).getUsername();
+                return PessoaDAO.pesqNomeUsr(nomeUsuario);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro getUsuarioLogado: " + e);
+            return null;
+        }
+        return null;
     }
 
     public static boolean ehUserAdmin() {
