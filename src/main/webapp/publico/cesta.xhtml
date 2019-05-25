@@ -19,7 +19,7 @@
                         </f:facet>
                         <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{cestaCtrl.listaProdServ}"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                                     {PageLinks} {NextPageLink} {LastPageLink}"
+                                     {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Cesta Vazia!"
                                      paginator="true" rows="10" style="margin-bottom:20px" >
 
                             <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
@@ -29,18 +29,19 @@
                                 <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}"/>
                             </p:column>
                             <p:column headerText="Preço" sortBy="f.preco">
-                                <h:outputText value="#{f.produto != null ? f.produto.preco : f.servico.valor}"/>
+                                <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor)}"/>
                             </p:column>
-                            <p:column style="width:32px;text-align: center">
-                                <p:commandButton rendered="#{f.produto != null}" update=":form:ProdDetalhe" oncomplete="PF('ProdDetalhe').show()" icon="pi pi-search" title="View">
+                            <p:column style="width:6%;text-align: center">
+                                <p:commandButton rendered="#{f.produto != null}" update=":form:ProdDetalhe" 
+                                                 oncomplete="PF('ProdDetalhe').show()" icon="pi pi-search" title="Detalhe">
                                     <f:setPropertyActionListener value="#{f.produto != null ? f.produto : f.servico}" target="#{cestaCtrl.produto}"/>
                                 </p:commandButton>
-                                <p:commandButton rendered="#{f.produto == null}" update=":form:ServDetalhe" oncomplete="PF('ServDetalhe').show()" icon="pi pi-search" title="View">
+                                <p:commandButton rendered="#{f.produto == null}" update=":form:ServDetalhe" 
+                                                 oncomplete="PF('ServDetalhe').show()" icon="pi pi-search" title="Detalhe">
                                     <f:setPropertyActionListener value="#{f.produto != null ? f.produto : f.servico}" target="#{cestaCtrl.servico}"/>
                                 </p:commandButton>
-                                <p:commandButton update="form" title="Fechar" icon="fa fa-close">
-
-                                </p:commandButton>
+                                <p:commandButton class="botaoExcluir" style="margin-left: 8px" update="form menu:menubar"
+                                                 title="Remover Item" icon="fa fa-close" action="#{cestaCtrl.actionExcluir(f)}"/>
                             </p:column>
                         </p:dataTable>
                     </p:panel>
@@ -52,14 +53,14 @@
                             </p:dataGrid><br/>
                             <p:panelGrid  columns="2" rendered="#{not empty cestaCtrl.produto}" columnClasses="label,value">
 
-                                <h:outputText value="Id:" />
+                                <h:outputText value="Código:" />
                                 <h:outputText value="#{cestaCtrl.produto.id}" />
 
                                 <h:outputText value="Nome:" />
                                 <h:outputText value="#{cestaCtrl.produto.nome}" />
 
                                 <h:outputText value="Preço:" />
-                                <h:outputText value="#{produtoCtrl.formatarNumero(cestaCtrl.produto.preco)}" />
+                                <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.produto.preco)}" />
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>
@@ -70,14 +71,14 @@
                             </p:dataGrid><br/>
                             <p:panelGrid  columns="2" rendered="#{not empty cestaCtrl.servico}" columnClasses="label,value">
 
-                                <h:outputText value="Id:" />
+                                <h:outputText value="Código:" />
                                 <h:outputText value="#{cestaCtrl.servico.id}" />
 
                                 <h:outputText value="Nome:" />
                                 <h:outputText value="#{cestaCtrl.servico.nome}" />
 
                                 <h:outputText value="Preço:" />
-                                <h:outputText value="#{produtoCtrl.formatarNumero(cestaCtrl.servico.valor)}" />
+                                <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.servico.valor)}" />
                             </p:panelGrid>
                         </p:outputPanel>
                     </p:dialog>

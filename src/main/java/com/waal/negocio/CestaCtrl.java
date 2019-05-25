@@ -28,11 +28,15 @@ public class CestaCtrl implements Serializable {
     private List<ProdutoServico> listaProdServ = new ArrayList<>();
 
     public void addCesta(Produto produto) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Sucesso", "Adicionado  com sucesso!"));
         listaProdServ.add(new ProdutoServico(produto));
         imprimeProdServ();
     }
 
     public void addCesta(Servico servico) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Sucesso", "Adicionado com sucesso!"));
         listaProdServ.add(new ProdutoServico(servico));
         imprimeProdServ();
     }
@@ -43,6 +47,10 @@ public class CestaCtrl implements Serializable {
         } else {
             addCesta(prodServ.getServico());
         }
+    }
+    
+    public String formatarNumero(double num) {
+        return String.format("R$ " + "%,.2f", num);
     }
 
     public void imprimeProdServ() {

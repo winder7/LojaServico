@@ -79,22 +79,25 @@ body .ui-panelgrid .ui-panelgrid-cell {
 .botaoCancelar {
     font-weight: bold;
     margin-top: 11px !important;
-    color: black !important;
+    color: white !important;
     background-color: #EC961C !important
+    border-color: #EC961C !important;
 }
 .botaoGravar {
     font-weight: bold;
     margin-top: 10px !important;
     margin-left: 10px !important;
     margin-right: 10px !important;
-    color: black !important;
-    background-color: #419641 !important; 
+    color: white !important;
+    background-color: #419641 !important;
+    border-color: #419641 !important;
 }
 .botaoExcluir {
     font-weight: bold;
     margin-top: 10px !important;
-    color: black !important;
+    color: white !important;
     background-color: #C73834 !important;
+    border-color: #C73834 !important;
 }
 .botaoInserir {
     margin-left: 15px;
