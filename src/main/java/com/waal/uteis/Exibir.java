@@ -13,9 +13,19 @@ public class Exibir {
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, titulo, mensagem);
         FacesContext.getCurrentInstance().addMessage(null, fm);
     }
+    
+    public static void Mensagem(String mensagem) {
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, mensagem, null);
+        FacesContext.getCurrentInstance().addMessage(null, fm);
+    }
 
     public static void MensagemErro(String titulo, String mensagem) {
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, titulo, mensagem);
+        FacesContext.getCurrentInstance().addMessage(null, fm);
+    }
+    
+    public static void MensagemErro(String mensagem) {
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, mensagem, null);
         FacesContext.getCurrentInstance().addMessage(null, fm);
     }
 }

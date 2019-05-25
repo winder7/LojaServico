@@ -78,4 +78,14 @@ public class SessionData {
             return false;
         }
     }
+    
+    public static boolean estaLogado() {
+        try {
+            Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return !user.toString().equals("anonymousUser");
+        } catch (Exception e) {
+            System.out.println("Erro ehUserAdmin: " + e);
+            return false;
+        }
+    }
 }

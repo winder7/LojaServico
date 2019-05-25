@@ -10,24 +10,33 @@
         <ui:composition template="/templates/template_03.xhtml">
             <ui:define name="title">Minha Conta</ui:define>        
             <ui:define name="left">
-                <p:panel header="Opções" style="height: 100%">
-                    <p:commandLink action="#{minhaContaCtrl.alteraMenu('meusPedidos')}" update="form">
-                        <h:outputText styleClass="menu-icon fa fa-archive"/>
-                        <h:outputText styleClass="menu-item" value="  Meus Pedidos"/>
-                    </p:commandLink><br></br>
-                    <p:commandLink action="#{minhaContaCtrl.alteraMenu('minhaConta')}" update="form">
-                        <h:outputText styleClass="menu-icon fa fa-user"/>
-                        <h:outputText styleClass="menu-item" value="   Minha Conta"/>
-                    </p:commandLink><br></br>
-                    <p:commandLink action="#{minhaContaCtrl.alteraMenu('alterarSenha')}" update="form">
-                        <h:outputText styleClass="menu-icon fa fa-key"/>
-                        <h:outputText styleClass="menu-item" value="  Alterar Senha"/>
-                    </p:commandLink>
+                <p:panel header="Minha Conta" style="height: 100%">
+                    <f:facet name="header">
+                        <i class="fa fa-id-card-o"/><h:outputText value=" Minha Conta" style="text-align: center"/>
+                    </f:facet>
+                    <p>
+                        <p:commandLink action="#{minhaContaCtrl.alteraMenu('meusPedidos')}" update="form">
+                            <h:outputText styleClass="menu-icon fa fa-archive"/>
+                            <h:outputText styleClass="menu-item" value="  Meus Pedidos"/>
+                        </p:commandLink>
+                    </p>
+                    <p>
+                        <p:commandLink action="#{minhaContaCtrl.alteraMenu('minhaConta')}" update="form">
+                            <h:outputText styleClass="menu-icon fa fa-user"/>
+                            <h:outputText styleClass="menu-item" value="   Meus Dados"/>
+                        </p:commandLink>
+                    </p>
+                    <p>
+                        <p:commandLink action="#{minhaContaCtrl.alteraMenu('alterarSenha')}" update="form">
+                            <h:outputText styleClass="menu-icon fa fa-unlock-alt"/>
+                            <h:outputText styleClass="menu-item" value="  Alterar Senha"/>
+                        </p:commandLink>
+                    </p>
                 </p:panel>
             </ui:define>
             <ui:define name="content">
                 <h:form id="form" class="form">
-                    <p:panel rendered="#{'minhaConta'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Minha Conta">
+                    <p:panel rendered="#{'minhaConta'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Meus Dados">
                         <p:growl id="growl" sticky="true" showDetail="true"/>
 
                         <p:wizard id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
@@ -196,10 +205,6 @@
                                         </h:panelGrid>
                                     </h:panelGrid>
                                     <hr></hr>
-                                    <b><p:outputLabel value="Ao clicar em Criar conta, você concorda com nossos "/></b> 
-                                    <b><p:commandLink value="Termos" oncomplete="PF('termosServico').show()"/></b>
-                                    <b><p:outputLabel value="e confirma que leu a "/></b>
-                                    <b><p:commandLink value="Política de Privacidade." oncomplete="PF('politicaPrivacidade').show()"/></b>
                                     <h:panelGrid columns="2" >
                                         <p:commandButton value="Salvar" actionListener="#{pessoaCtrl.alterar(minhaContaCtrl.pessoa)}" update="form" oncomplete="PF('contaDialog').show()"/>
                                         <p:button value="Cancelar" href="#{request.contextPath}/publico/index.xhtml"/>
@@ -246,7 +251,32 @@
                         </p:dataTable>
                     </p:panel>
                     <p:panel rendered="#{'alterarSenha'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Alterar Senha">
-                        Alterar Senha construir
+                        <p:messages />
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Senha Atual *" />
+                            <p:password id="senhaAtual" required="true" value="#{loginCtrl.senhaAtual}" maxlength="32" feedback="true" 
+                                        promptLabel="Insira sua senha atualmente cadastrada" weakLabel="Fraca"  goodLabel="Média" 
+                                        strongLabel="Forte" requiredMessage="Inserir senha atual"/>
+
+                            <h:outputLabel for="senha" value="Nova Senha: *" />
+                            <p:password id="senha" required="true" value="#{loginCtrl.novaSenha}" maxlength="32" feedback="true" promptLabel="Inserir sua nova senha"
+                                        weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Inserir sua nova senha">
+                                <f:validator validatorId="senhaValidador" />
+                                <f:attribute name="confirm" value="#{confirmPassword.submittedValue}" />
+                                <f:ajax event="blur" execute="password confirm" render="m_password" />
+                            </p:password>
+
+                            <h:outputLabel for="confirm" value="Repetir Senha: *" />
+                            <p:password id="confirm" required="true" binding="#{confirmPassword}" maxlength="32" feedback="true" promptLabel="Confirme sua nova senha"
+                                        weakLabel="Fraca"  goodLabel="Média" strongLabel="Forte" requiredMessage="Confirme sua nova senha">
+                                <f:ajax event="blur" execute="password confirm" render="m_password m_confirm" />
+                            </p:password>
+                        </h:panelGrid>
+                        <b><p:outputLabel value="A senha precisa conter pelo menos 8 caracteres e também deve incluir pelo menos 1 letra minúscula (abc), 1 maiúscula (ABC) e 1 número (123)."/></b>
+                        <h:panelGrid columns="2">
+                            <p:commandButton class="botaoGravar" value="Alterar" update="form" actionListener="#{loginCtrl.alterarSenhaCliente()}"/>
+                            <p:button class="botaoExcluir" value="Cancelar" href="#{request.contextPath}/cliente/minha_conta.xhtml"/>
+                        </h:panelGrid>
                     </p:panel>
                 </h:form>
             </ui:define>

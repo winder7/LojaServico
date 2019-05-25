@@ -2,9 +2,7 @@ package com.waal.negocio;
 
 import com.waal.beans.Pessoa;
 import java.io.Serializable;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import com.waal.persistencia.PessoaDAO;
 import com.waal.uteis.Enviar;
 import com.waal.uteis.Exibir;
@@ -24,6 +22,8 @@ public class LoginCtrl implements Serializable {
     private Pessoa pessoa;
     private String usrEmail;
     private String cpf;
+    private String senhaAtual;
+    private String novaSenha;
 
     public void actionGravar() {
         if (PessoaDAO.verifUsrCad(usrEmail, cpf)) {
@@ -52,6 +52,19 @@ public class LoginCtrl implements Serializable {
         }
     }
 
+    public void alterarSenhaCliente() {
+        pessoa = new Pessoa();
+        pessoa = SessionData.getUsuarioLogado();
+        String senhaCript = pessoa.getSenha();
+        if (senhaCript.equals(SessionData.encriptarSenha(senhaAtual))) {
+            pessoa.setSenha(SessionData.encriptarSenha(novaSenha));
+            PessoaDAO.alterar(pessoa);
+            Exibir.Mensagem("Tudo Certo! A senha foi alterada com sucesso.");
+        } else {
+            Exibir.MensagemErro("Ops! A senha atual não é valida!");
+        }
+    }
+
     //GET-SET
     public Pessoa getPessoa() {
         return pessoa;
@@ -75,5 +88,21 @@ public class LoginCtrl implements Serializable {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getSenhaAtual() {
+        return senhaAtual;
+    }
+
+    public void setSenhaAtual(String senhaAtual) {
+        this.senhaAtual = senhaAtual;
+    }
+
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
     }
 }

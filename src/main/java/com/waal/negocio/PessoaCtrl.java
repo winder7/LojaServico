@@ -143,6 +143,12 @@ public class PessoaCtrl implements Serializable {
         }
         return erro;
     }
+    
+    public Pessoa getDadosUsrLogado(){
+        pessoa = new Pessoa();
+        pessoa = SessionData.getUsuarioLogado();
+        return pessoa;
+    }
 
     //GET-SET
     public String getFiltro() {
