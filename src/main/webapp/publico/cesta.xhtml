@@ -13,7 +13,8 @@
                 <h:form id="form" style="padding: 10px 15px 15px 15px">
                     <p:growl id="msgs" showDetail="true"/>
 
-                    <p:wizard id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
+                    <p:wizard widgetVar="wiz" id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" 
+                              onnext="#{cestaCtrl.listaProdServ.size() == 0 ? 'hideBackOnLastTab' : ''}" showNavBar="false">
                         <p:tab id="login" title="Cesta">
                             <p:panel id="basic" header="Suas Compras">
                                 <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{cestaCtrl.listaProdServ}"
@@ -93,16 +94,26 @@
                                     </p:panelGrid>
                                 </p:outputPanel>
                             </p:dialog>
+                            <p:commandButton value="Próximo" oncomplete="PF('wiz').next()" process="@this" class="btnWizarProximo" 
+                                             icon="fa fa-angle-right" rendered="#{cestaCtrl.listaProdServ.size() > 0}"/>
                         </p:tab>
 
-                        <p:tab id="personal" title="Confirmar Endereço">
+                        <p:tab id="endereco" title="Confirmar Endereço">
                             <p:panel header="Confirmar o seu endereço">
                                 <p:messages />
-                                <meta http-equiv="Refresh" content="0; url='#{request.contextPath}/publico/login.xhtml'"/>
+                                <p:outputPanel id="compraDialog" rendered="#{!pessoaCtrl.usrLogado}" style="height: 300px; text-align: center">
+                                    <b><p><h1>Você deve fazer login para continuar com a compra.</h1></p></b>
+                                    <p>
+                                        <p:button value="Fazer Login" href="#{request.contextPath}/publico/login.xhtml?redirecionar=true"/>
+                                    </p>
+                                </p:outputPanel>
                             </p:panel>
+                            <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"/>
+                            <p:commandButton value="Próximo" oncomplete="PF('wiz').next()" process="@this" class="btnWizarProximo" 
+                                             icon="fa fa-angle-right" rendered="#{pessoaCtrl.usrLogado}"/>
                         </p:tab>
 
-                        <p:tab id="address" title="Forma de Pagamento">
+                        <p:tab id="formaPag" title="Forma de Pagamento">
                             <p:panel header="Escolha a forma de pagamento">
                                 <p:messages />
 

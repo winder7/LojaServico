@@ -164,6 +164,15 @@ body .ui-panelgrid .ui-panelgrid-cell {
     text-align: right !important;
 }
 
+.btnWizarProximo{
+    margin-top: 10px !important;
+    float: right
+}
+
+.btnWizarVoltar{
+    margin-top: 10px !important;
+}
+
 @media only screen and (max-width:1369px) {
     /* For HD Notebooks: */
     .imagens-vitrine {

@@ -13,7 +13,7 @@
                     always-use-default-target="true" 
                     authentication-success-handler-ref="successHandler"
                     authentication-failure-url="/publico/login.xhtml?login_error=1" />
-        <logout logout-success-url="/publico/login.xhtml"/> 
+        <logout logout-success-url="/publico/index.xhtml"/> 
         <remember-me /> 
     </http>
     <beans:bean id="successHandler" class="com.waal.negocio.RedirecionaPaginaPadrao"></beans:bean>
