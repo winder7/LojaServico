@@ -56,6 +56,7 @@
             <!--Menu Admin-->
             <center>
                 <p:menubar rendered="#{pessoaCtrl.userAdmin}">
+                    <p:menuitem value="Início" url="#{request.contextPath}/admin/principal.xhtml" icon="fa fa-home" />
                     <p:menuitem value="Produtos" url="#{request.contextPath}/admin/produto.xhtml" icon="fa fa-cubes" />
                     <p:menuitem value="Serviços" url="#{request.contextPath}/admin/servico.xhtml" icon="fa fa-wrench" />
                     <p:menuitem value="Formas de Pagamento" url="#{request.contextPath}/admin/forma_pgto.xhtml" icon="fa fa-credit-card" />
