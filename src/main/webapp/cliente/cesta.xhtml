@@ -98,17 +98,35 @@
                                              icon="fa fa-angle-right" rendered="#{cestaCtrl.listaProdServ.size() > 0}"/>
                         </p:tab>
 
-                        <p:tab id="endereco" title="Entrar no Sistema">
-                            <p:panel header="Entrar com os dados do seu usuário">
+                        <p:tab id="endereco" title="Confirmar Endereço">
+                            <p:panel header="Confirmar o seu endereço" >
                                 <p:messages />
-                                <p:outputPanel id="compraDialog" style="height: 300px; text-align: center">
-                                    <b><p><h1>Você deve fazer login para continuar com a compra.</h1></p></b>
-                                    <p>
-                                        <p:button value="Fazer Login" href="#{request.contextPath}/publico/login.xhtml?redirecionar=true"/>
-                                    </p>
-                                </p:outputPanel>
+                                <p:panel header="Endereço Cadastrado" style="width: 30%">
+                                    <h:panelGrid columns="2">
+                                        <h:outputText value="CEP: "/>
+                                        <h:outputText value="#{pessoaCtrl.dadosUsrLogado.cep}"/>
+
+                                        <h:outputText value="Rua: "/>
+                                        <h:outputText value="#{pessoaCtrl.pessoa.rua}"/>
+
+                                        <h:outputText value="Bairro: "/>
+                                        <h:outputText value="#{pessoaCtrl.pessoa.bairro}" />
+
+                                        <h:outputText value="Cidade: "/>
+                                        <h:outputText value="#{pessoaCtrl.pessoa.cidade}"/>
+
+                                        <h:outputText value="UF: "/>
+                                        <h:outputText value="#{pessoaCtrl.pessoa.uf}"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                                <h:panelGrid columns="2">
+                                    <p:commandButton class="botaoGravar" value="Usar este endereço"/>
+                                    <p:button class="botaoExcluir" value="Altera Endereço" href="#{request.contextPath}/cliente/minha_conta.xhtml"/>
+                                </h:panelGrid>
                             </p:panel>
                             <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"/>
+                            <p:commandButton value="Próximo" oncomplete="PF('wiz').next()" process="@this" class="btnWizarProximo" 
+                                             icon="fa fa-angle-right" rendered="#{pessoaCtrl.usrLogado}"/>
                         </p:tab>
 
                         <p:tab id="formaPag" title="Forma de Pagamento">

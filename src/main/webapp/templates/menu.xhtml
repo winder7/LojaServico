@@ -38,7 +38,7 @@
                 </p:submenu>
 
                 <p:submenu label="Cesta #{cestaCtrl.listaProdServ.size()}" icon="fa fa-shopping-basket" style="float: right;margin-top:4px">
-                    <p:menuitem value="Ir para a Cesta" icon="fa fa-shopping-basket" url="#{request.contextPath}/publico/cesta.xhtml"/>
+                    <p:menuitem value="Ir para a Cesta" icon="fa fa-shopping-basket" url="#{request.contextPath}#{temaCtrl.verifClienteLogado()}"/>
                     <p:menuitem value="Limpar Cesta" icon="fa fa-trash-o" action="#{cestaCtrl.actionLimpar()}" update="menubar form"/>
                 </p:submenu>
 

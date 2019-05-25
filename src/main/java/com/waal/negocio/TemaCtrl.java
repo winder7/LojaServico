@@ -1,6 +1,7 @@
 package com.waal.negocio;
 
 import com.waal.persistencia.PessoaDAO;
+import com.waal.uteis.SessionData;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -41,8 +42,12 @@ public class TemaCtrl implements Serializable {
             "trontastic", "ui-darkness", "ui-lightness", "vader"};
     }
 
-    public void teste() {
-        System.out.println(PessoaDAO.pesqNomeUsr("windergt@gmail.com").getNome());
+    public String verifClienteLogado() {
+        if (SessionData.estaLogado()) {
+            return "/cliente/cesta.xhtml";
+        } else {
+            return "/publico/cesta.xhtml";
+        }
     }
 
     public String obterUrl() {
@@ -50,12 +55,12 @@ public class TemaCtrl implements Serializable {
         HttpServletRequest servletRequest = (HttpServletRequest) fc.getExternalContext().getRequest();
         String fullURI = servletRequest.getRequestURI();
         //System.out.println(fullURI);
-        
+
         if (fullURI.contains("produtos")) {
             return "produtos";
-        }else if(fullURI.contains("servicos")) {
+        } else if (fullURI.contains("servicos")) {
             return "servicos";
-        }else if(fullURI.contains("index")) {
+        } else if (fullURI.contains("index")) {
             return "index";
         }
         return "null";
