@@ -18,11 +18,14 @@
                                 <p:panelGrid columns="1" style="width:100%;margin:10px 0px" columnClasses="label,value" 
                                              layout="grid" styleClass="ui-panelgrid-blank">
                                     <p:dataGrid id="gridImgProd" var="f" value="#{prodCarousel}" emptyMessage="Sem imagem">
-                                        <p:commandLink update=":formcarousel:prodDetalheCarousel" oncomplete="PF('prodDetalheCarousel').show()" title="Ver detalhes">
-                                            <p:graphicImage value="../resources/prod_Serv/#{f.produto != null ? vitrineCtrl.getImagem(f.produto) :
-                                                                                            vitrineCtrl.getImagem(f.servico)}.jpg" cache="false" class="imagens-vitrine"/>
-                                            <f:setPropertyActionListener value="#{prodCarousel}" target="#{prodCarousel}" />
-                                        </p:commandLink>
+                                            <p:commandLink rendered="#{prodCarousel.produto != null}" update=":form:ProdDetalhe" oncomplete="PF('ProdDetalhe').show()" title="Detalhes">
+                                                <p:graphicImage value="../resources/prod_Serv/#{vitrineCtrl.getImagem(f.produto)}.jpg" cache="false" class="imagens-vitrine"/>
+                                                <f:setPropertyActionListener value="#{prodCarousel.produto}" target="#{vitrineCtrl.produto}"/>
+                                            </p:commandLink>
+                                            <p:commandLink rendered="#{prodCarousel.servico != null}" update=":form:ServDetalhe" oncomplete="PF('ServDetalhe').show()" title="Detalhes">
+                                                <p:graphicImage value="../resources/prod_Serv/#{vitrineCtrl.getImagem(f.servico)}.jpg" cache="false" class="imagens-vitrine"/>
+                                                <f:setPropertyActionListener value="#{prodCarousel.servico}" target="#{vitrineCtrl.servico}"/>
+                                            </p:commandLink>
                                     </p:dataGrid>
                                     <h:outputText class="carouselNome" value="#{prodCarousel.produto != null ? prodCarousel.produto.nome 
                                                                                 : prodCarousel.servico.nome}" />
@@ -31,25 +34,6 @@
                                 </p:panelGrid>
                             </p:carousel>
                         </center>
-                        <p:dialog header="Detalhes do produto" widgetVar="prodDetalheCarousel" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:outputPanel id="prodDetalheCarousel" style="text-align:center;">
-                                <p:dataGrid id="gridImgProdCarousel" var="f" value="#{prodCarousel}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../resources/prod_Serv/#{f.produto != null ? vitrineCtrl.getImagem(f.produto) :
-                                                                                    vitrineCtrl.getImagem(f.servico)}.jpg" cache="false" class="imagens-detalhe"/>
-                                </p:dataGrid><br/>
-                                <p:panelGrid  columns="2" rendered="#{not empty produtoCtrl.produto}" columnClasses="label,value">
-
-                                    <h:outputText value="Id:" />
-                                    <h:outputText value="#{produtoCtrl.produto.id}" />
-
-                                    <h:outputText value="Nome:" />
-                                    <h:outputText value="#{produtoCtrl.produto.nome}" />
-
-                                    <h:outputText value="Preço:" />
-                                    <h:outputText value="#{produtoCtrl.formatarNumero(produtoCtrl.produto.preco)}" />
-                                </p:panelGrid>
-                            </p:outputPanel>
-                        </p:dialog>
                     </h:form>
                 </div>
                 <center>
@@ -67,20 +51,29 @@
                                 <p:panel header="#{prod.produto != null ? prod.produto.nome : prod.servico.nome}" style="text-align:center">
                                     <h:panelGrid columns="1" style="width:100%">
                                         <p:dataGrid id="gridImgProd" var="f" value="#{prod}" emptyMessage="Sem imagem">
-                                            <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
-                                                <p:graphicImage value="../resources/prod_Serv/#{f.produto != null ? vitrineCtrl.getImagem(f.produto) :
-                                                                                                vitrineCtrl.getImagem(f.servico)}.jpg" cache="false" class="imagens-vitrine"/>
-                                                <f:setPropertyActionListener value="#{prod}" target="#{prod}" />
+                                            <p:commandLink rendered="#{prod.produto != null}" update=":form:ProdDetalhe" oncomplete="PF('ProdDetalhe').show()" title="Detalhes">
+                                                <p:graphicImage value="../resources/prod_Serv/#{vitrineCtrl.getImagem(f.produto)}.jpg" cache="false" class="imagens-vitrine"/>
+                                                <f:setPropertyActionListener value="#{prod.produto}" target="#{vitrineCtrl.produto}"/>
+                                            </p:commandLink>
+
+                                            <p:commandLink rendered="#{prod.servico != null}" update=":form:ServDetalhe" oncomplete="PF('ServDetalhe').show()" title="Detalhes">
+                                                <p:graphicImage value="../resources/prod_Serv/#{vitrineCtrl.getImagem(f.servico)}.jpg" cache="false" class="imagens-vitrine"/>
+                                                <f:setPropertyActionListener value="#{prod.servico}" target="#{vitrineCtrl.servico}"/>
                                             </p:commandLink>
                                         </p:dataGrid>
                                         <h:outputText value="#{prod.produto != null ? prod.produto.nome : prod.servico.nome}"/>
                                         <h:outputText value="#{prod.produto != null ? produtoCtrl.formatarNumero(prod.produto.preco) :
                                                                produtoCtrl.formatarNumero(prod.servico.valor)}" />
                                         <p:column>
-                                            <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
+                                            <p:commandLink rendered="#{prod.produto != null}" update=":form:ProdDetalhe" oncomplete="PF('ProdDetalhe').show()" title="Detalhes">
                                                 <h:outputText styleClass="icon-vitrine fa fa-search"/>
-                                                <f:setPropertyActionListener value="#{prod}" target="#{prod.produto != null ? prod.produto : prod.servico}" />
+                                                <f:setPropertyActionListener value="#{prod.produto}" target="#{vitrineCtrl.produto}"/>
                                             </p:commandLink>
+                                            <p:commandLink rendered="#{prod.produto == null}" update=":form:ServDetalhe" oncomplete="PF('ServDetalhe').show()" title="Detalhes">
+                                                <h:outputText styleClass="icon-vitrine fa fa-search"/>
+                                                <f:setPropertyActionListener value="#{prod.servico}" target="#{vitrineCtrl.servico}"/>
+                                            </p:commandLink>
+
                                             <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" 
                                                            action="#{cestaCtrl.addCesta(prod)}" update="menu:menubar">
                                                 <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
@@ -91,35 +84,66 @@
                                 </p:panel>
                             </p:dataGrid>
                         </center>
-                        <p:dialog header="Detalhes do produto" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:outputPanel id="prodDetalhe" style="text-align:center;">
-                                <p:dataGrid id="gridImgProd" var="f" value="#{prod}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../resources/prod_Serv/#{f.produto != null ? vitrineCtrl.getImagem(f.produto) :
-                                                                                    vitrineCtrl.getImagem(f.servico)}.jpg" cache="false" class="imagens-detalhe"/>
+                        <p:dialog header="Detalhes do produto" widgetVar="ProdDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="ProdDetalhe" style="text-align:center;">
+                                <p:dataGrid id="gridImgProd" var="imgP" value="#{vitrineCtrl.produto.imagens}" emptyMessage="Sem imagem">
+                                    <p:graphicImage value="../resources/prod_Serv/#{imgP.id}.jpg" cache="false" class="imagens-detalhe"/>
                                 </p:dataGrid><br/>
-                                <p:panelGrid  columns="2" rendered="#{not empty prod}" columnClasses="label,value">
+                                <p:panelGrid  columns="2" rendered="#{not empty vitrineCtrl.produto}" columnClasses="label,value">
 
                                     <h:outputText value="Id:" />
-                                    <h:outputText value="#{prod.produto != null ? prod.produto.id : prod.servico.id}" />   
-                                    
+                                    <h:outputText value="#{vitrineCtrl.produto.id}" />
+
                                     <h:outputText value="Nome:" />
-                                    <h:outputText value="#{prod.produto != null ? prod.produto.nome : prod.servico.nome}"/>
+                                    <h:outputText value="#{vitrineCtrl.produto.nome}" />
 
                                     <h:outputText value="Preço:" />
-                                    <h:outputText value="#{prod.produto != null ? produtoCtrl.formatarNumero(prod.produto.preco) :
-                                                               produtoCtrl.formatarNumero(prod.servico.valor)}" />
+                                    <h:outputText value="#{produtoCtrl.formatarNumero(vitrineCtrl.produto.preco)}" />
                                 </p:panelGrid>
-                                <center>
-                                    <p:column>
-                                        <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').hide()" title="Fechar">
-                                            <h:outputText styleClass="icon-fechar-vitrine fa fa-close"/>
-                                        </p:commandLink>
-                                        <p:commandLink style="margin-left: 10px" title="Adicionar na cesta">
-                                            <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
-                                            <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
-                                        </p:commandLink>
-                                    </p:column>
-                                </center>
+                                <p:column>
+                                    <p:dataGrid columns="2" var="s" value="#{vitrineCtrl.produto}">
+                                        <center>
+                                            <p:commandLink update=":form:ProdDetalhe" oncomplete="PF('ProdDetalhe').hide()" title="Fechar">
+                                                <h:outputText styleClass="icon-fechar-vitrine fa fa-close"/>
+                                            </p:commandLink>
+                                            <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="menu:menubar">
+                                                <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
+                                                <f:setPropertyActionListener value="#{serv}" target="#{vitrineCtrl.produto}" />
+                                            </p:commandLink>
+                                        </center>
+                                    </p:dataGrid>
+                                </p:column>
+                            </p:outputPanel>
+                        </p:dialog>
+                        <p:dialog header="Detalhes do Servico" widgetVar="ServDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="ServDetalhe" style="text-align:center;">
+                                <p:dataGrid id="gridImgServ" var="imgS" value="#{vitrineCtrl.servico.imagens}" emptyMessage="Sem imagem">
+                                    <p:graphicImage value="../resources/prod_Serv/#{imgS.id}.jpg" cache="false" class="imagens-detalhe"/>
+                                </p:dataGrid><br/>
+                                <p:panelGrid  columns="2" rendered="#{not empty vitrineCtrl.servico}" columnClasses="label,value">
+
+                                    <h:outputText value="Id:" />
+                                    <h:outputText value="#{vitrineCtrl.servico.id}" />
+
+                                    <h:outputText value="Nome:" />
+                                    <h:outputText value="#{vitrineCtrl.servico.nome}" />
+
+                                    <h:outputText value="Preço:" />
+                                    <h:outputText value="#{produtoCtrl.formatarNumero(vitrineCtrl.servico.valor)}" />
+                                </p:panelGrid>
+                                <p:column>
+                                    <p:dataGrid columns="2" var="s" value="#{vitrineCtrl.servico}">
+                                        <center>
+                                            <p:commandLink update=":form:ServDetalhe" oncomplete="PF('ServDetalhe').hide()" title="Fechar">
+                                                <h:outputText styleClass="icon-fechar-vitrine fa fa-close"/>
+                                            </p:commandLink>
+                                            <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="menu:menubar">
+                                                <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
+                                                <f:setPropertyActionListener value="#{serv}" target="#{vitrineCtrl.servico}" />
+                                            </p:commandLink>
+                                        </center>
+                                    </p:dataGrid>
+                                </p:column>
                             </p:outputPanel>
                         </p:dialog>
                     </h:form>
