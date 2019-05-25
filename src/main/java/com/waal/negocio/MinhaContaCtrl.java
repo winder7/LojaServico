@@ -5,6 +5,7 @@ import com.waal.persistencia.PedidoDAO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -14,14 +15,20 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class MinhaContaCtrl implements Serializable {
+
     private String menu = "meusPedidos";
 
     private List<Pedido> lista = new ArrayList<Pedido>();
-    
-    public void alteraMenu(String _menu){
+
+    public void alteraMenu(String _menu) {
         this.menu = _menu;
     }
-    
+
+    @PostConstruct
+    public void construct() {
+        lista = PedidoDAO.listagem();
+    }
+
     //gets e sets
     public String getMenu() {
         return menu;
@@ -32,11 +39,10 @@ public class MinhaContaCtrl implements Serializable {
     }
 
     public List<Pedido> getLista() {
-        return PedidoDAO.listagem();
+        return lista;
     }
 
     public void setLista(List<Pedido> lista) {
         this.lista = lista;
     }
-    
 }

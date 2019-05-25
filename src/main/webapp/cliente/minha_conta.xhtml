@@ -10,7 +10,7 @@
         <ui:composition template="/templates/template_03.xhtml">
             <ui:define name="title">Minha Conta</ui:define>        
             <ui:define name="left">
-                <p:panel header="Opções">
+                <p:panel header="Opções" style="height: 100%">
                     <p:commandLink action="#{minhaContaCtrl.alteraMenu('minhaConta')}" update="form">
                         <h:outputText styleClass="menu-icon fa fa-user"/>
                         <h:outputText styleClass="menu-item" value="  Minha Conta"/>
@@ -33,28 +33,28 @@
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                      {PageLinks} {NextPageLink} {LastPageLink}"
                                      paginator="true" rows="10" style="margin-bottom:20px">
-                            <p:column headerText="Código" width="8%" style="text-align: center">
+                            <p:column headerText="Código" sortBy="#{f.id}"  width="8%" style="text-align: center">
                                 <h:outputText value="#{f.id}"/>
                             </p:column>
-                            <p:column headerText="Data de Emissão" width="18%" style="text-align: center">
+                            <p:column headerText="Data de Emissão" sortBy="#{f.dataEmissao}" width="18%" style="text-align: center">
                                 <h:outputText value="#{f.dataEmissao}"/>
                             </p:column>
-                            <p:column headerText="Data da Autorização" width="18%" style="text-align: center">
+                            <p:column headerText="Data da Autorização" sortBy="#{f.dataAutorizacao}" width="18%" style="text-align: center">
                                 <h:outputText value="#{f.dataAutorizacao}"/>
                             </p:column>
-                            <p:column headerText="Status" width="10%" style="text-align: center">
+                            <p:column headerText="Status" sortBy="#{f.status}" width="10%" style="text-align: center">
                                 <h:outputText value="#{f.status}"/>
                             </p:column>
-                            <p:column headerText="Total em produtos" width="20%" style="text-align: center">
+                            <p:column headerText="Total em produtos" sortBy="#{f.totalProduto}" width="20%" style="text-align: center">
                                 <h:outputText value="#{f.totalProduto}"/>
                             </p:column>
-                            <p:column headerText="Total em serviços" width="15%" style="text-align: center">
+                            <p:column headerText="Total em serviços" sortBy="#{f.totalServico}" width="15%" style="text-align: center">
                                 <h:outputText value="#{f.totalServico}"/>
                             </p:column>
-                            <p:column headerText="Total geral" width="10%" style="text-align: center">
+                            <p:column headerText="Total geral" sortBy="#{f.totalGeral}" width="10%" style="text-align: center">
                                 <h:outputText value="#{f.totalGeral}"/>
                             </p:column>
-                            <p:column headerText="Desconto" width="10%" style="text-align: center">
+                            <p:column headerText="Desconto" sortBy="#{f.desconto}" width="10%" style="text-align: center">
                                 <h:outputText value="#{f.desconto}"/>
                             </p:column>
                             <p:column style="width:32px;text-align: center">
