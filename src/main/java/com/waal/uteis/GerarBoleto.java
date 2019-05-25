@@ -60,7 +60,7 @@ public class GerarBoleto {
         titulo.setDeducao(BigDecimal.ZERO);
         titulo.setMora(BigDecimal.ZERO);
         titulo.setAcrecimo(BigDecimal.ZERO);
-        titulo.setValorCobrado(BigDecimal.ZERO);
+        titulo.setValorCobrado(BigDecimal.valueOf(0.17));
 
         
         Boleto boleto = new Boleto(titulo);
