@@ -16,7 +16,7 @@
                     <p:wizard widgetVar="wiz" id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" 
                               onnext="#{cestaCtrl.listaProdServ.size() == 0 ? 'hideBackOnLastTab' : ''}" showNavBar="false">
                         <p:tab id="login" title="Cesta">
-                            <p:panel id="basic" header="Suas Compras">
+                            <p:panel id="basic" header="Minha Cesta">
                                 <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{cestaCtrl.listaProdServ}"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                              {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Cesta Vazia!"
@@ -98,7 +98,7 @@
                                              icon="fa fa-angle-right" rendered="#{cestaCtrl.listaProdServ.size() > 0}"/>
                         </p:tab>
 
-                        <p:tab id="endereco" title="Entrar no Sistema">
+                        <p:tab id="endereco" title="Identificação">
                             <p:panel header="Entrar com os dados do seu usuário">
                                 <p:messages />
                                 <p:outputPanel id="compraDialog" style="height: 300px; text-align: center">
@@ -111,7 +111,7 @@
                             <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"/>
                         </p:tab>
 
-                        <p:tab id="formaPag" title="Forma de Pagamento">
+                        <p:tab id="formaPag" title="Pagamento">
                             <p:panel header="Escolha a forma de pagamento">
                                 <p:messages />
                             </p:panel>
