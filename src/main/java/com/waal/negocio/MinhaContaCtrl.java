@@ -16,7 +16,7 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class MinhaContaCtrl implements Serializable {
 
-    private String menu = "meusPedidos";
+    private String menu = "minhaConta";
 
     private List<Pedido> lista = new ArrayList<Pedido>();
 

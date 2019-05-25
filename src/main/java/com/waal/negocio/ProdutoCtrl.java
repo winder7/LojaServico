@@ -67,7 +67,7 @@ public class ProdutoCtrl implements Serializable {
     public String formatarNumero(double num) {
         return String.format("R$ " + "%,.2f", num);
     }
-    
+
     public void salvaImagem() {
 
         try {
@@ -91,7 +91,7 @@ public class ProdutoCtrl implements Serializable {
             ex.printStackTrace();
         }
     }
-    
+
     public void actionExcluirImagem() {
         produto.getImagens().remove(imagem);
     }
@@ -132,7 +132,7 @@ public class ProdutoCtrl implements Serializable {
             ex.printStackTrace();
         }
     }
-    
+
     public int getImagem(Produto produto) {
         return produto.getImagens().get(0).getId();
     }

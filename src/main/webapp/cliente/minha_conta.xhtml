@@ -25,7 +25,7 @@
             <ui:define name="content">
                 <h:form id="form" class="form">
                     <p:panel rendered="#{'minhaConta'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Minha Conta">
-                        olá eu sou sua conta
+                        <h:commandLink value="Download Boleto" action="#{pagamentoCtrl.gerarBoletoTeste()}" />
                     </p:panel>
 
                     <p:panel rendered="#{'meusPedidos'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Meus Pedidos">
