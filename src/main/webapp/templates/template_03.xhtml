@@ -8,7 +8,7 @@
         <link rel="shortcut icon" href="../resources/img/favicon3.png"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
-        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/cssLayout03.css"/>
         <h:outputStylesheet name="./css/styles.css"/>
         <title><ui:insert name="title">Loja de Serviços</ui:insert></title>
     </h:head>
@@ -21,7 +21,7 @@
                 <ui:insert name="menu" >
                     <ui:include src="/templates/menu.xhtml" />
                 </ui:insert>
-                
+
                 <ui:insert name="termos" >
                     <ui:include src="/templates/termos.xhtml" />
                 </ui:insert>
@@ -32,13 +32,8 @@
             <div id="left" >
                 <ui:insert name="left"></ui:insert>
             </div>
-            <div>
-                <div id="right">
-                    <ui:insert name="right"></ui:insert>
-                </div>
-                <div id="content" class="center_content">
-                    <ui:insert name="content">Content</ui:insert>
-                </div>
+            <div id="content" class="center_content">
+                <ui:insert name="content">Content</ui:insert>
             </div>
         </div>
         <div id="bottom">

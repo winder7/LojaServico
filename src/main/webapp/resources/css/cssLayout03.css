@@ -1,0 +1,63 @@
+#top {
+    margin: 0px 0px 10px 0px;
+    position: fixed;
+    z-index: 1050;
+    width: 100%;
+    top: 0
+}
+
+#bottom {
+    position: absolute;
+    bottom:0;
+    z-index: 1050;
+    width: 100%;
+    background-color: #67BC48;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+    font-weight: bold;
+}
+
+#left {
+    float: left;
+    width: 12%;
+    margin: 0px 8px 0px 8px;
+}
+
+.content {
+    margin-top: 92px
+}
+
+.center_content {
+    margin: 0px 8px 0px 12%;
+    margin-top: 92px
+}
+
+.left_content {
+    margin: -3px 8px 0px 8px;
+}
+
+#top a:link, #top a:visited {
+    font-weight : bold;
+    text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+.menu-icon {
+    color: black;
+    font-size: 14px;
+}
+.menu-item {
+    color: black;
+    font-size: 14px;
+}
+.menu-item:hover {
+    font-size: 15px;
+}
+.menu-icon:hover {
+    font-size: 15px;
+}
