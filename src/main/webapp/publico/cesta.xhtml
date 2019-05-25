@@ -31,7 +31,7 @@
                             <p:column headerText="Preço" sortBy="f.preco">
                                 <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor)}"/>
                             </p:column>
-                            <p:column style="width:6%;text-align: center">
+                            <p:column style="width:75px;text-align: center">
                                 <p:commandButton rendered="#{f.produto != null}" update=":form:ProdDetalhe" 
                                                  oncomplete="PF('ProdDetalhe').show()" icon="pi pi-search" title="Detalhe">
                                     <f:setPropertyActionListener value="#{f.produto != null ? f.produto : f.servico}" target="#{cestaCtrl.produto}"/>
