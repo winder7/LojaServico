@@ -44,6 +44,9 @@
                                     <h:selectBooleanCheckbox value="#{wizardCtrl.skip}" rendered="#{pessoaCtrl.pessoa.dataNasc != null}"/>
                                 </h:panelGrid>
                                 <b><p:outputLabel value="A senha precisa conter pelo menos 8 caracteres e também deve incluir pelo menos 1 letra minúscula (abc), 1 maiúscula (ABC) e 1 número (123)."/></b>
+                                <p>
+                                    <p:button class="botaoExcluir" value="Cancelar" icon="fa fa-angle-left" href="#{request.contextPath}/publico/index.xhtml"/>
+                                </p>
                             </p:panel>
                         </p:tab>
 

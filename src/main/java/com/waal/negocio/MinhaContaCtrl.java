@@ -1,5 +1,6 @@
 package com.waal.negocio;
 
+import com.waal.beans.Fone;
 import com.waal.beans.Pedido;
 import com.waal.beans.Pessoa;
 import com.waal.persistencia.PedidoDAO;
@@ -21,6 +22,7 @@ public class MinhaContaCtrl implements Serializable {
     private String menu = "meusPedidos";
     private Pessoa pessoa = new Pessoa();
     private String tipoPessoa = "PF";
+    private Fone fone = new Fone();
     private List<Pedido> lista = new ArrayList<Pedido>();
     
     private String _nome;
@@ -41,6 +43,10 @@ public class MinhaContaCtrl implements Serializable {
 
     public void setNome(String _nome) {
         this._nome = _nome;
+    }
+    
+    public void actionExcluirFone() {
+        pessoa.getFones().remove(fone);
     }
 
     //gets e sets
@@ -74,5 +80,13 @@ public class MinhaContaCtrl implements Serializable {
 
     public void setTipoPessoa(String tipoPessoa) {
         this.tipoPessoa = tipoPessoa;
+    }
+
+    public Fone getFone() {
+        return fone;
+    }
+
+    public void setFone(Fone fone) {
+        this.fone = fone;
     }
 }

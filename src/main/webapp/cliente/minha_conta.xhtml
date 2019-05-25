@@ -123,7 +123,7 @@
                                 <p:panel header="Telefones de Contato">
                                     <p:messages />
                                     <h:panelGrid id="fones" columns="2" style="text-align: left">
-                                        <h:dataTable id="listaFones" value="#{minhaContaCtrl.pessoa.fones}" var="f" rules="rows">
+                                        <h:dataTable id="listaFones" value="#{minhaContaCtrl.pessoa.fones}" var="fon" rules="rows">
                                             <f:facet name="header">
                                                 <p:commandButton value="Adicionar Fone" update=":form:fones" icon="fa fa-phone" actionListener="#{pessoaCtrl.actionInserirFone(minhaContaCtrl.pessoa)}"/>
                                             </f:facet>
@@ -131,13 +131,13 @@
                                                 <f:facet name="header">
                                                     <h:outputLabel value="Número"/>
                                                 </f:facet>
-                                                <p:inputMask value="#{f.numero}" mask="#{f.descricao == 'Fixo' ? '(99)9999-9999' : '(99)99999-9999'}"/>
+                                                <p:inputMask value="#{fon.numero}" mask="#{f.descricao == 'Fixo' ? '(99)9999-9999' : '(99)99999-9999'}"/>
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputLabel value="Tipo"/>
                                                 </f:facet>
-                                                <p:selectOneMenu value="#{f.descricao}" style="margin-top: 3px; width: 110px">
+                                                <p:selectOneMenu value="#{fon.descricao}" style="margin-top: 3px; width: 110px">
                                                     <f:selectItem itemLabel="Celular" itemValue="#{f.descricao}" />
                                                     <f:selectItem itemLabel="Fixo" itemValue="Fixo" />
                                                     <f:selectItem itemLabel="Celular" itemValue="Celular" />
@@ -145,8 +145,8 @@
                                                 </p:selectOneMenu>
                                             </h:column>
                                             <h:column>
-                                                <p:commandButton value="Remover" update=":form:fones" actionListener="#{pessoaCtrl.actionExcluirFone()}">
-                                                    <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.fone}"/>
+                                                <p:commandButton value="Remover" update=":form:fones" actionListener="#{minhaContaCtrl.actionExcluirFone()}">
+                                                    <f:setPropertyActionListener value="#{fon}" target="#{minhaContaCtrl.fone}"/>
                                                 </p:commandButton>
                                             </h:column>
                                         </h:dataTable>
@@ -191,23 +191,23 @@
                                             <h:outputText value="UF: " />
                                             <h:outputText value="#{minhaContaCtrl.pessoa.uf}" styleClass="outputLabel"/>
 
-                                            <h:dataTable value="#{minhaContaCtrl.pessoa.fones}" var="f" rules="rows" >
+                                            <h:dataTable value="#{minhaContaCtrl.pessoa.fones}" var="fone" rules="rows" >
                                                 <p:column>
                                                     <h:outputText value="Telefone " />
-                                                    <h:outputText value="#{f.descricao}: "/>
+                                                    <h:outputText value="#{fone.descricao}: "/>
                                                 </p:column>
                                             </h:dataTable>
-                                            <h:dataTable value="#{minhaContaCtrl.pessoa.fones}" var="f" rules="rows" styleClass="outputLabel">
+                                            <h:dataTable value="#{minhaContaCtrl.pessoa.fones}" var="fone" rules="rows" styleClass="outputLabel">
                                                 <p:column>
-                                                    <h:outputText value="#{f.numero}"/>
+                                                    <h:outputText value="#{fone.numero}"/>
                                                 </p:column>
                                             </h:dataTable>
                                         </h:panelGrid>
                                     </h:panelGrid>
                                     <hr></hr>
                                     <h:panelGrid columns="2" >
-                                        <p:commandButton value="Salvar" actionListener="#{pessoaCtrl.alterar(minhaContaCtrl.pessoa)}" update="form" oncomplete="PF('contaDialog').show()"/>
-                                        <p:button value="Cancelar" href="#{request.contextPath}/publico/index.xhtml"/>
+                                        <p:commandButton class="botaoGravar" value="Salvar" actionListener="#{pessoaCtrl.alterar(minhaContaCtrl.pessoa)}" update="form" action="minha_conta.xhtml?faces-redirect=true"/>
+                                        <p:button class="botaoExcluir" value="Cancelar" href="#{request.contextPath}/publico/index.xhtml"/>
                                     </h:panelGrid>
                                 </p:panel>
                             </p:tab>
