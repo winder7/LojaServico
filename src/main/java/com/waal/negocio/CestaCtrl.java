@@ -31,14 +31,14 @@ public class CestaCtrl implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Adicionado  com sucesso!"));
         listaProdServ.add(new ProdutoServico(produto));
-        imprimeProdServ();
+        //imprimeProdServ();
     }
 
     public void addCesta(Servico servico) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Adicionado com sucesso!"));
         listaProdServ.add(new ProdutoServico(servico));
-        imprimeProdServ();
+        //imprimeProdServ();
     }
 
     public void addCesta(ProdutoServico prodServ) {
