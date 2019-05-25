@@ -45,7 +45,7 @@
                 <p:submenu label="#{pessoaCtrl.usuarioLogado}" icon="fa fa-user-circle-o" style="float: right; margin-right: 10px;margin-top:4px;">
                     <p:menuitem rendered="#{!pessoaCtrl.usrLogado}" actionListener="#{pessoaCtrl.actionInserir()}" action="cadastro.xhtml?faces-redirect=true" value="Crie sua conta" icon="fa fa-address-book-o"/>
                     <p:menuitem rendered="#{!pessoaCtrl.usrLogado}" value="Entre" url="#{request.contextPath}/publico/login.xhtml" icon="fa fa-sign-in"/>
-                    <p:menuitem rendered="#{pessoaCtrl.usrLogado}" value="Minha Conta" icon="fa fa-id-card-o" url="#{request.contextPath}/cliente/minha_conta.xhtml"/>
+                    <p:menuitem rendered="#{pessoaCtrl.mostrarBotaoMinhaConta()}" value="Minha Conta" icon="fa fa-id-card-o" url="#{request.contextPath}/cliente/minha_conta.xhtml"/>
                     <p:menuitem rendered="#{pessoaCtrl.usrLogado}" value="Sair" icon="fa fa-sign-out" url="#{request.contextPath}/j_spring_security_logout"/>
                 </p:submenu>  
             </p:menubar>

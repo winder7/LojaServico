@@ -100,6 +100,10 @@ public class PessoaCtrl implements Serializable {
         usrLogado = !"Olá Visitante!".equals(nome);
         return nome;
     }
+    
+    public boolean mostrarBotaoMinhaConta(){
+        return (!getUserAdmin() && this.usrLogado);
+    }
 
     public boolean getUserAdmin() {
         return SessionData.ehUserAdmin();
