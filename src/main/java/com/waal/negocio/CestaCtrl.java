@@ -26,19 +26,20 @@ public class CestaCtrl implements Serializable {
     private Produto produto2 = new Produto();
     private List<Produto> listaProdutos = new ArrayList<>();
     private List<ProdutoServico> listaProdServ = new ArrayList<>();
+    private double soma;
 
     public void addCesta(Produto produto) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Adicionado  com sucesso!"));
         listaProdServ.add(new ProdutoServico(produto));
-        //imprimeProdServ();
+        soma += produto.getPreco();
     }
 
     public void addCesta(Servico servico) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Adicionado com sucesso!"));
         listaProdServ.add(new ProdutoServico(servico));
-        //imprimeProdServ();
+        soma += servico.getValor();
     }
 
     public void addCesta(ProdutoServico prodServ) {
@@ -48,12 +49,13 @@ public class CestaCtrl implements Serializable {
             addCesta(prodServ.getServico());
         }
     }
-    
+
     public String formatarNumero(double num) {
         return String.format("R$ " + "%,.2f", num);
     }
 
     public void imprimeProdServ() {
+        
         for (int i = 0; i < listaProdServ.size(); i++) {
             if (listaProdServ.get(i).getProduto() != null) {
                 System.out.println(listaProdServ.get(i).getProduto().getNome());
@@ -65,12 +67,15 @@ public class CestaCtrl implements Serializable {
 
     public void actionExcluir(ProdutoServico itens) {
         listaProdServ.remove(itens);
+        this.soma -= itens.getProduto().getPreco(); 
+        System.out.println(itens.getProduto().getPreco());
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Removido com sucesso!"));
     }
 
     public void actionLimpar() {
         listaProdServ.clear();
+        soma = 0.0;
     }
 
     public int getImagem(Produto produto) {
@@ -129,5 +134,12 @@ public class CestaCtrl implements Serializable {
     public void setProduto2(Produto produto2) {
         this.produto2 = produto2;
     }
-    
+
+    public double getSoma() {
+        return soma;
+    }
+
+    public void setSoma(double soma) {
+        this.soma = soma;
+    }
 }

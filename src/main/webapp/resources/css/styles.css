@@ -81,7 +81,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
     margin-top: 11px !important;
     color: white !important;
     background-color: #EC961C !important
-    border-color: #EC961C !important;
+        border-color: #EC961C !important;
 }
 .botaoGravar {
     font-weight: bold;
@@ -160,6 +160,10 @@ body .ui-panelgrid .ui-panelgrid-cell {
     height: 180px;
 }
 
+#dataTableFooter{
+    text-align: right !important;
+}
+
 @media only screen and (max-width:1369px) {
     /* For HD Notebooks: */
     .imagens-vitrine {
@@ -181,6 +185,13 @@ body .ui-panelgrid .ui-panelgrid-cell {
     }
 }
 
+@media only screen and (max-width:1290px) {
+
+    i.imagem-busca {
+        margin-left: 572px;
+    }
+}
+
 @media only screen and (max-width:800px) {
     .imagens-vitrine {
         max-width: 250px;
@@ -189,6 +200,10 @@ body .ui-panelgrid .ui-panelgrid-cell {
         min-height:120px;
         width: auto;
         height: auto;
+    }
+
+    i.imagem-busca {
+        margin-left: 472px;
     }
 }
 
@@ -201,5 +216,9 @@ body .ui-panelgrid .ui-panelgrid-cell {
         min-height:60px;
         width: auto;
         height: auto;
+    }
+
+    i.imagem-busca {
+        margin-left: 272px;
     }
 }

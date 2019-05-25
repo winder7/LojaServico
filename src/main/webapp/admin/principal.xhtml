@@ -6,12 +6,35 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:body>
-        <ui:composition template="/templates/template_02.xhtml">
+        <ui:composition template="/templates/template_01.xhtml">
             <ui:define name="title">Área Administrativa</ui:define>
             <ui:define name="content">
-                <center><img class="img" src="../resources/img/index1.png" style="margin-top: 15px" /></center>
-                <h:form id="form">
-                </h:form>
+                <center>
+                    <h:form id="form">
+                        <p:panelGrid columns="2" style="text-align: center; ">
+                            <p:column style="background-color: red">
+                                <p:commandLink title="Fechar" style="background-color: transparent">
+                                    <h:outputText styleClass="fa fa-home" style="font-size: 300px;"/>
+                                </p:commandLink>
+                            </p:column>
+                            <p:column>
+                                <p:commandLink title="Fechar">
+                                    <h:outputText styleClass="fa fa-home" style="font-size: 300px"/>
+                                </p:commandLink>
+                            </p:column>
+                            <p:column>
+                                <p:commandLink title="Fechar">
+                                    <h:outputText styleClass="fa fa-home" style="font-size: 300px"/>
+                                </p:commandLink>
+                            </p:column>
+                            <p:column>
+                                <p:commandLink title="Fechar">
+                                    <h:outputText styleClass="fa fa-home" style="font-size: 300px"/>
+                                </p:commandLink>
+                            </p:column>
+                        </p:panelGrid >
+                    </h:form>
+                </center>
             </ui:define>
         </ui:composition>
     </h:body>

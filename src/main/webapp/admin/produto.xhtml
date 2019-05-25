@@ -35,7 +35,7 @@
                             <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
                                 <h:outputText value="#{f.id}"/>
                             </p:column>
-                            <p:column headerText="Nome" sortBy="f.nome">
+                            <p:column headerText="Nome" sortBy="#{f.nome}">
                                 <h:outputText value="#{f.nome}"/>
                             </p:column>
                             <p:column headerText="Preço" sortBy="f.preco">
