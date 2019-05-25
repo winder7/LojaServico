@@ -13,87 +13,109 @@
                 <h:form id="form" style="padding: 10px 15px 15px 15px">
                     <p:growl id="msgs" showDetail="true"/>
 
-                    <p:panel id="basic" header="Lista de Produtos">
-                        <f:facet name="header">
-                            <i class="fa fa-shopping-basket"><p:outputLabel value=" Cesta" style="font-weight: bold"/></i>
-                        </f:facet>
-                        <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{cestaCtrl.listaProdServ}"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                                     {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Cesta Vazia!"
-                                     paginator="true" rows="10" style="margin-bottom:20px" >
+                    <p:wizard id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
+                        <p:tab id="login" title="Cesta">
+                            <p:panel id="basic" header="Suas Compras">
+                                <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{cestaCtrl.listaProdServ}"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                             {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Cesta Vazia!"
+                                             paginator="true" rows="10" style="margin-bottom:20px" >
 
-                            <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
-                                <h:outputText value="#{f.produto != null ? f.produto.id : f.servico.id}"/>
-                            </p:column>
-                            <p:column headerText="Imagem" style="width:100px;text-align: center">
-                                <p:graphicImage value="../resources/prod_Serv/#{cestaCtrl.getImagem(f.produto != null ? f.produto : f.servico)}.jpg" 
-                                                cache="false" style="height: 65px; width: 100px"/>
-                            </p:column>
-                            <p:column headerText="Nome" sortBy="#{f.produto != null ? f.produto.nome : f.servico.nome}">
-                                <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}"/>
-                            </p:column>
-                            <p:column headerText="Preço" sortBy="f.preco">
-                                <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor)}"/>
-                            </p:column>
-                            <p:column style="width:75px;text-align: center">
-                                <p:commandButton rendered="#{f.produto != null}" update=":form:ProdDetalhe" 
-                                                 oncomplete="PF('ProdDetalhe').show()" icon="pi pi-search" title="Detalhe">
-                                    <f:setPropertyActionListener value="#{f.produto != null ? f.produto : f.servico}" target="#{cestaCtrl.produto}"/>
-                                </p:commandButton>
-                                <p:commandButton rendered="#{f.produto == null}" update=":form:ServDetalhe" 
-                                                 oncomplete="PF('ServDetalhe').show()" icon="pi pi-search" title="Detalhe">
-                                    <f:setPropertyActionListener value="#{f.produto != null ? f.produto : f.servico}" target="#{cestaCtrl.servico}"/>
-                                </p:commandButton>
-                                <p:commandButton class="botaoExcluir" style="margin-left: 8px" update="form menu:menubar"
-                                                 title="Remover Item" icon="fa fa-close" action="#{cestaCtrl.actionExcluir(f)}"/>
-                            </p:column>
-                            <f:facet name="footer">
-                                <p:column>
-                                    <h:outputText value="Total:" style="margin-left: 152px"/>
-                                </p:column>
-                                <p:column>
-                                    <h:outputText value="#{ cestaCtrl.formatarNumero(cestaCtrl.soma)}" style="margin-left: 10px" />
-                                </p:column>
-                            </f:facet>
-                        </p:dataTable>
-                    </p:panel>
+                                    <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
+                                        <h:outputText value="#{f.produto != null ? f.produto.id : f.servico.id}"/>
+                                    </p:column>
+                                    <p:column headerText="Imagem" style="width:100px;text-align: center">
+                                        <p:graphicImage value="../resources/prod_Serv/#{cestaCtrl.getImagem(f.produto != null ? f.produto : f.servico)}.jpg" 
+                                                        cache="false" style="height: 65px; width: 100px"/>
+                                    </p:column>
+                                    <p:column headerText="Nome" sortBy="#{f.produto != null ? f.produto.nome : f.servico.nome}">
+                                        <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Preço" sortBy="f.preco">
+                                        <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor)}"/>
+                                    </p:column>
+                                    <p:column style="width:75px;text-align: center">
+                                        <p:commandButton rendered="#{f.produto != null}" update=":form:ProdDetalhe" 
+                                                         oncomplete="PF('ProdDetalhe').show()" icon="pi pi-search" title="Detalhe">
+                                            <f:setPropertyActionListener value="#{f.produto != null ? f.produto : f.servico}" target="#{cestaCtrl.produto}"/>
+                                        </p:commandButton>
+                                        <p:commandButton rendered="#{f.produto == null}" update=":form:ServDetalhe" 
+                                                         oncomplete="PF('ServDetalhe').show()" icon="pi pi-search" title="Detalhe">
+                                            <f:setPropertyActionListener value="#{f.produto != null ? f.produto : f.servico}" target="#{cestaCtrl.servico}"/>
+                                        </p:commandButton>
+                                        <p:commandButton class="botaoExcluir" style="margin-left: 8px" update="form menu:menubar"
+                                                         title="Remover Item" icon="fa fa-close" action="#{cestaCtrl.actionExcluir(f)}"/>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <p:column>
+                                            <h:outputText value="Total:" style="margin-left: 152px"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="#{ cestaCtrl.formatarNumero(cestaCtrl.soma)}" style="margin-left: 10px" />
+                                        </p:column>
+                                    </f:facet>
+                                </p:dataTable>
+                            </p:panel>
 
-                    <p:dialog header="Detalhes do produto" widgetVar="ProdDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                        <p:outputPanel id="ProdDetalhe" style="text-align:center;">
-                            <p:dataGrid id="gridImgProd" var="imgP" value="#{cestaCtrl.produto.imagens}" emptyMessage="Sem imagem">
-                                <p:graphicImage value="../resources/prod_Serv/#{imgP.id}.jpg" cache="false" class="imagens-detalhe"/>
-                            </p:dataGrid><br/>
-                            <p:panelGrid  columns="2" rendered="#{not empty cestaCtrl.produto}" columnClasses="label,value">
+                            <p:dialog header="Detalhes do produto" widgetVar="ProdDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:outputPanel id="ProdDetalhe" style="text-align:center;">
+                                    <p:dataGrid id="gridImgProd" var="imgP" value="#{cestaCtrl.produto.imagens}" emptyMessage="Sem imagem">
+                                        <p:graphicImage value="../resources/prod_Serv/#{imgP.id}.jpg" cache="false" class="imagens-detalhe"/>
+                                    </p:dataGrid><br/>
+                                    <p:panelGrid  columns="2" rendered="#{not empty cestaCtrl.produto}" columnClasses="label,value">
 
-                                <h:outputText value="Código:" />
-                                <h:outputText value="#{cestaCtrl.produto.id}" />
+                                        <h:outputText value="Código:" />
+                                        <h:outputText value="#{cestaCtrl.produto.id}" />
 
-                                <h:outputText value="Nome:" />
-                                <h:outputText value="#{cestaCtrl.produto.nome}" />
+                                        <h:outputText value="Nome:" />
+                                        <h:outputText value="#{cestaCtrl.produto.nome}" />
 
-                                <h:outputText value="Preço:" />
-                                <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.produto.preco)}" />
-                            </p:panelGrid>
-                        </p:outputPanel>
-                    </p:dialog>
-                    <p:dialog header="Detalhes do Servico" widgetVar="ServDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                        <p:outputPanel id="ServDetalhe" style="text-align:center;">
-                            <p:dataGrid id="gridImgServ" var="imgS" value="#{cestaCtrl.servico.imagens}" emptyMessage="Sem imagem">
-                                <p:graphicImage value="../resources/prod_Serv/#{imgS.id}.jpg" cache="false" class="imagens-detalhe"/>
-                            </p:dataGrid><br/>
-                            <p:panelGrid  columns="2" rendered="#{not empty cestaCtrl.servico}" columnClasses="label,value">
+                                        <h:outputText value="Preço:" />
+                                        <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.produto.preco)}" />
+                                    </p:panelGrid>
+                                </p:outputPanel>
+                            </p:dialog>
+                            <p:dialog header="Detalhes do Servico" widgetVar="ServDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:outputPanel id="ServDetalhe" style="text-align:center;">
+                                    <p:dataGrid id="gridImgServ" var="imgS" value="#{cestaCtrl.servico.imagens}" emptyMessage="Sem imagem">
+                                        <p:graphicImage value="../resources/prod_Serv/#{imgS.id}.jpg" cache="false" class="imagens-detalhe"/>
+                                    </p:dataGrid><br/>
+                                    <p:panelGrid  columns="2" rendered="#{not empty cestaCtrl.servico}" columnClasses="label,value">
 
-                                <h:outputText value="Código:" />
-                                <h:outputText value="#{cestaCtrl.servico.id}" />
+                                        <h:outputText value="Código:" />
+                                        <h:outputText value="#{cestaCtrl.servico.id}" />
 
-                                <h:outputText value="Nome:" />
-                                <h:outputText value="#{cestaCtrl.servico.nome}" />
+                                        <h:outputText value="Nome:" />
+                                        <h:outputText value="#{cestaCtrl.servico.nome}" />
 
-                                <h:outputText value="Preço:" />
-                                <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.servico.valor)}" />
-                            </p:panelGrid>
-                        </p:outputPanel>
-                    </p:dialog>
+                                        <h:outputText value="Preço:" />
+                                        <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.servico.valor)}" />
+                                    </p:panelGrid>
+                                </p:outputPanel>
+                            </p:dialog>
+                        </p:tab>
+
+                        <p:tab id="personal" title="Confirmar Endereço">
+                            <p:panel header="Confirmar o seu endereço">
+                                <p:messages />
+                                <meta http-equiv="Refresh" content="0; url='#{request.contextPath}/publico/login.xhtml'"/>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab id="address" title="Forma de Pagamento">
+                            <p:panel header="Escolha a forma de pagamento">
+                                <p:messages />
+
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab id="confirmacao" title="Confirmação">
+                            <p:panel header="Verifique se esta tudo correto">
+                                <p:messages />
+
+                            </p:panel>
+                        </p:tab>
+                    </p:wizard>
                 </h:form>
             </ui:define>
         </ui:composition>

@@ -132,6 +132,10 @@ public class ProdutoCtrl implements Serializable {
             ex.printStackTrace();
         }
     }
+    
+    public int getImagem(Produto produto) {
+        return produto.getImagens().get(0).getId();
+    }
 
     //GET-SET
     public String getFiltro() {

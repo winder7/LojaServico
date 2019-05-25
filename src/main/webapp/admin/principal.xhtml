@@ -11,25 +11,29 @@
             <ui:define name="content">
                 <center>
                     <h:form id="form">
-                        <p:panelGrid columns="2" style="text-align: center; ">
-                            <p:column style="background-color: red">
-                                <p:commandLink title="Fechar" style="background-color: transparent">
-                                    <h:outputText styleClass="fa fa-home" style="font-size: 300px;"/>
+                        <p:panelGrid columns="2" style="text-align: center;">
+                            <p:column>
+                                <p:commandLink title="Fechar" action="produto.xhtml?faces-redirect=true">
+                                    <h:outputText styleClass="fa fa-cubes" style="font-size: 300px;" value=""/> <br></br>
+                                    <h:outputText style="font-size: 60px;" value="Produtos"/>
                                 </p:commandLink>
                             </p:column>
                             <p:column>
-                                <p:commandLink title="Fechar">
-                                    <h:outputText styleClass="fa fa-home" style="font-size: 300px"/>
+                                <p:commandLink title="Fechar" style="color: #EC961C">
+                                    <h:outputText styleClass="fa fa-wrench" style="font-size: 300px"/> <br></br>
+                                    <h:outputText style="font-size: 60px;" value="Serviços"/>
                                 </p:commandLink>
                             </p:column>
                             <p:column>
-                                <p:commandLink title="Fechar">
-                                    <h:outputText styleClass="fa fa-home" style="font-size: 300px"/>
+                                <p:commandLink title="Fechar" style="color: #67BC48">
+                                    <h:outputText styleClass="fa fa-credit-card" style="font-size: 300px"/> <br></br>
+                                    <h:outputText style="font-size: 60px;" value="Formas de Pagamento"/>
                                 </p:commandLink>
                             </p:column>
                             <p:column>
-                                <p:commandLink title="Fechar">
-                                    <h:outputText styleClass="fa fa-home" style="font-size: 300px"/>
+                                <p:commandLink  style="color: orangered">
+                                    <h:outputText styleClass="fa fa-group" style="font-size: 300px"/> <br></br>
+                                    <h:outputText style="font-size: 60px;" value="Usuários"/>
                                 </p:commandLink>
                             </p:column>
                         </p:panelGrid >

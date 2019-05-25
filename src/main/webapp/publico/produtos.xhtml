@@ -12,6 +12,7 @@
             <ui:define name="content">
                 <div id="conteudo-produtos">
                     <h:form id="form">
+                        <p:growl id="msgs" showDetail="true"/>
                         <p:dataGrid var="prod" value="#{produtoCtrl.listagem}" rendered="#{produtoCtrl.listagem.size()!=0}" columns="3" layout="grid" style="overflow: hidden"
                                     rows="12" paginator="true" id="cars" paginatorPosition="top" rowsPerPageTemplate="12,24,48" 
                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">

@@ -33,6 +33,10 @@
                             <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
                                 <h:outputText value="#{f.id}" />
                             </p:column>
+                            <p:column headerText="Imagem" style="width:100px;text-align: center">
+                                <p:graphicImage value="../resources/prod_Serv/#{servicoCtrl.getImagem(f)}.jpg" 
+                                                cache="false" style="height: 65px; width: 100px"/>
+                            </p:column>
                             <p:column headerText="Nome" sortBy="f.nome">
                                 <h:outputText value="#{f.nome}" />
                             </p:column>
