@@ -145,7 +145,7 @@
                                                 </p:selectOneMenu>
                                             </h:column>
                                             <h:column>
-                                                <p:commandButton value="Remover" update=":form:fones" actionListener="#{minhaContaCtrl.actionExcluirFone()}">
+                                                <p:commandButton value="Remover" update=":form:fones" action="#{minhaContaCtrl.actionExcluirFone()}">
                                                     <f:setPropertyActionListener value="#{fon}" target="#{minhaContaCtrl.fone}"/>
                                                 </p:commandButton>
                                             </h:column>
