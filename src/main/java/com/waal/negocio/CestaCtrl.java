@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import com.waal.beans.Produto;
 import com.waal.beans.ProdutoServico;
 import com.waal.beans.Servico;
+import com.waal.uteis.Gerar;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -27,6 +28,14 @@ public class CestaCtrl implements Serializable {
     private List<Produto> listaProdutos = new ArrayList<>();
     private List<ProdutoServico> listaProdServ = new ArrayList<>();
     private double soma;
+    private double freteNormal;
+    private double freteExpersso;
+    private double freteEscolhido;
+
+    public CestaCtrl() {
+        freteNormal = Gerar.Frete(9, 40);
+        freteExpersso = freteNormal + Gerar.Frete(1, 15);
+    }
 
     public void addCesta(Produto produto) {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -141,5 +150,29 @@ public class CestaCtrl implements Serializable {
 
     public void setSoma(double soma) {
         this.soma = soma;
+    }
+
+    public double getFreteNormal() {
+        return freteNormal;
+    }
+
+    public void setFreteNormal(double freteNormal) {
+        this.freteNormal = freteNormal;
+    }
+
+    public double getFreteExpersso() {
+        return freteExpersso;
+    }
+
+    public void setFreteExpersso(double freteExpersso) {
+        this.freteExpersso = freteExpersso;
+    }
+
+    public double getFreteEscolhido() {
+        return freteEscolhido;
+    }
+
+    public void setFreteEscolhido(double freteEscolhido) {
+        this.freteEscolhido = freteEscolhido;
     }
 }

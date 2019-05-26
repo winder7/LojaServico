@@ -101,11 +101,11 @@
                         <p:tab id="endereco" title="Confirmar Endereço">
                             <p:panel header="Confirmar o seu endereço" >
                                 <p:messages />
-                                <h:panelGrid columns="2">
+                                <h:panelGrid id="resumo" columns="2">
                                     <p:panel header="Endereço Cadastrado">
                                         <h:panelGrid columns="2">
-                                            <h:outputText value="CEP: " style="font-weight: bold"/>
-                                            <h:outputText value="#{pessoaCtrl.dadosUsrLogado.cep}"/>
+                                            <h:outputText value="Nome: " style="font-weight: bold"/>
+                                            <h:outputText value="#{pessoaCtrl.dadosUsrLogado.nome}"/>
 
                                             <h:outputText value="Rua: " style="font-weight: bold"/>
                                             <h:outputText value="#{pessoaCtrl.pessoa.rua}"/>
@@ -114,10 +114,10 @@
                                             <h:outputText value="#{pessoaCtrl.pessoa.bairro}" />
 
                                             <h:outputText value="Cidade: " style="font-weight: bold"/>
-                                            <h:outputText value="#{pessoaCtrl.pessoa.cidade}"/>
+                                            <h:outputText value="#{pessoaCtrl.pessoa.cidade} - #{pessoaCtrl.pessoa.uf}"/>
 
-                                            <h:outputText value="UF: " style="font-weight: bold"/>
-                                            <h:outputText value="#{pessoaCtrl.pessoa.uf}"/>
+                                            <h:outputText value="CEP: " style="font-weight: bold"/>
+                                            <h:outputText value="#{pessoaCtrl.pessoa.cep}"/>
                                         </h:panelGrid>
                                     </p:panel>
 
@@ -127,9 +127,23 @@
                                             <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.soma)}"/>
 
                                             <h:outputText value="Frete para #{pessoaCtrl.pessoa.cidade}"/>
-                                            <h:outputText value="#{pessoaCtrl.pessoa.uf}"/>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteEscolhido)}"/>
                                             <h:outputText value="Total a pagar " style="font-weight: bold; margin-top: 60px"/>
-                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.soma)}" />
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.soma + cestaCtrl.freteEscolhido)}" />
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </h:panelGrid>
+
+                                <h:panelGrid columns="2">
+                                    <p:panel header="Opções de entrega">
+                                        <h:panelGrid columns="2">
+                                            <p:selectOneRadio id="frete" value="#{cestaCtrl.freteEscolhido}" unselectable="true">
+                                                <f:selectItem itemLabel="Frete Normal" itemValue="#{cestaCtrl.freteNormal}" />
+                                                <f:selectItem itemLabel="Frete Expresso" itemValue="#{cestaCtrl.freteExpersso}" />
+                                                <p:ajax event="change" update="resumo"/>
+                                            </p:selectOneRadio><br></br>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteNormal)}"/>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteExpersso)}"/>
                                         </h:panelGrid>
                                     </p:panel>
                                 </h:panelGrid>

@@ -27,6 +27,7 @@ import org.jrimum.domkee.financeiro.banco.febraban.Titulo.Aceite;
 public class Gerar {
 
     public static String Senha() {
+        
         String caracteres = "ABCDEFGHIJKLMNOPQRSTUVYWXZabcdefghijklmnopqrstuvywxz1234567890!@#$%";
 
         Random random = new Random();
@@ -39,6 +40,15 @@ public class Gerar {
         }
         System.out.println(armazenaChaves);
         return armazenaChaves;
+    }
+    
+    public static double Frete(int min, int max) {
+    
+        Random random = new Random();
+        double numInt = random.nextInt((max - min) + 1) + min;
+        double numDec = random.nextDouble();
+
+        return (numInt + numDec);
     }
 
     public static BoletoViewer Boleto(BoletoDto boletoDto) {
