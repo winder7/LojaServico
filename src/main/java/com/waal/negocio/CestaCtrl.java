@@ -31,6 +31,7 @@ public class CestaCtrl implements Serializable {
     private double freteNormal;
     private double freteExpersso;
     private double freteEscolhido;
+    private String formPagSel;
 
     public CestaCtrl() {
         freteNormal = Gerar.Frete(9, 40);
@@ -174,5 +175,13 @@ public class CestaCtrl implements Serializable {
 
     public void setFreteEscolhido(double freteEscolhido) {
         this.freteEscolhido = freteEscolhido;
+    }
+
+    public String getFormPagSel() {
+        return formPagSel;
+    }
+
+    public void setFormPagSel(String formPagSel) {
+        this.formPagSel = formPagSel;
     }
 }
