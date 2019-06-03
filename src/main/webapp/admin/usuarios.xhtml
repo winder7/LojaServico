@@ -166,7 +166,7 @@
                                         </p:selectOneMenu>
                                     </h:column>
                                     <h:column>
-                                        <p:commandButton value="Remover" update=":form:fones" actionListener="#{pessoaCtrl.actionExcluirFone()}">
+                                        <p:commandButton value="Remover" update=":form:fones" action="#{pessoaCtrl.actionExcluirFone()}">
                                             <f:setPropertyActionListener value="#{f}" target="#{pessoaCtrl.fone}"/>
                                         </p:commandButton>
                                     </h:column>

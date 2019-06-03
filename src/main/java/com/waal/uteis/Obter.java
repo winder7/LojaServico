@@ -1,7 +1,12 @@
 package com.waal.uteis;
 
+import com.waal.beans.Imagem;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.List;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 
 /**
  * @Autor Winder Rezende
@@ -43,5 +48,39 @@ public class Obter {
             CaminhoArq = null;
         }
         return CaminhoArq;
-    } 
+    }
+    
+    public static void Imagens(List<Imagem> imagens) {
+        try {
+            ServletContext sContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+
+            File folder = new File(sContext.getRealPath("/resources/prod_Serv"));
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            for (Imagem img : imagens) {
+                String nomeArquivo = img.getId() + ".jpg";
+                String arquivo = sContext.getRealPath("/resources/prod_Serv") + File.separator + nomeArquivo;
+
+                criaArquivo(img.getImg(), arquivo);
+            }
+        } catch (Exception ex) {
+            System.out.println("Erro ao listar imagens: " + ex);
+        }
+    }
+    
+    private static void criaArquivo(byte[] bytes, String arquivo) {
+        FileOutputStream fos;
+
+        try {
+            fos = new FileOutputStream(arquivo);
+            fos.write(bytes);
+
+            fos.flush();
+            fos.close();
+        } catch (Exception ex) {
+            System.out.println("Erro ao criar imagem: " + ex);
+        }
+    }
 }

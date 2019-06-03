@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.waal.persistencia.ServicoDAO;
+import com.waal.uteis.Obter;
 import java.io.File;
 import java.io.FileOutputStream;
 import javax.servlet.ServletContext;
@@ -42,6 +43,7 @@ public class ServicoCtrl implements Serializable {
             ServicoDAO.alterar(servico);
             context.addMessage(null, new FacesMessage("Sucesso", "Alterado com sucesso!"));
         }
+        listaImagem();
     }
 
     public void actionInserir() {
@@ -55,7 +57,6 @@ public class ServicoCtrl implements Serializable {
     }
 
     public void processFileUpload(FileUploadEvent uploadEvent) {
-        System.out.println("Entrou");
         try {
             imagem = new Imagem();
             imagem.setServico(servico);
@@ -70,41 +71,14 @@ public class ServicoCtrl implements Serializable {
         servico.getImagens().remove(imagem);
     }
 
-    public void listaImagemsProduto() {
-
-        try {
-            ServletContext sContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-
-            imagens = ImagemDAO.listByServicos(servico.getId());
-
-            File folder = new File(sContext.getRealPath("/resources/prod_Serv"));
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-
-            for (Imagem f : imagens) {
-                String nomeArquivo = f.getId() + ".jpg";
-                String arquivo = sContext.getRealPath("/resources/prod_Serv") + File.separator + nomeArquivo;
-
-                criaArquivo(f.getImg(), arquivo);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public void listaImagem() {
+        imagens = servico.getImagens();
+        Obter.Imagens(imagens);
     }
-
-    private void criaArquivo(byte[] bytes, String arquivo) {
-        FileOutputStream fos;
-
-        try {
-            fos = new FileOutputStream(arquivo);
-            fos.write(bytes);
-
-            fos.flush();
-            fos.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    
+    public void listaTodasImagens() {
+        imagens = ImagemDAO.listagem();
+        Obter.Imagens(imagens);
     }
 
     public String formatarNumero(double num) {
@@ -112,7 +86,12 @@ public class ServicoCtrl implements Serializable {
     }
     
     public int getImagem(Servico servico) {
-        return servico.getImagens().get(0).getId();
+        try {
+            return servico.getImagens().get(0).getId();
+        } catch (Exception e) {
+            System.out.println("Este serviço não possui imagem: " + e);
+            return 0;
+        }
     }
 
     //GET-SET

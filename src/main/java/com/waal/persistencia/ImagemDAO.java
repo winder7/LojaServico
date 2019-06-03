@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.Query;
 
 /**
  * @Autor Winder Rezende
@@ -63,5 +64,14 @@ public class ImagemDAO implements Serializable {
         }
 
         return null;
+    }
+    
+    public static List<Imagem> listagem() {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Query consulta;
+        consulta = sessao.createQuery("from Imagem order by img_id");
+        List lista = consulta.list();
+        sessao.close();
+        return lista;
     }
 }

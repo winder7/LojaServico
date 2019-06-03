@@ -13,13 +13,13 @@
                     <h:form id="form">
                         <p:panelGrid columns="2" style="text-align: center;">
                             <p:column>
-                                <p:commandLink title="Fechar" action="/admin/produto.xhtml?faces-redirect=true">
+                                <p:commandLink title="Fechar" actionListener="#{produtoCtrl.listaTodasImagens()}" action="/admin/produto.xhtml?faces-redirect=true">
                                     <h:outputText styleClass="fa fa-cubes" style="font-size: 150px;" value=""/> <br></br>
                                     <h:outputText style="font-size: 40px;" value="Produtos"/>
                                 </p:commandLink>
                             </p:column>
                             <p:column>
-                                <p:commandLink title="Fechar" style="color: #EC961C" action="/admin/servico.xhtml?faces-redirect=true">
+                                <p:commandLink title="Fechar" style="color: #EC961C" actionListener="#{produtoCtrl.listaTodasImagens()}" action="/admin/servico.xhtml?faces-redirect=true">
                                     <h:outputText styleClass="fa fa-wrench" style="font-size: 150px"/> <br></br>
                                     <h:outputText style="font-size: 40px;" value="Serviços"/>
                                 </p:commandLink>

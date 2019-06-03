@@ -46,7 +46,7 @@
                                 <h:outputText value="#{produtoCtrl.formatarNumero(f.preco)}"/>
                             </p:column>
                             <p:column style="width:32px;text-align: center">
-                                <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()" icon="pi pi-search" title="View" action="#{produtoCtrl.listaImagemsProduto()}">
+                                <p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()" icon="pi pi-search" title="View" action="#{produtoCtrl.listaImagem()}">
                                     <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.produto}"/>
                                 </p:commandButton>
                             </p:column>
@@ -68,14 +68,14 @@
                                 <p:outputLabel value="Carregar:"/>
                                 <p:fileUpload fileUploadListener="#{produtoCtrl.processFileUpload}" mode="advanced" dragDropSupport="false" 
                                               label="Escolher" cancelLabel="Cancelar" uploadLabel="Carregar" sizeLimit="1000000" fileLimit="1"
-                                              invalidSizeMessage="Imagem muito grande" auto="false"
+                                              invalidSizeMessage="Imagem muito grande" auto="true"
                                               invalidFileMessage="Tipo de imagem não suportado"
                                               allowTypes="/(\.|\/)(jpe?g|png)$/" />
 
                                 <p:outputLabel value="Imagem:"/>
                                 <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
                                     <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
-                                    <p:commandButton value="Remover" update=":form:gridImg" actionListener="#{produtoCtrl.actionExcluirImagem()}">
+                                    <p:commandButton value="Remover" update=":form:gridImg" action="#{produtoCtrl.actionExcluirImagem()}">
                                         <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.imagem}"/>
                                     </p:commandButton>
                                 </p:dataGrid>

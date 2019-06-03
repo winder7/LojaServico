@@ -6,6 +6,7 @@ import com.waal.beans.Imagem;
 import com.waal.beans.Produto;
 import com.waal.persistencia.ImagemDAO;
 import com.waal.persistencia.ProdutoDAO;
+import com.waal.uteis.Obter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.Serializable;
@@ -46,11 +47,11 @@ public class ProdutoCtrl implements Serializable {
             ProdutoDAO.alterar(produto);
             context.addMessage(null, new FacesMessage("Sucesso", "Alterado com sucesso!"));
         }
+        listaImagem();
     }
 
     public void actionInserir() {
         produto = new Produto();
-        //return "lista_produto";
     }
 
     public void actionExcluir() {
@@ -78,10 +79,11 @@ public class ProdutoCtrl implements Serializable {
             imagem = new Imagem();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Imagem adicionada", "Imagem adicionada"));
         }
+        System.out.println("ok");
+        
     }
 
     public void processFileUpload(FileUploadEvent uploadEvent) {
-        System.out.println("Entrou");
         try {
             imagem = new Imagem();
             imagem.setProduto(produto);
@@ -96,45 +98,23 @@ public class ProdutoCtrl implements Serializable {
         produto.getImagens().remove(imagem);
     }
 
-    public void listaImagemsProduto() {
-
-        try {
-            ServletContext sContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-
-            imagens = ImagemDAO.listByProdutos(produto.getId());
-
-            File folder = new File(sContext.getRealPath("/resources/prod_Serv"));
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
-
-            for (Imagem f : imagens) {
-                String nomeArquivo = f.getId() + ".jpg";
-                String arquivo = sContext.getRealPath("/resources/prod_Serv") + File.separator + nomeArquivo;
-
-                criaArquivo(f.getImg(), arquivo);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public void listaImagem() {
+        imagens = produto.getImagens();
+        Obter.Imagens(imagens);
     }
 
-    private void criaArquivo(byte[] bytes, String arquivo) {
-        FileOutputStream fos;
-
-        try {
-            fos = new FileOutputStream(arquivo);
-            fos.write(bytes);
-
-            fos.flush();
-            fos.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public void listaTodasImagens() {
+        imagens = ImagemDAO.listagem();
+        Obter.Imagens(imagens);
     }
 
     public int getImagem(Produto produto) {
-        return produto.getImagens().get(0).getId();
+        try {
+            return produto.getImagens().get(0).getId();
+        } catch (Exception e) {
+            System.out.println("Este produto não possui imagem: " + e);
+            return 0;
+        }
     }
 
     //GET-SET
