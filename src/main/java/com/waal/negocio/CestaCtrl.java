@@ -40,17 +40,17 @@ public class CestaCtrl implements Serializable {
     }
 
     public void addCesta(Produto produto) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Sucesso", "Adicionado  com sucesso!"));
         listaProdServ.add(new ProdutoServico(produto));
         soma += produto.getPreco();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Sucesso", "Produto adicionado a cesta"));
     }
 
     public void addCesta(Servico servico) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Sucesso", "Adicionado com sucesso!"));
         listaProdServ.add(new ProdutoServico(servico));
         soma += servico.getValor();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Sucesso", "Serviço adicionado a cesta"));
     }
 
     public void addCesta(ProdutoServico prodServ) {
@@ -59,6 +59,11 @@ public class CestaCtrl implements Serializable {
         } else {
             addCesta(prodServ.getServico());
         }
+    }
+
+    public void msg() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Sucesso", "Produto adicionado"));
     }
 
     public String formatarNumero(double num) {
@@ -77,11 +82,15 @@ public class CestaCtrl implements Serializable {
     }
 
     public void actionExcluir(ProdutoServico itens) {
-        listaProdServ.remove(itens);
-        this.soma -= itens.getProduto().getPreco();
-        System.out.println(itens.getProduto().getPreco());
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Sucesso", "Removido com sucesso!"));
+        listaProdServ.remove(itens);
+        if (itens.getProduto() != null) {
+            this.soma -= itens.getProduto().getPreco();
+            context.addMessage(null, new FacesMessage("Sucesso", "Produto removido!"));
+        } else {
+            this.soma -= itens.getServico().getValor();
+            context.addMessage(null, new FacesMessage("Sucesso", "Serviço Removido!"));
+        }
     }
 
     public void actionLimpar() {
@@ -108,7 +117,7 @@ public class CestaCtrl implements Serializable {
             return "";
         }
     }
-    
+
     public String selDescricao(String descricao, int parcelas) {
         if (parcelas > 1) {
             return descricao + " em " + parcelas + " vezes";

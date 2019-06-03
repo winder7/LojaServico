@@ -12,6 +12,7 @@
             <ui:define name="content">
                 <div id="conteudo-index">
                     <h:form id="formcarousel">
+                        <p:growl id="msgs" showDetail="true"/>
                         <center>
                             <p:carousel autoPlayInterval="5000" value="#{vitrineCtrl.listaVitrine}" rendered="#{vitrineCtrl.listaVitrine.size()!=0}"
                                         var="prodCarousel" itemStyle="text-align:center" responsive="true">
@@ -43,6 +44,7 @@
                 </center>
                 <div id="conteudo-produtos" style="margin-top: 10px">
                     <h:form id="form">
+                        <p:growl id="msgs" showDetail="true"/>
                         <center>
                             <p:dataGrid var="prod" value="#{vitrineCtrl.listaVitrine}" rendered="#{vitrineCtrl.listaVitrine.size()!=0}" columns="3" layout="grid"
                                         rows="12" paginator="true" id="produto" paginatorPosition="top" rowsPerPageTemplate="12,24,48"
@@ -75,7 +77,7 @@
                                             </p:commandLink>
 
                                             <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" 
-                                                           action="#{cestaCtrl.addCesta(prod)}" update="menu:menubar">
+                                                           action="#{cestaCtrl.addCesta(prod)}" update="form menu:menubar">
                                                 <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
                                                 <f:setPropertyActionListener value="#{prod}" target="#{prod}" />
                                             </p:commandLink>
@@ -106,9 +108,9 @@
                                             <p:commandLink update=":form:ProdDetalhe" oncomplete="PF('ProdDetalhe').hide()" title="Fechar">
                                                 <h:outputText styleClass="icon-fechar-vitrine fa fa-close"/>
                                             </p:commandLink>
-                                            <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="menu:menubar">
+                                            <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="form menu:menubar">
                                                 <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
-                                                <f:setPropertyActionListener value="#{serv}" target="#{vitrineCtrl.produto}" />
+                                                <f:setPropertyActionListener value="#{s}" target="#{vitrineCtrl.produto}" />
                                             </p:commandLink>
                                         </center>
                                     </p:dataGrid>
@@ -137,9 +139,9 @@
                                             <p:commandLink update=":form:ServDetalhe" oncomplete="PF('ServDetalhe').hide()" title="Fechar">
                                                 <h:outputText styleClass="icon-fechar-vitrine fa fa-close"/>
                                             </p:commandLink>
-                                            <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="menu:menubar">
+                                            <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="form menu:menubar">
                                                 <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
-                                                <f:setPropertyActionListener value="#{serv}" target="#{vitrineCtrl.servico}" />
+                                                <f:setPropertyActionListener value="#{s}" target="#{vitrineCtrl.servico}" />
                                             </p:commandLink>
                                         </center>
                                     </p:dataGrid>
