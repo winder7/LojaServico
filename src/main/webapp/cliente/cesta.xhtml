@@ -170,13 +170,13 @@
                                 <p:messages />
                                 <p:dataTable paginatorPosition="top" resizableColumns="true" id="tab" var="f" value="#{formaPgtoCtrl.listagem}"
                                              rows="10" style="margin-bottom:20px; width: 40%;" class="ui-datatable">
-                                    <p:column width="10%">
+                                    <p:column width="15%">
                                         <p:selectOneRadio id="pgto" value="#{cestaCtrl.formPagSel}" unselectable="true">
                                             <f:selectItem itemValue="#{f.descricao}" />
                                             <p:ajax event="change" update="form:painelPgto"/>
                                         </p:selectOneRadio>
                                     </p:column>
-                                    <p:column>
+                                    <p:column headerText="Forma de pagamento">
                                         <h:outputText value="#{f.descricao}#{f.numMaxParc > 1 ? f.numMaxParc : ''}" />
                                     </p:column>
                                 </p:dataTable>
