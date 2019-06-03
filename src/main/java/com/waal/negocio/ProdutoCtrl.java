@@ -69,20 +69,6 @@ public class ProdutoCtrl implements Serializable {
         return String.format("R$ " + "%,.2f", num);
     }
 
-    public void salvaImagem() {
-
-        try {
-            ImagemDAO.save(imagem);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            imagem = new Imagem();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Imagem adicionada", "Imagem adicionada"));
-        }
-        System.out.println("ok");
-        
-    }
-
     public void processFileUpload(FileUploadEvent uploadEvent) {
         try {
             imagem = new Imagem();

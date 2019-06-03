@@ -56,6 +56,41 @@
                                         </p:column>
                                     </f:facet>
                                 </p:dataTable>
+                                <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbls" var="f" value="#{cestaCtrl.listaProdServ}"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                             {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Cesta Vazia!"
+                                             paginator="true" rows="10" style="margin-bottom:20px" >
+
+                                    <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
+                                        <h:outputText value="#{f.servico.id}"/>
+                                    </p:column>
+                                    <p:column headerText="Imagem" style="width:100px;text-align: center">
+                                        <p:graphicImage value="../resources/prod_Serv/#{cestaCtrl.getImagem(f.produto != null ? f.produto : f.servico)}.jpg" 
+                                                        cache="false" style="height: 65px; width: 100px"/>
+                                    </p:column>
+                                    <p:column headerText="Nome" sortBy="#{f.servico.nome}">
+                                        <h:outputText value="#{f.servico.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Preço" sortBy="f.preco">
+                                        <h:outputText value="#{cestaCtrl.formatarNumero(f.servico.valor)}"/>
+                                    </p:column>
+                                    <p:column style="width:75px;text-align: center">
+                                        <p:commandButton rendered="#{f.servico != null}" update=":form:ServDetalhe" 
+                                                         oncomplete="PF('ServDetalhe').show()" icon="pi pi-search" title="Detalhe">
+                                            <f:setPropertyActionListener value="#{f.servico}" target="#{cestaCtrl.servico}"/>
+                                        </p:commandButton>
+                                        <p:commandButton class="botaoExcluir" style="margin-left: 8px" update="form menu:menubar"
+                                                         title="Remover Item" icon="fa fa-close" action="#{cestaCtrl.actionExcluir(f)}"/>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <p:column>
+                                            <h:outputText value="Total:" style="margin-left: 152px"/>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="#{ cestaCtrl.formatarNumero(cestaCtrl.soma)}" style="margin-left: 10px" />
+                                        </p:column>
+                                    </f:facet>
+                                </p:dataTable>
                             </p:panel>
 
                             <p:dialog header="Detalhes do produto" widgetVar="ProdDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
@@ -158,28 +193,23 @@
                                              icon="fa fa-angle-right" rendered="#{pessoaCtrl.usrLogado}"/>
                         </p:tab>
 
-                        <style>
-                            .ui-datatable {
-                                border: hidden !important;
-                                border-style: none !important;
-                            }
-                        </style>
-
                         <p:tab id="forPag" title="Pagamento">
                             <p:panel id="painelPgto" header="Escolha a forma de pagamento">
                                 <p:messages />
-                                <p:dataTable paginatorPosition="top" resizableColumns="true" id="tab" var="f" value="#{formaPgtoCtrl.listagem}"
-                                             rows="10" style="margin-bottom:20px; width: 40%;" class="ui-datatable">
-                                    <p:column width="10%">
+                                <h:dataTable id="tab" var="f" value="#{formaPgtoCtrl.listagem}"
+                                             rows="10" style="margin-bottom:20px; width: 20%; border-color: white">
+                                    <p:column>
+                                        <i class="#{cestaCtrl.selecionarIcone(f.descricao)}" style="font-size: 22px;"/>
+                                    </p:column>
+                                    <p:column>
                                         <p:selectOneRadio id="pgto" value="#{cestaCtrl.formPagSel}" unselectable="true">
-                                            <f:selectItem itemValue="#{f.descricao}" />
+                                            <f:selectItem itemValue="#{f.descricao}" itemLabel="#{cestaCtrl.selDescricao(f.descricao, f.numPadraoParc)}" />
+                                            <i class="#{cestaCtrl.selecionarIcone(f.descricao)}"/>
                                             <p:ajax event="change" update="form:painelPgto"/>
                                         </p:selectOneRadio>
                                     </p:column>
-                                    <p:column>
-                                        <h:outputText value="#{f.descricao}#{f.numMaxParc > 1 ? f.numMaxParc : ''}" />
-                                    </p:column>
-                                </p:dataTable>
+                                </h:dataTable>
+                                <hr></hr>
                                 <b><h:outputText value="#{cestaCtrl.formPagSel}"/></b>
                             </p:panel>
                             <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"/>

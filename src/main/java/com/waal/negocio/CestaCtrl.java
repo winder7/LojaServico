@@ -36,6 +36,7 @@ public class CestaCtrl implements Serializable {
     public CestaCtrl() {
         freteNormal = Gerar.Frete(9, 40);
         freteExpersso = freteNormal + Gerar.Frete(1, 15);
+        freteEscolhido = freteNormal;
     }
 
     public void addCesta(Produto produto) {
@@ -65,7 +66,7 @@ public class CestaCtrl implements Serializable {
     }
 
     public void imprimeProdServ() {
-        
+
         for (int i = 0; i < listaProdServ.size(); i++) {
             if (listaProdServ.get(i).getProduto() != null) {
                 System.out.println(listaProdServ.get(i).getProduto().getNome());
@@ -77,7 +78,7 @@ public class CestaCtrl implements Serializable {
 
     public void actionExcluir(ProdutoServico itens) {
         listaProdServ.remove(itens);
-        this.soma -= itens.getProduto().getPreco(); 
+        this.soma -= itens.getProduto().getPreco();
         System.out.println(itens.getProduto().getPreco());
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Removido com sucesso!"));
@@ -94,6 +95,26 @@ public class CestaCtrl implements Serializable {
 
     public int getImagem(Servico servico) {
         return servico.getImagens().get(0).getId();
+    }
+
+    public String selecionarIcone(String descricao) {
+        if (descricao.contains("Boleto")) {
+            return "fa fa-file-text-o";
+        } else if (descricao.contains("Cartão")) {
+            return "fa fa-credit-card";
+        } else if (descricao.contains("Transferência")) {
+            return "fa fa-exchange";
+        } else {
+            return "";
+        }
+    }
+    
+    public String selDescricao(String descricao, int parcelas) {
+        if (parcelas > 1) {
+            return descricao + " em " + parcelas + " vezes";
+        } else {
+            return descricao;
+        }
     }
 
     //GET-SET
