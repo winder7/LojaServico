@@ -21,7 +21,7 @@
                         </p:commandLink>
                     </p>
                     <p>
-                        <p:commandLink action="#{minhaContaCtrl.alteraMenu('minhaConta')}" update="form">
+                        <p:commandLink action="#{minhaContaCtrl.alteraMenu('meusDados')}" update="form">
                             <h:outputText styleClass="menu-icon fa fa-user"/>
                             <h:outputText styleClass="menu-item" value="   Meus Dados"/>
                         </p:commandLink>
@@ -36,7 +36,7 @@
             </ui:define>
             <ui:define name="content">
                 <h:form id="form" class="form">
-                    <p:panel rendered="#{'minhaConta'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Meus Dados">
+                    <p:panel rendered="#{'meusDados'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Meus Dados">
                         <p:growl id="growl" sticky="true" showDetail="true"/>
 
                         <p:wizard id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >

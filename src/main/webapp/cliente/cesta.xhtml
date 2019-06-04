@@ -188,7 +188,8 @@
 
                                 <h:panelGrid columns="2">
                                     <p:commandButton class="botaoGravar" style="margin-left: -1px !important" value="Usar este endereço" oncomplete="PF('wiz').next()" process="@this"/>
-                                    <p:button class="botaoExcluir" style="margin-left: -5px !important; width: 155px !important" value="Alterar Endereço" href="#{request.contextPath}/cliente/minha_conta.xhtml"/>
+                                    <p:button class="botaoExcluir" style="margin-left: -5px !important; width: 155px !important" value="Alterar Endereço" 
+                                              href="#{request.contextPath}/cliente/minha_conta.xhtml" onclick="#{minhaContaCtrl.alteraMenu('meusDados')}"/>
                                 </h:panelGrid>
                             </p:panel>
                             <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"
@@ -255,7 +256,6 @@
                                             <p:column>
                                                 <p:selectOneRadio id="pgto" value="#{cestaCtrl.formPagSel}" unselectable="true">
                                                     <f:selectItem itemValue="#{f.descricao}" itemLabel="#{cestaCtrl.selDescricao(f.descricao, f.numPadraoParc)}" />
-                                                    <i class="#{cestaCtrl.selecionarIcone(f.descricao)}"/>
                                                     <p:ajax event="change" update="form:painelPgto"/>
                                                 </p:selectOneRadio>
                                             </p:column>
@@ -290,11 +290,115 @@
                                         ● O prazo de entrega dos pedidos pagos com boleto bancário começa a contar três dias depois do pagamento do boleto, tempo necessário para que a instituição bancária confirme o pagamento.
                                     </p>
                                 </p:panel>
-                                <p:panel header="Cartão de Credito" rendered="#{cestaCtrl.formPagSel == 'Cartão de Credito'}">
+                                <p:panel header="Cartão de Crédito" rendered="#{cestaCtrl.formPagSel == 'Cartão de Credito'}">
+                                    <p:panelGrid columns="2">
+                                        <h:outputText value="Número do cartão:"/>
+                                        <p:inputMask mask="9999.9999.9999.9999" size="30"/>
 
+                                        <h:outputText value="Nome impresso no cartão:"/>
+                                        <p:inputText size="30"/>
+
+                                        <h:outputText value="Nome impresso no cartão:"/>
+                                        <p:row>
+                                            <p:selectOneMenu style="width: 83px" placeholder="Mês">
+                                                <f:selectItem itemLabel="01" itemValue="01" />
+                                                <f:selectItem itemLabel="02" itemValue="02" />
+                                                <f:selectItem itemLabel="03" itemValue="03" />
+                                                <f:selectItem itemLabel="04" itemValue="04" />
+                                                <f:selectItem itemLabel="05" itemValue="05" />
+                                                <f:selectItem itemLabel="06" itemValue="06" />
+                                                <f:selectItem itemLabel="07" itemValue="07" />
+                                                <f:selectItem itemLabel="08" itemValue="08" />
+                                                <f:selectItem itemLabel="09" itemValue="09" />
+                                                <f:selectItem itemLabel="10" itemValue="10" />
+                                                <f:selectItem itemLabel="11" itemValue="11" />
+                                                <f:selectItem itemLabel="11" itemValue="11" />
+                                            </p:selectOneMenu>
+                                            <p:selectOneMenu style="width: 83px; margin-left: 5px" placeholder="Ano">
+                                                <f:selectItem itemLabel="2019" itemValue="2019" />
+                                                <f:selectItem itemLabel="2020" itemValue="2020" />
+                                                <f:selectItem itemLabel="2021" itemValue="2021" />
+                                                <f:selectItem itemLabel="2022" itemValue="2022" />
+                                                <f:selectItem itemLabel="2023" itemValue="2023" />
+                                                <f:selectItem itemLabel="2024" itemValue="2024" />
+                                                <f:selectItem itemLabel="2025" itemValue="2025" />
+                                                <f:selectItem itemLabel="2026" itemValue="2026" />
+                                                <f:selectItem itemLabel="2027" itemValue="2027" />
+                                                <f:selectItem itemLabel="2029" itemValue="2029" />
+                                                <f:selectItem itemLabel="2030" itemValue="2030" />
+                                            </p:selectOneMenu> 
+                                        </p:row>
+
+                                        <h:outputText value="Código de segurança:"/>
+                                        <p:inputText size="5"/>
+
+                                        <h:outputText value="Parcelar em:"/>
+                                        <p:inputText size="3"/>
+                                    </p:panelGrid>
+                                    <center>
+                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}</b>
+                                        <p:commandButton class="botaoGravar" style="margin-left: 10px !important" value="Pagar com cartão de crédito" oncomplete="PF('wiz').next()" process="@this"/>
+                                    </center>
+
+                                    <h3>Importante</h3>
+                                    <p>
+                                        Mesmo no caso de pagamento em várias parcelas de pequeno valor, lembre-se que o valor total da compra não pode exceder o limite de seu cartão. 
+                                        Esta é a regra de aprovação adotada pelas administradoras de cartão de crédito. Para sua segurança, as informações de crédito poderão passar 
+                                        por uma análise interna sujeita à confirmação via contato telefônico ou e-mail.
+                                    </p>
                                 </p:panel>
                                 <p:panel header="Transferência Bancaria" rendered="#{cestaCtrl.formPagSel == 'Transferência Bancaria'}">
+                                    <p>
+                                        Escolha seu banco abaixo, e ao confirmar sua compra você será encaminhado para uma página do banco, onde deverá fazer o pagamento online.
+                                    </p>
 
+                                    <h:panelGrid columns="1" style="width: 250px">
+                                        <p:row>
+                                            <i class="fa fa-credit-card"/>
+                                            <p:selectOneRadio unselectable="true">
+                                                <f:selectItem itemValue="Itaú" itemLabel="Itaú" />
+                                                <p:ajax event="change" update="form:painelPgto"/>
+                                            </p:selectOneRadio>
+                                        </p:row>
+                                        <hr></hr>
+                                        <p:row>
+                                            <i class="fa fa-credit-card"/>
+                                            <p:selectOneRadio unselectable="true">
+                                                <f:selectItem itemValue="Bradesco" itemLabel="Bradesco" />
+                                                <p:ajax event="change" update="form:painelPgto"/>
+                                            </p:selectOneRadio>
+                                        </p:row>
+                                        <hr></hr>
+                                        <p:row>
+                                            <i class="fa fa-credit-card"/>
+                                            <p:selectOneRadio unselectable="true">
+                                                <f:selectItem itemValue="Banco de Brasil" itemLabel="Banco de Brasil" />
+                                                <i class="fa fa-credit-card"/>
+                                                <p:ajax event="change" update="form:painelPgto"/>
+                                            </p:selectOneRadio>
+                                        </p:row>
+                                        <hr></hr>
+                                        <p:row>
+                                            <i class="fa fa-cc-visa"/>
+                                            <p:selectOneRadio unselectable="true">
+                                                <f:selectItem itemValue="Visa Electron" itemLabel="Visa Electron" />
+                                                <p:ajax event="change" update="form:painelPgto"/>
+                                            </p:selectOneRadio>
+                                        </p:row>
+                                        <hr></hr>
+                                        <p:row>
+                                            <i class="fa fa-credit-card"/>
+                                            <p:selectOneRadio unselectable="true">
+                                                <f:selectItem itemValue="Santander" itemLabel="Santander" />
+                                                <p:ajax event="change" update="form:painelPgto"/>
+                                            </p:selectOneRadio>
+                                        </p:row>
+                                    </h:panelGrid>
+                                    
+                                    <center>
+                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}</b>
+                                        <p:commandButton class="botaoGravar" style="margin-left: 10px !important" value="Pagar com transferência Bancaria" oncomplete="PF('wiz').next()" process="@this"/>
+                                    </center>
 
                                 </p:panel>
                             </p:panel>

@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  * @Autor Alexandre Almeida
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class MinhaContaCtrl implements Serializable {
 
     private String menu = "meusPedidos";
@@ -29,6 +29,7 @@ public class MinhaContaCtrl implements Serializable {
     
     public void alteraMenu(String _menu) {
         this.menu = _menu;
+        System.out.println(menu);
     }
 
     @PostConstruct
