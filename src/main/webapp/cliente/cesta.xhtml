@@ -114,15 +114,19 @@
                                 </p:outputPanel>
                             </p:dialog>
                             <p:commandButton value="Próximo" oncomplete="PF('wiz').next()" process="@this" class="btnWizarProximo" 
-                                             icon="fa fa-angle-right" rendered="#{cestaCtrl.listaProdServ.size() > 0}"/>
+                                             icon="fa fa-angle-right" rendered="#{cestaCtrl.listaProdServ.size() > 0}" style="margin-bottom: 25px"/>
                         </p:tab>
 
                         <p:tab id="endereco" title="Confirmar Endereço">
                             <p:panel header="Confirmar o seu endereço" >
                                 <p:messages />
                                 <h:panelGrid id="resumo" columns="2">
-                                    <p:panel header="Endereço Cadastrado">
-                                        <h:panelGrid columns="2">
+                                    <p:panel>
+                                        <f:facet name="header">
+                                            <i class="fa fa-map-marker" style="font-size: 19px"/>
+                                            <p:outputLabel value=" Endereço Cadastrado"/>
+                                        </f:facet>
+                                        <h:panelGrid columns="2" style="width: 300px; height: 150px">
                                             <h:outputText value="Nome: " style="font-weight: bold"/>
                                             <h:outputText value="#{pessoaCtrl.dadosUsrLogado.nome}"/>
 
@@ -140,15 +144,19 @@
                                         </h:panelGrid>
                                     </p:panel>
 
-                                    <p:panel header="Resumo da compra">
-                                        <h:panelGrid columns="2">
+                                    <p:panel>
+                                        <f:facet name="header">
+                                            <i class="fa fa-list" style="font-size: 16px"/>
+                                            <p:outputLabel value=" Resumo da compra"/>
+                                        </f:facet>
+                                        <h:panelGrid columns="2" style="width: 300px; height: 150px">
                                             <h:outputText value="#{cestaCtrl.listaProdServ.size()} Item(s)"/>
                                             <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}"/>
 
                                             <h:outputText value="Frete para #{pessoaCtrl.pessoa.cidade}"/>
                                             <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteEscolhido)}"/>
                                             <h:outputText value="Total a pagar " style="font-weight: bold; margin-top: 60px"/>
-                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}" />
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}" style="font-weight: bold"/>
                                             <br></br>
                                             <br></br>
                                         </h:panelGrid>
@@ -156,57 +164,151 @@
                                 </h:panelGrid>
 
                                 <h:panelGrid columns="2">
-                                    <p:panel header="Opções de entrega">
-                                        <h:panelGrid columns="2">
-                                            <p:selectOneRadio id="frete" value="#{cestaCtrl.freteEscolhido}" unselectable="true">
-                                                <f:selectItem itemLabel="Frete Normal" itemValue="#{cestaCtrl.freteNormal}" />
-                                                <f:selectItem itemLabel="Frete Expresso" itemValue="#{cestaCtrl.freteExpersso}" />
-                                                <p:ajax event="change" update="resumo"/>
-                                            </p:selectOneRadio><br></br>
-                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteNormal)}"/>
-                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteExpersso)}"/>
+                                    <p:panel>
+                                        <f:facet name="header">
+                                            <i class="fa fa-truck" style="font-size: 19px"/>
+                                            <p:outputLabel value=" Opções de entrega" style="color: blue"/>
+                                        </f:facet>
+                                        <h:panelGrid columns="2" style="width: 300px;">
+                                            <p:row>
+                                                <p:selectOneRadio id="frete" value="#{cestaCtrl.freteEscolhido}" unselectable="true">
+                                                    <f:selectItem itemLabel="Frete Normal" itemValue="#{cestaCtrl.freteNormal}" />
+                                                    <f:selectItem itemLabel="Frete Expresso" itemValue="#{cestaCtrl.freteExpersso}" />
+                                                    <p:ajax event="change" update="resumo"/>
+                                                </p:selectOneRadio>
+                                            </p:row>
+                                            <p:row></p:row>
+                                            <p:row>
+                                                <b><h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteNormal)}"/></b>
+                                                <b><h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteExpersso)}" style="margin-left: 78px"/></b>
+                                            </p:row>
                                         </h:panelGrid>
                                     </p:panel>
                                 </h:panelGrid>
 
                                 <h:panelGrid columns="2">
-                                    <p:commandButton class="botaoGravar" value="Usar este endereço" oncomplete="PF('wiz').next()" process="@this"/>
-                                    <p:button class="botaoExcluir" value="Altera Endereço" href="#{request.contextPath}/cliente/minha_conta.xhtml"/>
+                                    <p:commandButton class="botaoGravar" style="margin-left: -1px !important" value="Usar este endereço" oncomplete="PF('wiz').next()" process="@this"/>
+                                    <p:button class="botaoExcluir" style="margin-left: -5px !important; width: 155px !important" value="Alterar Endereço" href="#{request.contextPath}/cliente/minha_conta.xhtml"/>
                                 </h:panelGrid>
                             </p:panel>
-                            <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"/>
+                            <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"
+                                             style="margin-bottom: 25px"/>
                             <p:commandButton value="Próximo" oncomplete="PF('wiz').next()" process="@this" class="btnWizarProximo" 
-                                             icon="fa fa-angle-right" rendered="#{pessoaCtrl.usrLogado}"/>
+                                             icon="fa fa-angle-right" rendered="#{pessoaCtrl.usrLogado}" style="margin-bottom: 25px"/>
                         </p:tab>
 
                         <p:tab id="forPag" title="Pagamento">
                             <p:panel id="painelPgto" header="Escolha a forma de pagamento">
                                 <p:messages />
-                                <h:dataTable id="tab" var="f" value="#{formaPgtoCtrl.listagem}"
-                                             rows="10" style="margin-bottom:20px; width: 20%; border-color: white">
-                                    <p:column>
-                                        <i class="#{cestaCtrl.selecionarIcone(f.descricao)}" style="font-size: 22px;"/>
-                                    </p:column>
-                                    <p:column>
-                                        <p:selectOneRadio id="pgto" value="#{cestaCtrl.formPagSel}" unselectable="true">
-                                            <f:selectItem itemValue="#{f.descricao}" itemLabel="#{cestaCtrl.selDescricao(f.descricao, f.numPadraoParc)}" />
-                                            <i class="#{cestaCtrl.selecionarIcone(f.descricao)}"/>
-                                            <p:ajax event="change" update="form:painelPgto"/>
-                                        </p:selectOneRadio>
-                                    </p:column>
-                                </h:dataTable>
+                                <h:panelGrid columns="2">
+                                    <p:panel>
+                                        <f:facet name="header">
+                                            <i class="fa fa-map-marker" style="font-size: 19px"/>
+                                            <p:outputLabel value=" Endereço Cadastrado"/>
+                                        </f:facet>
+                                        <h:panelGrid columns="2" style="width: 300px; height: 150px">
+                                            <h:outputText value="Nome: " style="font-weight: bold"/>
+                                            <h:outputText value="#{pessoaCtrl.dadosUsrLogado.nome}"/>
+
+                                            <h:outputText value="Rua: " style="font-weight: bold"/>
+                                            <h:outputText value="#{pessoaCtrl.pessoa.rua}"/>
+
+                                            <h:outputText value="Bairro: " style="font-weight: bold"/>
+                                            <h:outputText value="#{pessoaCtrl.pessoa.bairro}" />
+
+                                            <h:outputText value="Cidade: " style="font-weight: bold"/>
+                                            <h:outputText value="#{pessoaCtrl.pessoa.cidade} - #{pessoaCtrl.pessoa.uf}"/>
+
+                                            <h:outputText value="CEP: " style="font-weight: bold"/>
+                                            <h:outputText value="#{pessoaCtrl.pessoa.cep}"/>
+                                        </h:panelGrid>
+                                    </p:panel>
+
+                                    <p:panel>
+                                        <f:facet name="header">
+                                            <i class="fa fa-list" style="font-size: 16px"/>
+                                            <p:outputLabel value=" Resumo da compra"/>
+                                        </f:facet>
+                                        <h:panelGrid columns="2" style="width: 300px; height: 150px">
+                                            <h:outputText value="#{cestaCtrl.listaProdServ.size()} Item(s)"/>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}"/>
+
+                                            <h:outputText value="Frete para #{pessoaCtrl.pessoa.cidade}"/>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteEscolhido)}"/>
+                                            <h:outputText value="Total a pagar " style="font-weight: bold; margin-top: 60px"/>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}" style="font-weight: bold"/>
+                                            <br></br>
+                                            <br></br>
+                                        </h:panelGrid>
+                                    </p:panel>
+
+                                    <p:panel style="width: 330px;">
+                                        <f:facet name="header">
+                                            <i class="fa fa-money" style="font-size: 16px"/>
+                                            <p:outputLabel value=" Forma de pagamento" style="color: blue"/>
+                                        </f:facet>
+                                        <h:dataTable id="tab" var="f" value="#{formaPgtoCtrl.listagem}"
+                                                     rows="10" style="margin-bottom:20px; width: 300px; border-color: white ">
+                                            <p:column>
+                                                <i class="#{cestaCtrl.selecionarIcone(f.descricao)}" style="font-size: 22px;"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:selectOneRadio id="pgto" value="#{cestaCtrl.formPagSel}" unselectable="true">
+                                                    <f:selectItem itemValue="#{f.descricao}" itemLabel="#{cestaCtrl.selDescricao(f.descricao, f.numPadraoParc)}" />
+                                                    <i class="#{cestaCtrl.selecionarIcone(f.descricao)}"/>
+                                                    <p:ajax event="change" update="form:painelPgto"/>
+                                                </p:selectOneRadio>
+                                            </p:column>
+                                        </h:dataTable>
+                                    </p:panel>
+                                </h:panelGrid>
+
+
                                 <hr></hr>
-                                <b><h:outputText value="#{cestaCtrl.formPagSel}"/></b>
+                                <p:panel header="Boleto" rendered="#{cestaCtrl.formPagSel == 'Boleto'}">
+                                    <p>
+                                        <i class="fa fa-print" style="font-size: 28px"/>
+                                        Imprima o boleto e <b>pague no banco</b>
+                                    </p>
+                                    <p>
+                                        <i class="fa fa-laptop" style="font-size: 28px"/>
+                                        <b>ou pague pela internet</b> utilizando o código de barras do boleto
+                                    </p>
+                                    <p>
+                                        <i class="fa fa-calendar" style="font-size: 28px"/>
+                                        o prazo de validade do boleto é de <b>1 dia útil</b>
+                                    </p>
+                                    <center>
+                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}</b>
+                                        <p:commandButton class="botaoGravar" style="margin-left: 10px !important" value="Pagar com boleto" oncomplete="PF('wiz').next()" process="@this"/>
+                                    </center>
+                                    <h3>Importante</h3>
+                                    <p>
+                                        ● Caso o seu computador tenha um programa anti pop-up, será preciso desativá-lo antes de finalizar sua compra e imprimir o boleto ou pagar pelo internet banking;<br></br>
+                                        ● Não faça depósito ou transferência entre contas. O boleto não é enviado pelos Correios. Imprima-o e pague-o no banco ou pela internet;<br></br>
+                                        ● Se o boleto não for pago até a data de vencimento, o pedido será automaticamente cancelado;<br></br>
+                                        ● O prazo de entrega dos pedidos pagos com boleto bancário começa a contar três dias depois do pagamento do boleto, tempo necessário para que a instituição bancária confirme o pagamento.
+                                    </p>
+                                </p:panel>
+                                <p:panel header="Cartão de Credito" rendered="#{cestaCtrl.formPagSel == 'Cartão de Credito'}">
+
+                                </p:panel>
+                                <p:panel header="Transferência Bancaria" rendered="#{cestaCtrl.formPagSel == 'Transferência Bancaria'}">
+
+
+                                </p:panel>
                             </p:panel>
-                            <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"/>
+                            <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"
+                                             style="margin-bottom: 25px"/>
                             <p:commandButton value="Próximo" oncomplete="PF('wiz').next()" process="@this" class="btnWizarProximo" 
-                                             icon="fa fa-angle-right" rendered="#{pessoaCtrl.usrLogado}"/>
+                                             icon="fa fa-angle-right" rendered="#{pessoaCtrl.usrLogado and cestaCtrl.formPagSel != ''}" style="margin-bottom: 25px"/>
                         </p:tab>
 
                         <p:tab id="confirmacao" title="Confirmação">
                             <p:panel header="Verifique se esta tudo correto">
                                 <p:messages />
                             </p:panel>
+                            <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"/>
                         </p:tab>
                     </p:wizard>
                 </h:form>
