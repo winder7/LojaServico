@@ -26,8 +26,11 @@ public class CestaCtrl implements Serializable {
     private Servico servico = new Servico();
     private Produto produto2 = new Produto();
     private List<Produto> listaProdutos = new ArrayList<>();
+    private List<Servico> listaServico = new ArrayList<>();
     private List<ProdutoServico> listaProdServ = new ArrayList<>();
-    private double soma;
+    private double somaProduto;
+    private double somaServico;
+    private double somaTotal;
     private double freteNormal;
     private double freteExpersso;
     private double freteEscolhido;
@@ -41,14 +44,16 @@ public class CestaCtrl implements Serializable {
 
     public void addCesta(Produto produto) {
         listaProdServ.add(new ProdutoServico(produto));
-        soma += produto.getPreco();
+        somaProduto += produto.getPreco();
+        somaTotal = somaProduto + somaServico;
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Produto adicionado a cesta"));
     }
 
     public void addCesta(Servico servico) {
         listaProdServ.add(new ProdutoServico(servico));
-        soma += servico.getValor();
+        somaServico += servico.getValor();
+        somaTotal = somaProduto + somaServico;
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Serviço adicionado a cesta"));
     }
@@ -61,13 +66,28 @@ public class CestaCtrl implements Serializable {
         }
     }
 
-    public void msg() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Sucesso", "Produto adicionado"));
-    }
-
     public String formatarNumero(double num) {
         return String.format("R$ " + "%,.2f", num);
+    }
+    
+    private List<Produto> cestaPordutos() {
+        listaProdutos = new ArrayList<>();
+        for (ProdutoServico proServ : listaProdServ) {
+            if (proServ.getProduto() != null) {
+                listaProdutos.add(proServ.getProduto());
+            }
+        }
+        return  listaProdutos;
+    } 
+    
+    private List<Servico> cestaServicos() {
+        listaServico = new ArrayList<>();
+        for (ProdutoServico proServ : listaProdServ) {
+            if (proServ.getServico()!= null) {
+                listaServico.add(proServ.getServico());
+            }
+        }
+        return  listaServico;
     }
 
     public void imprimeProdServ() {
@@ -85,17 +105,23 @@ public class CestaCtrl implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         listaProdServ.remove(itens);
         if (itens.getProduto() != null) {
-            this.soma -= itens.getProduto().getPreco();
+            this.somaProduto -= itens.getProduto().getPreco();
+            somaTotal = somaProduto + somaServico;
             context.addMessage(null, new FacesMessage("Sucesso", "Produto removido!"));
         } else {
-            this.soma -= itens.getServico().getValor();
+            this.somaServico -= itens.getServico().getValor();
+            somaTotal = somaProduto + somaServico;
             context.addMessage(null, new FacesMessage("Sucesso", "Serviço Removido!"));
         }
     }
 
     public void actionLimpar() {
         listaProdServ.clear();
-        soma = 0.0;
+        listaProdutos.clear();
+        listaServico.clear();
+        somaProduto = 0.0;
+        somaServico = 0.0;
+        somaTotal = 0.0;
     }
 
     public int getImagem(Produto produto) {
@@ -135,22 +161,6 @@ public class CestaCtrl implements Serializable {
         this.filtro = filtro;
     }
 
-    public List<Produto> getListaProdutos() {
-        return listaProdutos;
-    }
-
-    public void setListaProdutos(List<Produto> listaProdutos) {
-        this.listaProdutos = listaProdutos;
-    }
-
-    public List<ProdutoServico> getListaProdServ() {
-        return listaProdServ;
-    }
-
-    public void setListaProdServ(List<ProdutoServico> listaProdServ) {
-        this.listaProdServ = listaProdServ;
-    }
-
     public Produto getProduto() {
         return produto;
     }
@@ -175,12 +185,52 @@ public class CestaCtrl implements Serializable {
         this.produto2 = produto2;
     }
 
-    public double getSoma() {
-        return soma;
+    public List<Produto> getListaProdutos() {
+        return listaProdutos;
     }
 
-    public void setSoma(double soma) {
-        this.soma = soma;
+    public void setListaProdutos(List<Produto> listaProdutos) {
+        this.listaProdutos = listaProdutos;
+    }
+
+    public List<Servico> getListaServico() {
+        return listaServico;
+    }
+
+    public void setListaServico(List<Servico> listaServico) {
+        this.listaServico = listaServico;
+    }
+
+    public List<ProdutoServico> getListaProdServ() {
+        return listaProdServ;
+    }
+
+    public void setListaProdServ(List<ProdutoServico> listaProdServ) {
+        this.listaProdServ = listaProdServ;
+    }
+
+    public double getSomaProduto() {
+        return somaProduto;
+    }
+
+    public void setSomaProduto(double somaProduto) {
+        this.somaProduto = somaProduto;
+    }
+
+    public double getSomaServico() {
+        return somaServico;
+    }
+
+    public void setSomaServico(double somaServico) {
+        this.somaServico = somaServico;
+    }
+
+    public double getSomaTotal() {
+        return somaTotal;
+    }
+
+    public void setSomaTotal(double somaTotal) {
+        this.somaTotal = somaTotal;
     }
 
     public double getFreteNormal() {

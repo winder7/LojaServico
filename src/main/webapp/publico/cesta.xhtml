@@ -20,10 +20,13 @@
                                 <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{cestaCtrl.listaProdServ}"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                              {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Cesta Vazia!"
-                                             paginator="true" rows="10" style="margin-bottom:20px" >
+                                             paginator="true" rows="10" style="margin-bottom:20px" reflow="true">
 
                                     <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
                                         <h:outputText value="#{f.produto != null ? f.produto.id : f.servico.id}"/>
+                                    </p:column>
+                                    <p:column headerText="Tipo" sortBy="Produto" width="5%" style="text-align: center">
+                                        <h:outputText value="#{f.produto != null ? 'Produto' : 'Serviço'}"/>
                                     </p:column>
                                     <p:column headerText="Imagem" style="width:100px;text-align: center">
                                         <p:graphicImage value="../resources/prod_Serv/#{cestaCtrl.getImagem(f.produto != null ? f.produto : f.servico)}.jpg" 
@@ -48,12 +51,28 @@
                                                          title="Remover Item" icon="fa fa-close" action="#{cestaCtrl.actionExcluir(f)}"/>
                                     </p:column>
                                     <f:facet name="footer">
-                                        <p:column>
-                                            <h:outputText value="Total:" style="margin-left: 152px"/>
-                                        </p:column>
-                                        <p:column>
-                                            <h:outputText value="#{ cestaCtrl.formatarNumero(cestaCtrl.soma)}" style="margin-left: 10px" />
-                                        </p:column>
+                                        <center>
+                                            <h:panelGrid columns="2" style="text-align: right; width: 300px;">
+                                                <p:row>
+                                                    <h:outputText value="Total Serviços:"/>
+                                                </p:row>
+                                                <p:row>
+                                                    <h:outputText value="#{ cestaCtrl.formatarNumero(cestaCtrl.somaServico)}"/>
+                                                </p:row>
+                                                <p:row>
+                                                    <h:outputText value="Total Produtos:"/>
+                                                </p:row>
+                                                <p:row>
+                                                    <h:outputText value="#{ cestaCtrl.formatarNumero(cestaCtrl.somaProduto)}"/>
+                                                </p:row>
+                                                <p:row>
+                                                    <h:outputText value="Total Compra:"/>
+                                                </p:row>
+                                                <p:row>
+                                                    <h:outputText value="#{ cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}"/>
+                                                </p:row>
+                                            </h:panelGrid>
+                                        </center>
                                     </f:facet>
                                 </p:dataTable>
                             </p:panel>
