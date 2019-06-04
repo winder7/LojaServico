@@ -279,7 +279,7 @@
                                         o prazo de validade do boleto é de <b>1 dia útil</b>
                                     </p>
                                     <center>
-                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}</b>
+                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}</b>
                                         <p:commandButton class="botaoGravar" style="margin-left: 10px !important" value="Pagar com boleto" oncomplete="PF('wiz').next()" process="@this"/>
                                     </center>
                                     <h3>Importante</h3>
@@ -336,7 +336,7 @@
                                         <p:inputText size="3"/>
                                     </p:panelGrid>
                                     <center>
-                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}</b>
+                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}</b>
                                         <p:commandButton class="botaoGravar" style="margin-left: 10px !important" value="Pagar com cartão de crédito" oncomplete="PF('wiz').next()" process="@this"/>
                                     </center>
 
@@ -396,7 +396,7 @@
                                     </h:panelGrid>
                                     
                                     <center>
-                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}</b>
+                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}</b>
                                         <p:commandButton class="botaoGravar" style="margin-left: 10px !important" value="Pagar com transferência Bancaria" oncomplete="PF('wiz').next()" process="@this"/>
                                     </center>
 
