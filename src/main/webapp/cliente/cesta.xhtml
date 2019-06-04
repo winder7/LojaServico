@@ -233,9 +233,14 @@
                                         <h:panelGrid columns="2" style="width: 300px; height: 150px">
                                             <h:outputText value="#{cestaCtrl.listaProdServ.size()} Item(s)"/>
                                             <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaProdServ)}"/>
-
+                                            
                                             <h:outputText value="Frete para #{pessoaCtrl.pessoa.cidade}"/>
                                             <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteEscolhido)}"/>
+                                            
+                                            <h:outputText value="Desconto" style="color: #419641; font-weight:bold "/>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.calculaDesconto(cestaCtrl.desconto))}" 
+                                                          style="color: #419641; font-weight:bold "/>
+                                            
                                             <h:outputText value="Total a pagar " style="font-weight: bold; margin-top: 60px"/>
                                             <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.calculaTotal(cestaCtrl.somaProdServ, cestaCtrl.freteEscolhido))}" style="font-weight: bold"/>
                                             <br></br>
@@ -255,7 +260,7 @@
                                             </p:column>
                                             <p:column>
                                                 <p:selectOneRadio id="pgto" value="#{cestaCtrl.formPagSel}" unselectable="true">
-                                                    <f:selectItem itemValue="#{f.descricao}" itemLabel="#{cestaCtrl.selDescricao(f.descricao, f.numPadraoParc)}" />
+                                                    <f:selectItem itemValue="#{f.descricao}" itemLabel="#{cestaCtrl.selDescricao(f.descricao, f.numPadraoParc, f.percentualAcres)}" />
                                                     <p:ajax event="change" update="form:painelPgto"/>
                                                 </p:selectOneRadio>
                                             </p:column>

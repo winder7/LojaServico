@@ -41,7 +41,9 @@ public class CestaCtrl implements Serializable {
     private double freteNormal;
     private double freteExpersso;
     private double freteEscolhido;
-    private String formPagSel;
+    private double desconto = 0.0;
+    private float percentDesconto;
+    private String formPagSel = "";
     private Map<String, Integer> ItensBoxAno;
     private Map<String, Double> ItensBoxParcelas;
 
@@ -132,6 +134,8 @@ public class CestaCtrl implements Serializable {
         somaProduto = 0.0;
         somaServico = 0.0;
         somaTotal = 0.0;
+        somaProdServ = 0.0;
+        desconto = 0.0;
     }
 
     public int getImagem(Produto produto) {
@@ -143,7 +147,7 @@ public class CestaCtrl implements Serializable {
     }
 
     public String selecionarIcone(String descricao) {
-        
+
         if (descricao.contains("Boleto")) {
             return "fa fa-file-text-o";
         } else if (descricao.contains("Cartão")) {
@@ -155,16 +159,19 @@ public class CestaCtrl implements Serializable {
         }
     }
 
-    public String selDescricao(String descricao, int parcelas) {
+    public String selDescricao(String descricao, int parcelas, float percentDesconto) {
         if (parcelas > 1) {
             return descricao + " em " + parcelas + " vezes";
+        } else if (descricao.contains("Boleto")) {
+            this.percentDesconto = percentDesconto;
+            return descricao + " (" + ((int) percentDesconto * -1) + "% de desconto)";
         } else {
             return descricao;
         }
     }
 
     private void setBoxAno() {
-        
+
         ItensBoxAno = new LinkedHashMap<>();
         int ano = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date()));
         for (int i = 0; i < 10; i++) {
@@ -173,7 +180,7 @@ public class CestaCtrl implements Serializable {
     }
 
     public Map<String, Double> setBoxParcelas(Map<String, Double> ItensBoxParcelas) {
-        
+
         ItensBoxParcelas = new LinkedHashMap<>();
         try {
             List<FormaPgto> parcelas = FormaPgtoDAO.listagem(filtro);
@@ -192,14 +199,23 @@ public class CestaCtrl implements Serializable {
         }
         return ItensBoxParcelas;
     }
-    
+
     public double calculaTotal(double somaProdServ, double freteEscolhido) {
-        somaTotal = somaProdServ + freteEscolhido;
+        somaTotal = somaProdServ + freteEscolhido + desconto;
         return somaTotal;
+    }
+    
+    public double calculaDesconto(double desconto) {
+        if (formPagSel.contains("Boleto")) {
+            desconto = somaProdServ * (percentDesconto / 100);
+        } else {
+            desconto = 0.0;
+        }
+        this.desconto = desconto;
+        return desconto;
     }
 
     //GET-SET
-
     public String getFiltro() {
         return filtro;
     }
@@ -310,6 +326,22 @@ public class CestaCtrl implements Serializable {
 
     public void setFreteEscolhido(double freteEscolhido) {
         this.freteEscolhido = freteEscolhido;
+    }
+
+    public double getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(double desconto) {
+        this.desconto = desconto;
+    }
+
+    public float getPercentDesconto() {
+        return percentDesconto;
+    }
+
+    public void setPercentDesconto(float percentDesconto) {
+        this.percentDesconto = percentDesconto;
     }
 
     public String getFormPagSel() {
