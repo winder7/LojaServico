@@ -1,12 +1,18 @@
 package com.waal.negocio;
 
+import com.waal.beans.FormaPgto;
 import java.util.ArrayList;
 import com.waal.beans.Produto;
 import com.waal.beans.ProdutoServico;
 import com.waal.beans.Servico;
+import com.waal.persistencia.FormaPgtoDAO;
 import com.waal.uteis.Gerar;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -30,22 +36,26 @@ public class CestaCtrl implements Serializable {
     private List<ProdutoServico> listaProdServ = new ArrayList<>();
     private double somaProduto;
     private double somaServico;
+    private double somaProdServ;
     private double somaTotal;
     private double freteNormal;
     private double freteExpersso;
     private double freteEscolhido;
     private String formPagSel;
+    private Map<String, Integer> ItensBoxAno;
+    private Map<String, Double> ItensBoxParcelas;
 
     public CestaCtrl() {
         freteNormal = Gerar.Frete(9, 40);
         freteExpersso = freteNormal + Gerar.Frete(1, 15);
         freteEscolhido = freteNormal;
+        setBoxAno();
     }
 
     public void addCesta(Produto produto) {
         listaProdServ.add(new ProdutoServico(produto));
         somaProduto += produto.getPreco();
-        somaTotal = somaProduto + somaServico;
+        somaProdServ = somaProduto + somaServico;
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Produto adicionado a cesta"));
     }
@@ -53,7 +63,7 @@ public class CestaCtrl implements Serializable {
     public void addCesta(Servico servico) {
         listaProdServ.add(new ProdutoServico(servico));
         somaServico += servico.getValor();
-        somaTotal = somaProduto + somaServico;
+        somaProdServ = somaProduto + somaServico;
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Sucesso", "Serviço adicionado a cesta"));
     }
@@ -69,7 +79,7 @@ public class CestaCtrl implements Serializable {
     public String formatarNumero(double num) {
         return String.format("R$ " + "%,.2f", num);
     }
-    
+
     private List<Produto> cestaPordutos() {
         listaProdutos = new ArrayList<>();
         for (ProdutoServico proServ : listaProdServ) {
@@ -77,17 +87,17 @@ public class CestaCtrl implements Serializable {
                 listaProdutos.add(proServ.getProduto());
             }
         }
-        return  listaProdutos;
-    } 
-    
+        return listaProdutos;
+    }
+
     private List<Servico> cestaServicos() {
         listaServico = new ArrayList<>();
         for (ProdutoServico proServ : listaProdServ) {
-            if (proServ.getServico()!= null) {
+            if (proServ.getServico() != null) {
                 listaServico.add(proServ.getServico());
             }
         }
-        return  listaServico;
+        return listaServico;
     }
 
     public void imprimeProdServ() {
@@ -106,11 +116,11 @@ public class CestaCtrl implements Serializable {
         listaProdServ.remove(itens);
         if (itens.getProduto() != null) {
             this.somaProduto -= itens.getProduto().getPreco();
-            somaTotal = somaProduto + somaServico;
+            somaProdServ = somaProduto + somaServico;
             context.addMessage(null, new FacesMessage("Sucesso", "Produto removido!"));
         } else {
             this.somaServico -= itens.getServico().getValor();
-            somaTotal = somaProduto + somaServico;
+            somaProdServ = somaProduto + somaServico;
             context.addMessage(null, new FacesMessage("Sucesso", "Serviço Removido!"));
         }
     }
@@ -133,6 +143,7 @@ public class CestaCtrl implements Serializable {
     }
 
     public String selecionarIcone(String descricao) {
+        
         if (descricao.contains("Boleto")) {
             return "fa fa-file-text-o";
         } else if (descricao.contains("Cartão")) {
@@ -152,7 +163,43 @@ public class CestaCtrl implements Serializable {
         }
     }
 
+    private void setBoxAno() {
+        
+        ItensBoxAno = new LinkedHashMap<>();
+        int ano = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date()));
+        for (int i = 0; i < 10; i++) {
+            ItensBoxAno.put(Integer.toString(ano), (ano++));
+        }
+    }
+
+    public Map<String, Double> setBoxParcelas(Map<String, Double> ItensBoxParcelas) {
+        
+        ItensBoxParcelas = new LinkedHashMap<>();
+        try {
+            List<FormaPgto> parcelas = FormaPgtoDAO.listagem(filtro);
+            int parcCartao = 0;
+            for (FormaPgto parcela : parcelas) {
+                if (parcela.getDescricao().contains("Cartão")) {
+                    parcCartao = parcela.getNumMaxParc() + 1;
+                }
+            }
+            System.out.println("Pacelas: " + parcCartao);
+            for (int i = 1; i < parcCartao; i++) {
+                ItensBoxParcelas.put(i + "x de " + (formatarNumero(somaTotal / i)), (somaTotal / i));
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao gerar parcelas: " + e);
+        }
+        return ItensBoxParcelas;
+    }
+    
+    public double calculaTotal(double somaProdServ, double freteEscolhido) {
+        somaTotal = somaProdServ + freteEscolhido;
+        return somaTotal;
+    }
+
     //GET-SET
+
     public String getFiltro() {
         return filtro;
     }
@@ -225,6 +272,14 @@ public class CestaCtrl implements Serializable {
         this.somaServico = somaServico;
     }
 
+    public double getSomaProdServ() {
+        return somaProdServ;
+    }
+
+    public void setSomaProdServ(double somaProdServ) {
+        this.somaProdServ = somaProdServ;
+    }
+
     public double getSomaTotal() {
         return somaTotal;
     }
@@ -263,5 +318,21 @@ public class CestaCtrl implements Serializable {
 
     public void setFormPagSel(String formPagSel) {
         this.formPagSel = formPagSel;
+    }
+
+    public Map<String, Integer> getItensBoxAno() {
+        return ItensBoxAno;
+    }
+
+    public void setItensBoxAno(Map<String, Integer> ItensBoxAno) {
+        this.ItensBoxAno = ItensBoxAno;
+    }
+
+    public Map<String, Double> getItensBoxParcelas() {
+        return ItensBoxParcelas;
+    }
+
+    public void setItensBoxParcelas(Map<String, Double> ItensBoxParcelas) {
+        this.ItensBoxParcelas = ItensBoxParcelas;
     }
 }

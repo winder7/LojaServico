@@ -69,7 +69,7 @@
                                                     <h:outputText value="Total Compra:"/>
                                                 </p:row>
                                                 <p:row>
-                                                    <h:outputText value="#{ cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}"/>
+                                                    <h:outputText value="#{ cestaCtrl.formatarNumero(cestaCtrl.somaProdServ)}"/>
                                                 </p:row>
                                             </h:panelGrid>
                                         </center>
@@ -151,12 +151,12 @@
                                         </f:facet>
                                         <h:panelGrid columns="2" style="width: 300px; height: 150px">
                                             <h:outputText value="#{cestaCtrl.listaProdServ.size()} Item(s)"/>
-                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}"/>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaProdServ)}"/>
 
                                             <h:outputText value="Frete para #{pessoaCtrl.pessoa.cidade}"/>
                                             <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteEscolhido)}"/>
                                             <h:outputText value="Total a pagar " style="font-weight: bold; margin-top: 60px"/>
-                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}" style="font-weight: bold"/>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.calculaTotal(cestaCtrl.somaProdServ, cestaCtrl.freteEscolhido))}" style="font-weight: bold"/>
                                             <br></br>
                                             <br></br>
                                         </h:panelGrid>
@@ -232,12 +232,12 @@
                                         </f:facet>
                                         <h:panelGrid columns="2" style="width: 300px; height: 150px">
                                             <h:outputText value="#{cestaCtrl.listaProdServ.size()} Item(s)"/>
-                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaTotal)}"/>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaProdServ)}"/>
 
                                             <h:outputText value="Frete para #{pessoaCtrl.pessoa.cidade}"/>
                                             <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.freteEscolhido)}"/>
                                             <h:outputText value="Total a pagar " style="font-weight: bold; margin-top: 60px"/>
-                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}" style="font-weight: bold"/>
+                                            <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.calculaTotal(cestaCtrl.somaProdServ, cestaCtrl.freteEscolhido))}" style="font-weight: bold"/>
                                             <br></br>
                                             <br></br>
                                         </h:panelGrid>
@@ -279,7 +279,7 @@
                                         o prazo de validade do boleto é de <b>1 dia útil</b>
                                     </p>
                                     <center>
-                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}</b>
+                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.calculaTotal(cestaCtrl.somaProdServ, cestaCtrl.freteEscolhido))}</b>
                                         <p:commandButton class="botaoGravar" style="margin-left: 10px !important" value="Pagar com boleto" oncomplete="PF('wiz').next()" process="@this"/>
                                     </center>
                                     <h3>Importante</h3>
@@ -289,18 +289,29 @@
                                         ● Se o boleto não for pago até a data de vencimento, o pedido será automaticamente cancelado;<br></br>
                                         ● O prazo de entrega dos pedidos pagos com boleto bancário começa a contar três dias depois do pagamento do boleto, tempo necessário para que a instituição bancária confirme o pagamento.
                                     </p>
+                                    <br></br>
                                 </p:panel>
-                                <p:panel header="Cartão de Crédito" rendered="#{cestaCtrl.formPagSel == 'Cartão de Credito'}">
+                                <p:panel header="Cartão de Crédito" rendered="#{cestaCtrl.formPagSel == 'Cartão de Crédito'}">
                                     <p:panelGrid columns="2">
                                         <h:outputText value="Número do cartão:"/>
-                                        <p:inputMask mask="9999.9999.9999.9999" size="30"/>
+                                        <p:row>
+                                            <p:inputMask mask="9999.9999.9999.9999" size="30"/><br></br>
+                                            <i class="fa fa-cc-visa" style="font-size: 22px"/>
+                                            <i class="fa fa-cc-mastercard" style="font-size: 22px"/>
+                                            <i class="fa fa-cc-amex" style="font-size: 22px"/>
+                                            <i class="fa fa-cc-discover" style="font-size: 22px"/>
+                                            <i class="fa fa-cc-stripe" style="font-size: 22px"/>
+                                            <i class="fa fa-cc-diners-club" style="font-size: 22px"/>
+                                            <i class="fa fa-cc-paypal" style="font-size: 22px"/>
+                                        </p:row>
 
                                         <h:outputText value="Nome impresso no cartão:"/>
                                         <p:inputText size="30"/>
 
-                                        <h:outputText value="Nome impresso no cartão:"/>
+                                        <h:outputText value="Validade:"/>
                                         <p:row>
-                                            <p:selectOneMenu style="width: 83px" placeholder="Mês">
+                                            <p:selectOneMenu style="width: 83px">
+                                                <f:selectItem itemLabel="Mês" itemValue="" />
                                                 <f:selectItem itemLabel="01" itemValue="01" />
                                                 <f:selectItem itemLabel="02" itemValue="02" />
                                                 <f:selectItem itemLabel="03" itemValue="03" />
@@ -312,31 +323,27 @@
                                                 <f:selectItem itemLabel="09" itemValue="09" />
                                                 <f:selectItem itemLabel="10" itemValue="10" />
                                                 <f:selectItem itemLabel="11" itemValue="11" />
-                                                <f:selectItem itemLabel="11" itemValue="11" />
+                                                <f:selectItem itemLabel="12" itemValue="12" />
                                             </p:selectOneMenu>
-                                            <p:selectOneMenu style="width: 83px; margin-left: 5px" placeholder="Ano">
-                                                <f:selectItem itemLabel="2019" itemValue="2019" />
-                                                <f:selectItem itemLabel="2020" itemValue="2020" />
-                                                <f:selectItem itemLabel="2021" itemValue="2021" />
-                                                <f:selectItem itemLabel="2022" itemValue="2022" />
-                                                <f:selectItem itemLabel="2023" itemValue="2023" />
-                                                <f:selectItem itemLabel="2024" itemValue="2024" />
-                                                <f:selectItem itemLabel="2025" itemValue="2025" />
-                                                <f:selectItem itemLabel="2026" itemValue="2026" />
-                                                <f:selectItem itemLabel="2027" itemValue="2027" />
-                                                <f:selectItem itemLabel="2029" itemValue="2029" />
-                                                <f:selectItem itemLabel="2030" itemValue="2030" />
+                                            <p:selectOneMenu style="width: 83px; margin-left: 5px">
+                                                <f:selectItem itemLabel="Ano" itemValue="" />
+                                                <f:selectItems value="#{cestaCtrl.itensBoxAno}"/>
                                             </p:selectOneMenu> 
                                         </p:row>
 
                                         <h:outputText value="Código de segurança:"/>
-                                        <p:inputText size="5"/>
-
+                                        <p:row>
+                                            <p:inputMask mask="999" size="5"/>
+                                            <i class="fa fa-credit-card" style="font-size: 28px; margin-left: 5px"/>
+                                        </p:row>
                                         <h:outputText value="Parcelar em:"/>
-                                        <p:inputText size="3"/>
+                                        <p:selectOneMenu>
+                                            <f:selectItem itemLabel="Selecione" itemValue="" />
+                                            <f:selectItems value="#{cestaCtrl.setBoxParcelas(cestaCtrl.itensBoxParcelas)}"/>
+                                        </p:selectOneMenu> 
                                     </p:panelGrid>
                                     <center>
-                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}</b>
+                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.calculaTotal(cestaCtrl.somaProdServ, cestaCtrl.freteEscolhido))}</b>
                                         <p:commandButton class="botaoGravar" style="margin-left: 10px !important" value="Pagar com cartão de crédito" oncomplete="PF('wiz').next()" process="@this"/>
                                     </center>
 
@@ -346,6 +353,7 @@
                                         Esta é a regra de aprovação adotada pelas administradoras de cartão de crédito. Para sua segurança, as informações de crédito poderão passar 
                                         por uma análise interna sujeita à confirmação via contato telefônico ou e-mail.
                                     </p>
+                                    <br></br>
                                 </p:panel>
                                 <p:panel header="Transferência Bancaria" rendered="#{cestaCtrl.formPagSel == 'Transferência Bancaria'}">
                                     <p>
@@ -394,10 +402,11 @@
                                             </p:selectOneRadio>
                                         </p:row>
                                     </h:panelGrid>
-                                    
+
                                     <center>
-                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.somaTotal + cestaCtrl.freteEscolhido)}</b>
+                                        <b>Total: #{cestaCtrl.formatarNumero(cestaCtrl.calculaTotal(cestaCtrl.somaProdServ, cestaCtrl.freteEscolhido))}</b>
                                         <p:commandButton class="botaoGravar" style="margin-left: 10px !important" value="Pagar com transferência Bancaria" oncomplete="PF('wiz').next()" process="@this"/>
+                                        <br></br><br></br>
                                     </center>
 
                                 </p:panel>
