@@ -261,7 +261,7 @@
                                             </p:column>
                                             <p:column>
                                                 <p:selectOneRadio id="pgto" value="#{cestaCtrl.formPagSel}" unselectable="true">
-                                                    <f:selectItem itemValue="#{f.descricao}" itemLabel="#{cestaCtrl.selDescricao(f.descricao, f.numPadraoParc, f.percentualAcres)}" />
+                                                    <f:selectItem itemValue="#{f.descricao};#{f.id}" itemLabel="#{cestaCtrl.selDescricao(f.descricao, f.numPadraoParc, f.percentualAcres)}" />
                                                     <p:ajax event="change" update="form"/>
                                                 </p:selectOneRadio>
                                             </p:column>

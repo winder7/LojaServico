@@ -1,6 +1,7 @@
 package com.waal.negocio;
 
 import com.waal.beans.FormaPgto;
+import com.waal.beans.ItensPed;
 import com.waal.beans.Pedido;
 import com.waal.beans.Pessoa;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import com.waal.beans.Produto;
 import com.waal.beans.ProdutoServico;
 import com.waal.beans.Servico;
 import com.waal.persistencia.FormaPgtoDAO;
+import com.waal.persistencia.PedidoDAO;
 import com.waal.uteis.BoletoDto;
 import com.waal.uteis.Gerar;
 import com.waal.uteis.SessionData;
@@ -53,6 +55,7 @@ public class CestaCtrl implements Serializable {
     private Map<String, Integer> ItensBoxAno;
     private Map<String, String> ItensBoxParcelas;
     private boolean finalPedido;
+    private ItensPed itensPed = new ItensPed();
 
     public CestaCtrl() {
         freteNormal = Gerar.Frete(9, 40);
@@ -87,37 +90,6 @@ public class CestaCtrl implements Serializable {
 
     public String formatarNumero(double num) {
         return String.format("R$ " + "%,.2f", num);
-    }
-
-    private List<Produto> cestaPordutos() {
-        listaProdutos = new ArrayList<>();
-        for (ProdutoServico proServ : listaProdServ) {
-            if (proServ.getProduto() != null) {
-                listaProdutos.add(proServ.getProduto());
-            }
-        }
-        return listaProdutos;
-    }
-
-    private List<Servico> cestaServicos() {
-        listaServico = new ArrayList<>();
-        for (ProdutoServico proServ : listaProdServ) {
-            if (proServ.getServico() != null) {
-                listaServico.add(proServ.getServico());
-            }
-        }
-        return listaServico;
-    }
-
-    public void imprimeProdServ() {
-
-        for (int i = 0; i < listaProdServ.size(); i++) {
-            if (listaProdServ.get(i).getProduto() != null) {
-                System.out.println(listaProdServ.get(i).getProduto().getNome());
-            } else {
-                System.out.println(listaProdServ.get(i).getServico().getNome());
-            }
-        }
     }
 
     public void actionExcluir(ProdutoServico itens) {
@@ -208,9 +180,9 @@ public class CestaCtrl implements Serializable {
         }
         return ItensBoxParcelas;
     }
-    
+
     public boolean verficaFormaPag(String formaPagamento) {
-    
+
         return forPagEsc.contains(formaPagamento);
     }
 
@@ -233,32 +205,72 @@ public class CestaCtrl implements Serializable {
     public String formaPagInfo(String formaPag) {
 
         if (formaPag.contains("Boleto")) {
-            return formaPag + " (" + (int)(percentDesconto * -1) + "% desc.)";
+            return formaPag + " (" + (int) (percentDesconto * -1) + "% desc.)";
         } else if (formaPag.contains("Cartão")) {
             return formaPag + " \n" + parcelaSel;
         } else {
             return formaPag;
         }
     }
-    
+
     public void gerarBoleto() {
         System.out.println("Gerando Boleto...");
         PagamentoCtrl pg = new PagamentoCtrl();
         Pessoa pessoa = new Pessoa();
         pessoa = SessionData.getUsuarioLogado();
         Pedido pedido = new Pedido();
-        pedido.setTotalGeral((float)(somaTotal - desconto));
+        pedido.setTotalGeral((float) (somaTotal - desconto));
         pedido.setDesconto((float) desconto * -1);
         BoletoDto boletoDto = new BoletoDto(pessoa, pedido);
         pg.GerarBoleto(boletoDto);
         System.out.println("Boleto Gerado!");
     }
-    
-    public void finalizarPedido(){
+
+    public void finalizarPedido() {
         if (finalPedido) {
-            actionLimpar();
-            System.out.println("Pedido Finalizado...");
+            try {
+                System.out.println("Salvando Pedido...");
+                Pedido pedido = new Pedido();
+                pedido.setDataEmissao(new Date());
+                pedido.setDataAutorizacao(new Date());
+                pedido.setStatus("Aguardando Pagamento");
+                pedido.setTotalServico((float) somaServico);
+                pedido.setTotalProduto((float) somaProduto);
+                pedido.setTotalGeral((float) somaTotal);
+                pedido.setDesconto((float) desconto);
+                pedido.setPes_id(SessionData.getUsuarioLogado().getId());
+                pedido.setFpg_id(Integer.parseInt(forPagEsc.split(";")[1]));
+                //List<ItensPed> listaItensPedido = new ArrayList<>();          
+                for (ProdutoServico prodServ : listaProdServ) {
+                    itensPed = new ItensPed();
+                    if (prodServ.getProduto() != null) {
+                        itensPed.setProduto(prodServ.getProduto());
+                    } else {
+                        itensPed.setServico(prodServ.getServico());
+                    }
+                    itensPed.setPedido(pedido);
+                    pedido.getItesPed().add(itensPed);
+                }
+                
+                PedidoDAO.inserir(pedido);
+                actionLimpar();
+                System.out.println("Pedido Salvo... Finalizado!");
+            } catch (Exception e) {
+                System.out.println("Erro ao finalizar pedido: " + e);
+            }
         }
+    }
+
+    private void imprimePed(Pedido pedido) {
+        System.out.println(pedido.getDataAutorizacao());
+        System.out.println(pedido.getDataEmissao());
+        System.out.println(pedido.getStatus());
+        System.out.println(pedido.getTotalServico());
+        System.out.println(pedido.getTotalProduto());
+        System.out.println(pedido.getTotalGeral());
+        System.out.println(pedido.getDesconto());
+        System.out.println(pedido.getPes_id());
+        System.out.println(pedido.getFpg_id());
     }
 
     //GET-SET
@@ -436,5 +448,13 @@ public class CestaCtrl implements Serializable {
 
     public void setFinalPedido(boolean finalPedido) {
         this.finalPedido = finalPedido;
+    }
+
+    public ItensPed getItensPed() {
+        return itensPed;
+    }
+
+    public void setItensPed(ItensPed itensPed) {
+        this.itensPed = itensPed;
     }
 }

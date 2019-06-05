@@ -11,9 +11,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import com.waal.persistencia.ServicoDAO;
 import com.waal.uteis.Obter;
-import java.io.File;
-import java.io.FileOutputStream;
-import javax.servlet.ServletContext;
 import org.primefaces.event.FileUploadEvent;
 
 /**

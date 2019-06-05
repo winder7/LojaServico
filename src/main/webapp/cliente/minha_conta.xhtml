@@ -215,7 +215,7 @@
                     </p:panel>
 
                     <p:panel rendered="#{'meusPedidos'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Meus Pedidos">
-                        <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{minhaContaCtrl.lista}"
+                        <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{minhaContaCtrl.listagem}"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                      {PageLinks} {NextPageLink} {LastPageLink}"
                                      paginator="true" rows="10" style="margin-bottom:20px">
@@ -243,11 +243,7 @@
                             <p:column headerText="Desconto" sortBy="#{f.desconto}" width="10%" style="text-align: center">
                                 <h:outputText value="#{f.desconto}"/>
                             </p:column>
-                            <p:column style="width:32px;text-align: center">
-                                <p:commandButton  icon="pi pi-search" title="View" action="#{produtoCtrl.listaImagemsProduto()}">
-                                    <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.produto}"/>
-                                </p:commandButton>
-                            </p:column>
+                            
                         </p:dataTable>
                     </p:panel>
                     <p:panel rendered="#{'alterarSenha'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Alterar Senha">

@@ -1,12 +1,17 @@
 package com.waal.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -25,7 +30,7 @@ public class Pedido implements Serializable {
     @Column(name = "ped_data_emissao", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataEmissao;
-    @Column(name = "ped_status", length = 15, nullable = true)
+    @Column(name = "ped_status", length = 25, nullable = true)
     private String status;
     @Column(name = "ped_data_autorizacao", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -38,7 +43,14 @@ public class Pedido implements Serializable {
     private float totalGeral;
     @Column(name = "ped_desconto", nullable = true)
     private float desconto;
+    @Column(name = "fk_pes_id")
+    private int pes_id;
+    @Column(name = "fk_fpg_id")
+    private int fpg_id;
 
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<ItensPed> itesPed = new ArrayList<ItensPed>();
+    
     public int getId() {
         return id;
     }
@@ -101,5 +113,29 @@ public class Pedido implements Serializable {
 
     public void setDesconto(float desconto) {
         this.desconto = desconto;
+    }
+
+    public int getPes_id() {
+        return pes_id;
+    }
+
+    public void setPes_id(int pes_id) {
+        this.pes_id = pes_id;
+    }
+
+    public int getFpg_id() {
+        return fpg_id;
+    }
+
+    public void setFpg_id(int fpg_id) {
+        this.fpg_id = fpg_id;
+    }
+
+    public List<ItensPed> getItesPed() {
+        return itesPed;
+    }
+
+    public void setItesPed(List<ItensPed> itesPed) {
+        this.itesPed = itesPed;
     }
 }

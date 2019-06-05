@@ -7,15 +7,12 @@ import com.waal.beans.Produto;
 import com.waal.persistencia.ImagemDAO;
 import com.waal.persistencia.ProdutoDAO;
 import com.waal.uteis.Obter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
 import org.primefaces.event.FileUploadEvent;
 
 /**

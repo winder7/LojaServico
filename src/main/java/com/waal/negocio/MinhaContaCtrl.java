@@ -38,6 +38,10 @@ public class MinhaContaCtrl implements Serializable {
         this.pessoa = SessionData.getUsuarioLogado();
     }
     
+    public List<Pedido> getListagem() {
+        return PedidoDAO.listagemUsr(SessionData.getUsuarioLogado().getId());
+    }
+    
     public String getNome() {
         return _nome;
     }

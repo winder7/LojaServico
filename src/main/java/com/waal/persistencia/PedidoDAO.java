@@ -46,4 +46,14 @@ public class PedidoDAO implements Serializable {
         sessao.close();
         return lista;
     }
+    
+    public static List<Pedido> listagemUsr(int pes_id) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Query consulta;
+        consulta = sessao.createQuery("from Pedido where fk_pes_id = :parametro order by ped_data_emissao desc");
+        consulta.setInteger("parametro", pes_id);
+        List lista = consulta.list();
+        sessao.close();
+        return lista;
+    }
 }
