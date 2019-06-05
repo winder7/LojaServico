@@ -30,7 +30,7 @@ public class LoginCtrl implements Serializable {
             pessoa = PessoaDAO.pesqNomeUsr(usrEmail);
             String novaSenha = Gerar.Senha();
             pessoa.setSenha(novaSenha);
-            Enviar.Email(usrEmail, "Recuperação de Senha Waal Service", htmlMsg(novaSenha));
+            Enviar.Email(usrEmail, "Recuperação de Senha Waal Service", htmlMsg(novaSenha, pessoa.getNome()));
             if (pessoa.getId() != 0) {
                 pessoa.setSenha(SessionData.encriptarSenha(pessoa.getSenha()));
                 PessoaDAO.alterar(pessoa);
@@ -65,9 +65,12 @@ public class LoginCtrl implements Serializable {
         }
     }
 
-    private String htmlMsg(String novaSenha) {
-        String msg = "<!DOCTYPE html><html> <b><h1>Olá usuário!</h1></b><br> Sua nova senha de acesso é: " + novaSenha + ""
-                + "<p> <b>OBS: </b> Favor alterar a senha no cadastro após efetuar login no site.</p> </html>";
+    private String htmlMsg(String novaSenha, String nomePessoa) {
+        String msg = "<!DOCTYPE html><html><div style=\"width: 560px; margin: auto;\"><center><img src=\"D:\\imagem\\waalName.jpg\" style=\"width: 550px;\"/>" +
+                "<b><h1>Olá " + nomePessoa + "!</h1></b><br>" +
+                "<h3>Sua nova senha de acesso é: " + novaSenha + "</h3></center>" +
+                "<p><b>OBS: </b> Para sua segurança efetue a alteração da senha após realizar o login no site.</p></div></html>";
+        
         return msg;
     }
 
