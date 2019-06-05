@@ -30,7 +30,7 @@ public class LoginCtrl implements Serializable {
             pessoa = PessoaDAO.pesqNomeUsr(usrEmail);
             String novaSenha = Gerar.Senha();
             pessoa.setSenha(novaSenha);
-            Enviar.Email(usrEmail, novaSenha);
+            Enviar.Email(usrEmail, "Recuperação de Senha Waal Service", htmlMsg(novaSenha));
             if (pessoa.getId() != 0) {
                 pessoa.setSenha(SessionData.encriptarSenha(pessoa.getSenha()));
                 PessoaDAO.alterar(pessoa);
@@ -63,6 +63,12 @@ public class LoginCtrl implements Serializable {
         } else {
             Exibir.MensagemErro("Ops! A senha atual não é valida!");
         }
+    }
+
+    private String htmlMsg(String novaSenha) {
+        String msg = "<!DOCTYPE html><html> <b><h1>Olá usuário!</h1></b><br> Sua nova senha de acesso é: " + novaSenha + ""
+                + "<p> <b>OBS: </b> Favor alterar a senha no cadastro após efetuar login no site.</p> </html>";
+        return msg;
     }
 
     //GET-SET

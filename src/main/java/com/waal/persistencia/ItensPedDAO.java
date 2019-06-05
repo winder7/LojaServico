@@ -3,47 +3,47 @@ package com.waal.persistencia;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.*;
-import com.waal.beans.Servico;
+import com.waal.beans.ItensPed;
 
 /**
  * @Autor m159255
  * @Data 27/02/2019
  */
-public class ServicoDAO implements Serializable {
+public class ItensPedDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public static void inserir(Servico servico) {
+    public static void inserir(ItensPed itensPed) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         Transaction t = sessao.beginTransaction();
-        sessao.save(servico);
+        sessao.save(itensPed);
         t.commit();
         sessao.close();
     }
 
-    public static void alterar(Servico servico) {
+    public static void alterar(ItensPed itensPed) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         Transaction t = sessao.beginTransaction();
-        sessao.update(servico);
+        sessao.update(itensPed);
         t.commit();
         sessao.close();
     }
 
-    public static void excluir(Servico servico) {
+    public static void excluir(ItensPed itensPed) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         Transaction t = sessao.beginTransaction();
-        sessao.delete(servico);
+        sessao.delete(itensPed);
         t.commit();
         sessao.close();
     }
 
-    public static List<Servico> listagem(String filtro) {
+    public static List<ItensPed> listagem(String filtro) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         Query consulta;
         if (filtro.trim().length() == 0) {
-            consulta = sessao.createQuery("from Servico order by ser_id");
+            consulta = sessao.createQuery("from ItensPed order by ser_id");
         } else {
-            consulta = sessao.createQuery("from Servico " + "where upper(ser_nome) like :parametro order by ser_id");
+            consulta = sessao.createQuery("from ItensPed " + "where upper(ser_nome) like :parametro order by ser_id");
             consulta.setString("parametro", "%" + filtro.toUpperCase() + "%");
         }
         List lista = consulta.list();
@@ -51,12 +51,22 @@ public class ServicoDAO implements Serializable {
         return lista;
     }
     
-    public static Servico pesqId(int valor) {
+    public static ItensPed pesqId(int valor) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-        Query consulta = sessao.createQuery("from Pessoa " + "where ser_id = :parametro");
+        Query consulta = sessao.createQuery("from Pessoa " + "where itp_id = :parametro");
         consulta.setInteger("parametro", valor);
-        Servico servico = (Servico) consulta.uniqueResult();
+        ItensPed itensPed = (ItensPed) consulta.uniqueResult();
         sessao.close();
-        return servico;
+        return itensPed;
+    }
+    
+    public static List<ItensPed> listagemPed(int valor) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Query consulta;
+        consulta = sessao.createQuery("from ItensPed where fk_ped_id = :parametro");
+        consulta.setInteger("parametro", valor);
+        List lista = consulta.list();
+        sessao.close();
+        return lista;
     }
 }

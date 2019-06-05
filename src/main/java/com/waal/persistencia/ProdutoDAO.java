@@ -52,4 +52,13 @@ public class ProdutoDAO implements Serializable {
         sessao.close();
         return lista;
     }
+    
+    public static Produto pesqId(int valor) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        Query consulta = sessao.createQuery("from Pessoa " + "where pro_id = :parametro");
+        consulta.setInteger("parametro", valor);
+        Produto produto = (Produto) consulta.uniqueResult();
+        sessao.close();
+        return produto;
+    }
 }

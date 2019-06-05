@@ -30,4 +30,13 @@ public class Formatar {
         }
         return dataForm;
     }
+    
+    public static String formatarNumero(double num) {
+        try {
+            return String.format("R$ " + "%,.2f", num);
+        } catch (Exception e) {
+            System.out.println("Erro na formatação de número!: " + e);
+            return "Erro";
+        }
+    }
 }

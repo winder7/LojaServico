@@ -11,7 +11,9 @@ import com.waal.beans.Servico;
 import com.waal.persistencia.FormaPgtoDAO;
 import com.waal.persistencia.PedidoDAO;
 import com.waal.uteis.BoletoDto;
+import com.waal.uteis.Enviar;
 import com.waal.uteis.Gerar;
+import com.waal.uteis.Mensagem;
 import com.waal.uteis.SessionData;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -231,6 +233,7 @@ public class CestaCtrl implements Serializable {
             try {
                 System.out.println("Salvando Pedido...");
                 Pedido pedido = new Pedido();
+                Pessoa usr = SessionData.getUsuarioLogado();
                 pedido.setDataEmissao(new Date());
                 pedido.setDataAutorizacao(new Date());
                 pedido.setStatus("Aguardando Pagamento");
@@ -238,21 +241,28 @@ public class CestaCtrl implements Serializable {
                 pedido.setTotalProduto((float) somaProduto);
                 pedido.setTotalGeral((float) somaTotal);
                 pedido.setDesconto((float) desconto);
-                pedido.setPes_id(SessionData.getUsuarioLogado().getId());
+                pedido.setPes_id(usr.getId());
                 pedido.setFpg_id(Integer.parseInt(forPagEsc.split(";")[1]));
                 //List<ItensPed> listaItensPedido = new ArrayList<>();          
                 for (ProdutoServico prodServ : listaProdServ) {
                     itensPed = new ItensPed();
                     if (prodServ.getProduto() != null) {
                         itensPed.setProduto(prodServ.getProduto());
+                        itensPed.setQtde(1);
+                        itensPed.setValorUnit(prodServ.getProduto().getPreco());
+                        itensPed.setSubTotal(prodServ.getProduto().getPreco());
                     } else {
                         itensPed.setServico(prodServ.getServico());
+                        itensPed.setQtde(1);
+                        itensPed.setValorUnit(prodServ.getServico().getValor());
+                        itensPed.setSubTotal(prodServ.getServico().getValor());
                     }
                     itensPed.setPedido(pedido);
                     pedido.getItesPed().add(itensPed);
                 }
                 
                 PedidoDAO.inserir(pedido);
+                Enviar.Email(usr.getEmail(), "Pedido realizado na loja Waal Service", Mensagem.html(usr, pedido));
                 actionLimpar();
                 System.out.println("Pedido Salvo... Finalizado!");
             } catch (Exception e) {

@@ -36,7 +36,77 @@
             </ui:define>
             <ui:define name="content">
                 <h:form id="form" class="form">
-                    <p:panel rendered="#{'meusDados'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Meus Dados">
+                    <p:panel rendered="#{'meusPedidos'.equals(minhaContaCtrl.menu)}" style="overflow: hidden">
+                        <f:facet name="header">
+                            <i class="fa fa-archive" style="font-size: 16px"/>
+                            <p:outputLabel value=" Meus Pedidos"/>
+                        </f:facet>
+                        <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{minhaContaCtrl.listagem}"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                     {PageLinks} {NextPageLink} {LastPageLink}"
+                                     paginator="true" rows="10" style="margin-bottom:20px">
+                            <p:column headerText="Código" sortBy="#{f.id}"  width="8%" style="text-align: center">
+                                <h:outputText value="#{f.id}"/>
+                            </p:column>
+                            <p:column headerText="Data de Emissão" sortBy="#{f.dataEmissao}" width="12%" style="text-align: center">
+                                <h:outputText value="#{minhaContaCtrl.formatarData(f.dataEmissao)}"/>
+                            </p:column>
+                            <p:column headerText="Data da Autorização" sortBy="#{f.dataAutorizacao}" width="12%" style="text-align: center">
+                                <h:outputText value="#{minhaContaCtrl.formatarData(f.dataAutorizacao) }"/>
+                            </p:column>
+                            <p:column headerText="Status" sortBy="#{f.status}" width="18%" style="text-align: center">
+                                <h:outputText value="#{f.status}"/>
+                            </p:column>
+                            <p:column headerText="Total em produtos" sortBy="#{f.totalProduto}" width="15%" style="text-align: center">
+                                <h:outputText value="#{minhaContaCtrl.formatarNumero(f.totalProduto)}"/>
+                            </p:column>
+                            <p:column headerText="Total em serviços" sortBy="#{f.totalServico}" width="15%" style="text-align: center">
+                                <h:outputText value="#{minhaContaCtrl.formatarNumero(f.totalServico)}"/>
+                            </p:column>
+                            <p:column headerText="Total geral" sortBy="#{f.totalGeral}" width="10%" style="text-align: center">
+                                <h:outputText value="#{minhaContaCtrl.formatarNumero(f.totalGeral)}"/>
+                            </p:column>
+                            <p:column headerText="Desconto" sortBy="#{f.desconto}" width="10%" style="text-align: center">
+                                <h:outputText value="#{minhaContaCtrl.formatarNumero(f.desconto)}"/>
+                            </p:column>
+                            <p:column style="width:32px;text-align: center">
+                                <p:commandButton update=":form:pedDetail" oncomplete="PF('pedDetail').show()" icon="pi pi-search" title="View" action="#{minhaContaCtrl.ItensPedido(f)}">
+                                    <f:setPropertyActionListener value="#{f}" target="#{minhaContaCtrl.pedido}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+
+                    <p:dialog  widgetVar="pedDetail" modal="true" showEffect="fade" fitViewport="true" hideEffect="fade" resizable="false" responsive="true" >
+                        <f:facet name="header">
+                            <i class="fa fa-cubes"><p:outputLabel value=" Detalhes do pedido" style="font-weight: bold"/></i>
+                        </f:facet>
+                        <p:outputPanel id="pedDetail" style="text-align: center;">
+                            <p:dataTable resizableColumns="true" id="tblRes" var="f" value="#{minhaContaCtrl.listaProdServ}"
+                                         emptyMessage="Cesta Vazia!" style="max-height: 400px !important; max-width: 600px !important" reflow="true" scrollHeight="true">
+
+                                <p:column headerText="Item" sortBy="Produto" width="50" style="text-align: center">
+                                    <h:outputText value="#{f.produto != null ? 'Produto' : 'Serviço'}"/>
+                                </p:column>
+                                <p:column headerText="Imagem" style="width:60px;text-align: center">
+                                    <p:graphicImage value="../resources/prod_Serv/#{cestaCtrl.getImagem(f.produto != null ? f.produto : f.servico)}.jpg" 
+                                                    cache="false" style="height: 25px; width: 40px"/>
+                                </p:column>
+                                <p:column headerText="Nome" sortBy="#{f.produto != null ? f.produto.nome : f.servico.nome}">
+                                    <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}"/>
+                                </p:column>
+                                <p:column headerText="Preço" sortBy="f.preco">
+                                    <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor)}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:outputPanel>
+                    </p:dialog>
+
+                    <p:panel rendered="#{'meusDados'.equals(minhaContaCtrl.menu)}" style="overflow: hidden">
+                        <f:facet name="header">
+                            <i class="fa fa-user" style="font-size: 16px"/>
+                            <p:outputLabel value=" Meus Dados"/>
+                        </f:facet>
                         <p:growl id="growl" sticky="true" showDetail="true"/>
 
                         <p:wizard id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" >
@@ -214,39 +284,11 @@
                         </p:wizard>
                     </p:panel>
 
-                    <p:panel rendered="#{'meusPedidos'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Meus Pedidos">
-                        <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{minhaContaCtrl.listagem}"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                                     {PageLinks} {NextPageLink} {LastPageLink}"
-                                     paginator="true" rows="10" style="margin-bottom:20px">
-                            <p:column headerText="Código" sortBy="#{f.id}"  width="8%" style="text-align: center">
-                                <h:outputText value="#{f.id}"/>
-                            </p:column>
-                            <p:column headerText="Data de Emissão" sortBy="#{f.dataEmissao}" width="18%" style="text-align: center">
-                                <h:outputText value="#{f.dataEmissao}"/>
-                            </p:column>
-                            <p:column headerText="Data da Autorização" sortBy="#{f.dataAutorizacao}" width="18%" style="text-align: center">
-                                <h:outputText value="#{f.dataAutorizacao}"/>
-                            </p:column>
-                            <p:column headerText="Status" sortBy="#{f.status}" width="10%" style="text-align: center">
-                                <h:outputText value="#{f.status}"/>
-                            </p:column>
-                            <p:column headerText="Total em produtos" sortBy="#{f.totalProduto}" width="20%" style="text-align: center">
-                                <h:outputText value="#{f.totalProduto}"/>
-                            </p:column>
-                            <p:column headerText="Total em serviços" sortBy="#{f.totalServico}" width="15%" style="text-align: center">
-                                <h:outputText value="#{f.totalServico}"/>
-                            </p:column>
-                            <p:column headerText="Total geral" sortBy="#{f.totalGeral}" width="10%" style="text-align: center">
-                                <h:outputText value="#{f.totalGeral}"/>
-                            </p:column>
-                            <p:column headerText="Desconto" sortBy="#{f.desconto}" width="10%" style="text-align: center">
-                                <h:outputText value="#{f.desconto}"/>
-                            </p:column>
-                            
-                        </p:dataTable>
-                    </p:panel>
-                    <p:panel rendered="#{'alterarSenha'.equals(minhaContaCtrl.menu)}" style="overflow: hidden"  header="Alterar Senha">
+                    <p:panel rendered="#{'alterarSenha'.equals(minhaContaCtrl.menu)}" style="overflow: hidden">
+                        <f:facet name="header">
+                            <i class="fa fa-unlock-alt" style="font-size: 16px"/>
+                            <p:outputLabel value=" Alterar Senha"/>
+                        </f:facet>
                         <p:messages />
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="Senha Atual *" />

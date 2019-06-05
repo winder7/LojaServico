@@ -16,7 +16,7 @@ import javax.mail.internet.MimeMessage;
 
 public class Enviar {
 
-    public static void Email(final String usrEmail, final String novaSenha) {
+    public static void Email(String usrEmail, String tituloEamil, String mensagem) {
         new Thread(new Runnable() {
 
             @Override
@@ -46,12 +46,8 @@ public class Enviar {
                     Address[] toUser = InternetAddress.parse(usrEmail); //Destinatário(s)
 
                     message.setRecipients(Message.RecipientType.TO, toUser);
-                    message.setSubject("Recuperação de Senha Waal Service"); //Assunto
-                    message.setText(
-                            "<!DOCTYPE html><html> <b><h1>Olá usuário!</h1></b><br> Sua nova senha de acesso é: " + novaSenha + ""
-                            + "<p> <b>OBS: </b> Favor alterar a senha no cadastro após efetuar login no site.</p> </html>",
-                            "utf-8", "html"
-                    );
+                    message.setSubject(tituloEamil); //Assunto
+                    message.setText(mensagem, "utf-8", "html");
 
                     Transport.send(message);//Método para enviar a mensagem criada
 
