@@ -12,15 +12,10 @@ public class BoletoDto {
 
     private Pessoa pessoa;
     private Pedido pedido;
-    private FormaPgto formaPgto;
 
-    public BoletoDto(Pessoa pessoa, Pedido pedido, FormaPgto formaPgto) {
+    public BoletoDto(Pessoa pessoa, Pedido pedido) {
         this.pessoa = pessoa;
         this.pedido = pedido;
-        this.formaPgto = formaPgto;
-    }
-
-    public BoletoDto() {
     }
 
     public Pessoa getPessoa() {
@@ -37,13 +32,5 @@ public class BoletoDto {
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
-    }
-
-    public FormaPgto getFormaPgto() {
-        return formaPgto;
-    }
-
-    public void setFormaPgto(FormaPgto formaPgto) {
-        this.formaPgto = formaPgto;
     }
 }

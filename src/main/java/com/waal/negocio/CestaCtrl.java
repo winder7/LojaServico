@@ -1,12 +1,16 @@
 package com.waal.negocio;
 
 import com.waal.beans.FormaPgto;
+import com.waal.beans.Pedido;
+import com.waal.beans.Pessoa;
 import java.util.ArrayList;
 import com.waal.beans.Produto;
 import com.waal.beans.ProdutoServico;
 import com.waal.beans.Servico;
 import com.waal.persistencia.FormaPgtoDAO;
+import com.waal.uteis.BoletoDto;
 import com.waal.uteis.Gerar;
+import com.waal.uteis.SessionData;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,9 +47,12 @@ public class CestaCtrl implements Serializable {
     private double freteEscolhido;
     private double desconto = 0.0;
     private float percentDesconto;
-    private String formPagSel = "";
+    private String parcelaSel;
+    private String formPagSel = "f";
+    private String forPagEsc = "p";
     private Map<String, Integer> ItensBoxAno;
-    private Map<String, Double> ItensBoxParcelas;
+    private Map<String, String> ItensBoxParcelas;
+    private boolean finalPedido;
 
     public CestaCtrl() {
         freteNormal = Gerar.Frete(9, 40);
@@ -136,6 +143,7 @@ public class CestaCtrl implements Serializable {
         somaTotal = 0.0;
         somaProdServ = 0.0;
         desconto = 0.0;
+        finalPedido = false;
     }
 
     public int getImagem(Produto produto) {
@@ -149,7 +157,7 @@ public class CestaCtrl implements Serializable {
     public String selecionarIcone(String descricao) {
 
         if (descricao.contains("Boleto")) {
-            return "fa fa-file-text-o";
+            return "fa fa-barcode";
         } else if (descricao.contains("Cartão")) {
             return "fa fa-credit-card";
         } else if (descricao.contains("Transferência")) {
@@ -179,7 +187,7 @@ public class CestaCtrl implements Serializable {
         }
     }
 
-    public Map<String, Double> setBoxParcelas(Map<String, Double> ItensBoxParcelas) {
+    public Map<String, String> setBoxParcelas(Map<String, String> ItensBoxParcelas) {
 
         ItensBoxParcelas = new LinkedHashMap<>();
         try {
@@ -192,20 +200,27 @@ public class CestaCtrl implements Serializable {
             }
             System.out.println("Pacelas: " + parcCartao);
             for (int i = 1; i < parcCartao; i++) {
-                ItensBoxParcelas.put(i + "x de " + (formatarNumero(somaTotal / i)), (somaTotal / i));
+                String parcelaGer = i + "x de " + (formatarNumero(somaTotal / i));
+                ItensBoxParcelas.put(parcelaGer, parcelaGer);
             }
         } catch (Exception e) {
             System.out.println("Erro ao gerar parcelas: " + e);
         }
         return ItensBoxParcelas;
     }
+    
+    public boolean verficaFormaPag(String formaPagamento) {
+    
+        return forPagEsc.contains(formaPagamento);
+    }
 
     public double calculaTotal(double somaProdServ, double freteEscolhido) {
         somaTotal = somaProdServ + freteEscolhido + desconto;
         return somaTotal;
     }
-    
+
     public double calculaDesconto(double desconto) {
+        forPagEsc = formPagSel;
         if (formPagSel.contains("Boleto")) {
             desconto = somaProdServ * (percentDesconto / 100);
         } else {
@@ -213,6 +228,37 @@ public class CestaCtrl implements Serializable {
         }
         this.desconto = desconto;
         return desconto;
+    }
+
+    public String formaPagInfo(String formaPag) {
+
+        if (formaPag.contains("Boleto")) {
+            return formaPag + " (" + (int)(percentDesconto * -1) + "% desc.)";
+        } else if (formaPag.contains("Cartão")) {
+            return formaPag + " \n" + parcelaSel;
+        } else {
+            return formaPag;
+        }
+    }
+    
+    public void gerarBoleto() {
+        System.out.println("Gerando Boleto...");
+        PagamentoCtrl pg = new PagamentoCtrl();
+        Pessoa pessoa = new Pessoa();
+        pessoa = SessionData.getUsuarioLogado();
+        Pedido pedido = new Pedido();
+        pedido.setTotalGeral((float)(somaTotal - desconto));
+        pedido.setDesconto((float) desconto * -1);
+        BoletoDto boletoDto = new BoletoDto(pessoa, pedido);
+        pg.GerarBoleto(boletoDto);
+        System.out.println("Boleto Gerado!");
+    }
+    
+    public void finalizarPedido(){
+        if (finalPedido) {
+            actionLimpar();
+            System.out.println("Pedido Finalizado...");
+        }
     }
 
     //GET-SET
@@ -344,12 +390,28 @@ public class CestaCtrl implements Serializable {
         this.percentDesconto = percentDesconto;
     }
 
+    public String getParcelaSel() {
+        return parcelaSel;
+    }
+
+    public void setParcelaSel(String parcelaSel) {
+        this.parcelaSel = parcelaSel;
+    }
+
     public String getFormPagSel() {
         return formPagSel;
     }
 
     public void setFormPagSel(String formPagSel) {
         this.formPagSel = formPagSel;
+    }
+
+    public String getForPagEsc() {
+        return forPagEsc;
+    }
+
+    public void setForPagEsc(String forPagEsc) {
+        this.forPagEsc = forPagEsc;
     }
 
     public Map<String, Integer> getItensBoxAno() {
@@ -360,11 +422,19 @@ public class CestaCtrl implements Serializable {
         this.ItensBoxAno = ItensBoxAno;
     }
 
-    public Map<String, Double> getItensBoxParcelas() {
+    public Map<String, String> getItensBoxParcelas() {
         return ItensBoxParcelas;
     }
 
-    public void setItensBoxParcelas(Map<String, Double> ItensBoxParcelas) {
+    public void setItensBoxParcelas(Map<String, String> ItensBoxParcelas) {
         this.ItensBoxParcelas = ItensBoxParcelas;
+    }
+
+    public boolean isFinalPedido() {
+        return finalPedido;
+    }
+
+    public void setFinalPedido(boolean finalPedido) {
+        this.finalPedido = finalPedido;
     }
 }

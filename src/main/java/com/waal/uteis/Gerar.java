@@ -27,7 +27,7 @@ import org.jrimum.domkee.financeiro.banco.febraban.Titulo.Aceite;
 public class Gerar {
 
     public static String Senha() {
-        
+
         String caracteres = "ABCDEFGHIJKLMNOPQRSTUVYWXZabcdefghijklmnopqrstuvywxz1234567890!@#$%";
 
         Random random = new Random();
@@ -41,9 +41,9 @@ public class Gerar {
         System.out.println(armazenaChaves);
         return armazenaChaves;
     }
-    
+
     public static double Frete(int min, int max) {
-    
+
         Random random = new Random();
         double numInt = random.nextInt((max - min) + 1) + min;
         double numDec = random.nextDouble();
@@ -60,7 +60,7 @@ public class Gerar {
         contaBancaria.setAgencia(new Agencia(2073, "1"));
 
         //Dados do cliente
-        Sacado sacado = new Sacado(boletoDto.getPessoa().getNome(), boletoDto.getPessoa().getCpf().replaceAll("[^0-9]",""));
+        Sacado sacado = new Sacado(boletoDto.getPessoa().getNome(), boletoDto.getPessoa().getCpf().replaceAll("[^0-9]", ""));
         Endereco enderecoSac = new Endereco();
         enderecoSac.setUF(UnidadeFederativa.valueOf(boletoDto.getPessoa().getUf()));
         enderecoSac.setLocalidade(boletoDto.getPessoa().getCidade());
@@ -78,7 +78,7 @@ public class Gerar {
         titulo.setDigitoDoNossoNumero("5");
         titulo.setValor(BigDecimal.valueOf(totalGeral));
         titulo.setDataDoDocumento(new Date());
-        titulo.setDataDoVencimento(Somar.Data(new Date(), 2));
+        titulo.setDataDoVencimento(Somar.Data(new Date(), 1));
         titulo.setTipoDeDocumento(TipoDeTitulo.DM_DUPLICATA_MERCANTIL);
         titulo.setAceite(Aceite.A);
         titulo.setDesconto(BigDecimal.valueOf(desconto));
@@ -90,9 +90,9 @@ public class Gerar {
         Boleto boleto = new Boleto(titulo);
         boleto.setLocalPagamento("Pagável em qualquer Banco até o Vencimento.");
         boleto.setInstrucaoAoSacado("A equipe da WAAL Software agradece pela preferência.");
-        boleto.setInstrucao1("NÃO RECEBER APOS 30 DIAS DO VENCIMENTO");
-        boleto.setInstrucao2("APÓS VENCIMENTO COBRAR MULTA DE 2,00% MAIS MORA DE 0,03% AO DIA");
-        boleto.setInstrucao3("Obtenha mais informações no site www.waalservice.com.br ou pelo SAC 0800 777 21");
+        boleto.setInstrucao1("O prazo de validade do boleto é de 1 dia útil");
+        boleto.setInstrucao2("Obtenha mais informações no site www.waalservice.com.br ou pelo SAC 0800 777 21");
+        //boleto.setInstrucao3("Obtenha mais informações no site www.waalservice.com.br ou pelo SAC 0800 777 21");
 
         BoletoViewer boletoViewer = new BoletoViewer(boleto);
 

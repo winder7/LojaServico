@@ -114,7 +114,7 @@
                                 </p:outputPanel>
                             </p:dialog>
                             <p:commandButton value="Próximo" oncomplete="PF('wiz').next()" process="@this" class="btnWizarProximo" 
-                                             icon="fa fa-angle-right" rendered="#{cestaCtrl.listaProdServ.size() > 0}"/>
+                                             icon="fa fa-angle-right" rendered="#{cestaCtrl.listaProdServ.size() > 0}" style="margin-bottom: 30px"/>
                         </p:tab>
 
                         <p:tab id="endereco" title="Identificação">
@@ -127,7 +127,8 @@
                                     </p>
                                 </p:outputPanel>
                             </p:panel>
-                            <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"/>
+                            <p:commandButton value="Voltar" oncomplete="PF('wiz').back()" process="@this" class="btnWizarVoltar" icon="fa fa-angle-left"
+                                             style="margin-bottom: 30px"/>
                         </p:tab>
 
                         <p:tab id="formaPag" title="Pagamento">

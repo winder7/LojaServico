@@ -61,7 +61,7 @@ public class PagamentoCtrl implements Serializable {
         pedido = PedidoDAO.listagem().get(0);
         FormaPgto formaPgto = new FormaPgto();
         formaPgto = new FormaPgtoDAO().listagem("").get(0);
-        BoletoDto boletoDto = new BoletoDto(pessoa, pedido, formaPgto);
+        BoletoDto boletoDto = new BoletoDto(pessoa, pedido);
 
         return boletoDto;
     }

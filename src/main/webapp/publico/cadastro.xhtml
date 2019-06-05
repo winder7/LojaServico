@@ -64,8 +64,14 @@
                                     <p:inputText value="#{pessoaCtrl.pessoa.nome}" size="30" required="true" label="Nome Completo"/>
 
                                     <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}" />
-                                    <p:inputMask value="#{pessoaCtrl.pessoa.cpf}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'CPF: *' : 'CNPJ: *'}"
-                                                 mask="#{pessoaCtrl.tipopessoa == 'PF' ? '999.999.999-99' : '99.999.999/9999-99'}"/>
+                                    <p:inputMask value="#{pessoaCtrl.pessoa.cpf}" size="30" required="true" label="CPF: *" rendered="#{pessoaCtrl.tipopessoa == 'PF'}"
+                                                 mask="999.999.999-99">
+                                        <f:validator validatorId="cpfValidator" />
+                                    </p:inputMask>
+                                    <p:inputMask value="#{pessoaCtrl.pessoa.cpf}" size="30" required="true" label="CNPJ: *" rendered="#{pessoaCtrl.tipopessoa == 'PJ'}"
+                                                 mask="99.999.999/9999-99">
+                                        <f:validator validatorId="cnpjValidator" />
+                                    </p:inputMask>
                                     <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}"/>
                                     <p:inputText value="#{pessoaCtrl.pessoa.rg}" size="30" required="true" label="#{pessoaCtrl.tipopessoa == 'PF' ? 'RG: *' : 'Inscrição Estadual: *'}" type="number"/>
                                     <h:outputText value="#{pessoaCtrl.tipopessoa == 'PF' ? 'Data de Nascimento: *' : 'Data da Fundação: *'}" />
