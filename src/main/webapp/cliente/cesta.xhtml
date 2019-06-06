@@ -526,7 +526,7 @@
                                         Verifique se todos os itens e valores do pedido estão de acordo e finalize o pedido.
                                     </p>
                                     <p>
-                                        <p:selectBooleanCheckbox value="#{cestaCtrl.finalPedido}" required="true" requiredMessage="Você deve aceitar os termos!"/>
+                                        <p:selectBooleanCheckbox value="#{cestaCtrl.finalPedido}"/>
                                         <b><p:outputLabel value="Você afirma  que leu e concorda com nossos "/></b> 
                                         <b><p:commandLink value="Termos." oncomplete="PF('termosServico').show()"/></b>
                                     </p>
@@ -535,8 +535,8 @@
 
                                         <h:commandLink value="Gerar Boleto" action="#{cestaCtrl.gerarBoleto()}" rendered="#{cestaCtrl.verficaFormaPag('Boleto')}"/>
                                         <br></br>
-                                        <p:commandButton class="botaoGravar" value="Finalizar pedido" action="#{cestaCtrl.finalizarPedido()}" update="form"
-                                                         onclick="#{minhaContaCtrl.alteraMenu('meusPedidos')}" />
+                                        <p:commandButton class="botaoGravar" value="Finalizar pedido" actionListener="#{cestaCtrl.finalizarPedido()}" update="form"
+                                                         onclick="#{minhaContaCtrl.alteraMenu('meusPedidos')}" action="/cliente/minha_conta.xhtml?faces-redirect=true"/>
                                     </div>
                                 </p:panel>
                             </p:panel>

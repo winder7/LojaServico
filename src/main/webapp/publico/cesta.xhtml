@@ -123,7 +123,7 @@
                                 <p:outputPanel id="compraDialog" style="height: 300px; text-align: center">
                                     <b><p><h1>Você deve fazer login para continuar com a compra.</h1></p></b>
                                     <p>
-                                        <p:button value="Fazer Login" href="#{request.contextPath}/publico/login.xhtml?redirecionar=true"/>
+                                        <p:commandButton value="Fazer Login" actionListener="#{cestaCtrl.ativaRedirCesta(true)}" action="login.xhtml?faces-redirect=true"/>
                                     </p>
                                 </p:outputPanel>
                             </p:panel>

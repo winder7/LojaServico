@@ -11,16 +11,18 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 /**
  * @Autor Winder Rezende
- * @Data  15/04/2019
+ * @Data 15/04/2019
  */
-public class RedirecionaPaginaPadrao implements AuthenticationSuccessHandler{
+public class RedirecionaPaginaPadrao implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (roles.contains("ROLE_ADMINISTRADOR")) {
-            response.sendRedirect("/LojaServico/admin/principal.xhtml"); 
-        }else if (roles.contains("ROLE_CLIENTE")) {
+            response.sendRedirect("/LojaServico/admin/principal.xhtml");
+        } else if (roles.contains("ROLE_CLIENTE") && CestaCtrl.redirCesta) {
+            response.sendRedirect("/LojaServico/cliente/cesta.xhtml");
+        } else if (roles.contains("ROLE_CLIENTE")) {
             response.sendRedirect("/LojaServico/cliente/principal.xhtml");
         }
     }

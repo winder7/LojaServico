@@ -4,19 +4,27 @@ package com.waal.uteis;
  * @Data: 27/04/2018
  * @Autor Winder Rezende
  */
+import java.io.File;
 import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Part;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class Enviar {
 
-    public static void Email(String usrEmail, String tituloEamil, String mensagem) {
+    public static void Email(String usrEmail, String tituloEamil, String mensagem, File file) {
         new Thread(new Runnable() {
 
             @Override
@@ -47,7 +55,24 @@ public class Enviar {
 
                     message.setRecipients(Message.RecipientType.TO, toUser);
                     message.setSubject(tituloEamil); //Assunto
-                    message.setText(mensagem, "utf-8", "html");
+
+                    MimeBodyPart mbpMensagem = new MimeBodyPart();
+                    mbpMensagem.setText(mensagem, "utf-8", "html");
+
+                    Multipart mp = new MimeMultipart();//partes do email
+                    mp.addBodyPart(mbpMensagem);
+
+                    if (file != null) {
+                        MimeBodyPart mbpAnexo = new MimeBodyPart();
+                        DataSource fds = new FileDataSource(file);
+                        mbpAnexo.setDisposition(Part.ATTACHMENT);
+                        mbpAnexo.setDataHandler(new DataHandler(fds));
+                        mbpAnexo.setFileName(file.getName());
+                        mp.addBodyPart(mbpAnexo);
+                    }
+
+                    message.setContent(mp);
+                    message.saveChanges();
 
                     Transport.send(message);//Método para enviar a mensagem criada
 

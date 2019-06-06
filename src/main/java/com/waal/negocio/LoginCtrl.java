@@ -30,7 +30,7 @@ public class LoginCtrl implements Serializable {
             pessoa = PessoaDAO.pesqNomeUsr(usrEmail);
             String novaSenha = Gerar.Senha();
             pessoa.setSenha(novaSenha);
-            Enviar.Email(usrEmail, "Recuperação de Senha Waal Service", htmlMsg(novaSenha, pessoa.getNome()));
+            Enviar.Email(usrEmail, "Recuperação de Senha Waal Service", htmlMsg(novaSenha, pessoa.getNome()), null);
             if (pessoa.getId() != 0) {
                 pessoa.setSenha(SessionData.encriptarSenha(pessoa.getSenha()));
                 PessoaDAO.alterar(pessoa);

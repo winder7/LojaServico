@@ -58,6 +58,7 @@ public class CestaCtrl implements Serializable {
     private Map<String, String> ItensBoxParcelas;
     private boolean finalPedido;
     private ItensPed itensPed = new ItensPed();
+    public static boolean redirCesta = false;
 
     public CestaCtrl() {
         freteNormal = Gerar.Frete(9, 40);
@@ -118,6 +119,7 @@ public class CestaCtrl implements Serializable {
         somaProdServ = 0.0;
         desconto = 0.0;
         finalPedido = false;
+        redirCesta = false;
     }
 
     public int getImagem(Produto produto) {
@@ -262,7 +264,7 @@ public class CestaCtrl implements Serializable {
                 }
                 
                 PedidoDAO.inserir(pedido);
-                Enviar.Email(usr.getEmail(), "Pedido realizado na loja Waal Service", Mensagem.html(usr, pedido));
+                Enviar.Email(usr.getEmail(), "Pedido realizado na loja Waal Service", Mensagem.html(usr, pedido), null);
                 actionLimpar();
                 System.out.println("Pedido Salvo... Finalizado!");
             } catch (Exception e) {
@@ -281,6 +283,11 @@ public class CestaCtrl implements Serializable {
         System.out.println(pedido.getDesconto());
         System.out.println(pedido.getPes_id());
         System.out.println(pedido.getFpg_id());
+    }
+    
+    public void ativaRedirCesta(boolean ativaInativa) {
+        redirCesta = ativaInativa;
+        System.out.println(redirCesta);
     }
 
     //GET-SET

@@ -12,6 +12,7 @@
             <ui:define name="content">
                 <div id="conteudo-index">
                     <h:form id="formcarousel">
+                       #{cestaCtrl.ativaRedirCesta(false)}
                         <p:growl id="msgs" showDetail="true"/>
                         <center>
                             <p:carousel autoPlayInterval="5000" value="#{vitrineCtrl.listaVitrine}" rendered="#{vitrineCtrl.listaVitrine.size()!=0}"
