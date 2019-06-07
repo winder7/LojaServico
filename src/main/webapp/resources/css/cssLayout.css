@@ -38,7 +38,7 @@
 
 .center_content {
     margin: 0px 9% 0px 9%;
-    margin-top: 92px
+    margin-top: 93px
 }
 
 .left_content {
@@ -67,74 +67,73 @@
     background-color: transparent !important;
 }
 
-.searchBar{
-    margin:5px 10px 1px 1px !important;
-    width: 750px !important;
-}
-
-@media only screen and (max-width:1369px) {
+@media only screen and (max-width:1366px) {
     /* For HD Notebooks: */
     #right {
-        width: 0%;
-        padding: 0px;
-        visibility: hidden;
+        float: right;
+        padding: 5px;
+        width: 4%;
     }
+    #left {
+        float: left;
+        padding: 5px;
+        width: 4%;
+    }
+}
+
+@media only screen and (max-width:1280px) {
+    /* For Legacy Notebooks: */
     #left {
         width: 0%;
         padding: 0px;
         visibility: hidden;
     }
+    
+    #right {
+        width: 0%;
+        padding: 0px;
+        visibility: hidden;
+    }
+    
     .center_content {
         margin: 0px 9% 0px 0px;
         width: 100%;
-        margin-top: 94px
-    }
-}
-
-@media only screen and (max-width:1290px) {
-    .searchBar{
-        width: 600px !important;
+        margin-top: 93px
     }
 }
 
 @media only screen and (max-width:800px) {
     /* For tablets: */
-    #left {
-        width: 0%;
-        padding: 0px;
-        visibility: hidden;
-    }
-    #right {
-        width: 0%;
-        padding: 0px;
-        visibility: hidden;
-    }
+ 
+}
+
+@media only screen and (max-width:768px) {
+    /* For Smartfones: */
+    
     .center_content {
         margin: 0px 0px 0px 0px;
         width: 100%;
-        margin-top: 120px
-    }
-
-    .searchBar{
-        width: 500px !important;
+        margin-top: 132px
     }
 }
 
-@media only screen and (max-width:500px) {
-    /* For mobile phones: */
-    #left, #right {
-        width: 0%;
-        padding: 0px;
-        visibility: hidden;
-    }
+@media only screen and (max-width:479px) {
+    /* For Smartfones: */
+    
     .center_content {
         margin: 0px 0px 0px 0px;
         width: 100%;
-        margin-top: 155px
+        margin-top: 172px
     }
+}
 
-    .searchBar{
-        width: 300px !important;
+@media only screen and (max-width:330px) {
+    /* For Smartfones: */
+    
+    .center_content {
+        margin: 0px 0px 0px 0px;
+        width: 100%;
+        margin-top: 210px
     }
 }
 

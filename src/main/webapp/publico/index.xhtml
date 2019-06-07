@@ -17,6 +17,10 @@
                         <center>
                             <p:carousel autoPlayInterval="5000" value="#{vitrineCtrl.listaVitrine}" rendered="#{vitrineCtrl.listaVitrine.size()!=0}"
                                         var="prodCarousel" itemStyle="text-align:center" responsive="true">
+                                <f:facet name="header">
+                                    <i class="fa fa-star-o" style=" margin-right: 3px; font-size: 22px"/>
+                                    <h:outputText value="Destaques" style="font-size: 18px; color: red"/>
+                                </f:facet>
                                 <p:panelGrid columns="1" style="width:100%;margin:10px 0px" columnClasses="label,value" 
                                              layout="grid" styleClass="ui-panelgrid-blank">
                                     <p:dataGrid id="gridImgProd" var="f" value="#{prodCarousel}" emptyMessage="Sem imagem">
@@ -52,6 +56,11 @@
                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
                                 <p:panel header="#{prod.produto != null ? prod.produto.nome : prod.servico.nome}" style="text-align:center">
+                                    <f:facet name="header">
+                                        <i class="#{prod.produto != null ? 'fa fa-cubes' : 'fa fa-wrench'}" style=" margin-right: 3px; font-size: 16px"/>
+                                        <h:outputText value="#{prod.produto != null ? prod.produto.nome : prod.servico.nome}" 
+                                                      style=" color: #{prod.produto != null ? 'blue' : 'green'}"/>
+                                    </f:facet>
                                     <h:panelGrid columns="1" class="responsive">
                                         <p:dataGrid class="responsive" id="gridImgProd" var="f" value="#{prod}" emptyMessage="Sem imagem">
                                             <p:commandLink rendered="#{prod.produto != null}" update=":form:ProdDetalhe" oncomplete="PF('ProdDetalhe').show()" title="Detalhes">
@@ -85,7 +94,7 @@
                                 </p:panel>
                             </p:dataGrid>
                         </center>
-                        <p:dialog header="Detalhes do produto" widgetVar="ProdDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:dialog header="Detalhes do produto" widgetVar="ProdDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
                             <p:outputPanel id="ProdDetalhe" style="text-align:center;">
                                 <p:dataGrid id="gridImgProd" var="imgP" value="#{vitrineCtrl.produto.imagens}" emptyMessage="Sem imagem">
                                     <p:graphicImage value="../resources/prod_Serv/#{imgP.id}.jpg" cache="false" class="imagens-detalhe"/>
@@ -103,10 +112,11 @@
                                 </p:panelGrid>
                                 <p:column>
                                     <p:dataGrid columns="2" var="s" value="#{vitrineCtrl.produto}">
-                                        <h:panelGrid columns="2" style="width: 100%; margin-left: -5px; text-align: center">
-                                            <p:commandButton class="botaoFechar" value="Fechar" icon="fa fa-close" update=":form:ProdDetalhe" oncomplete="PF('ProdDetalhe').hide()" title="Fechar">
-                                            </p:commandButton>
-                                            <p:commandButton value="Comprar" class="botaoAddCesta" icon="fa fa-shopping-basket" style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="form menu:menubar">
+                                        <h:panelGrid columns="2" style="width: 100%; text-align: center">
+                                            <p:commandButton class="botaoFechar" value="Fechar" icon="fa fa-close" update=":form:ProdDetalhe" 
+                                                             oncomplete="PF('ProdDetalhe').hide()" title="Fechar"/>
+                                            <p:commandButton value="Comprar" class="botaoAddCesta" icon="fa fa-shopping-basket" style="margin-left: 10px" 
+                                                             title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="form menu:menubar">
                                                 <f:setPropertyActionListener value="#{s}" target="#{vitrineCtrl.produto}" />
                                             </p:commandButton>
                                         </h:panelGrid>
@@ -114,7 +124,7 @@
                                 </p:column>
                             </p:outputPanel>
                         </p:dialog>
-                        <p:dialog header="Detalhes do Servico" widgetVar="ServDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:dialog header="Detalhes do Servico" widgetVar="ServDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
                             <p:outputPanel id="ServDetalhe" style="text-align:center;">
                                 <p:dataGrid id="gridImgServ" var="imgS" value="#{vitrineCtrl.servico.imagens}" emptyMessage="Sem imagem">
                                     <p:graphicImage value="../resources/prod_Serv/#{imgS.id}.jpg" cache="false" class="imagens-detalhe"/>
@@ -132,15 +142,14 @@
                                 </p:panelGrid>
                                 <p:column>
                                     <p:dataGrid columns="2" var="s" value="#{vitrineCtrl.servico}">
-                                        <center>
-                                            <p:commandLink update=":form:ServDetalhe" oncomplete="PF('ServDetalhe').hide()" title="Fechar">
-                                                <h:outputText styleClass="icon-fechar-vitrine fa fa-close"/>
-                                            </p:commandLink>
-                                            <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="form menu:menubar">
-                                                <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
+                                        <h:panelGrid columns="2" style="width: 100%; text-align: center">
+                                            <p:commandButton class="botaoFechar" value="Fechar" icon="fa fa-close" update=":form:ServDetalhe" 
+                                                             oncomplete="PF('ServDetalhe').hide()" title="Fechar"/>
+                                            <p:commandButton value="Comprar" class="botaoAddCesta" icon="fa fa-shopping-basket" style="margin-left: 10px" 
+                                                             title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="form menu:menubar">
                                                 <f:setPropertyActionListener value="#{s}" target="#{vitrineCtrl.servico}" />
-                                            </p:commandLink>
-                                        </center>
+                                            </p:commandButton>
+                                        </h:panelGrid>
                                     </p:dataGrid>
                                 </p:column>
                             </p:outputPanel>

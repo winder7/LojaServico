@@ -63,16 +63,6 @@ html {
     margin-bottom: 5%;
 }
 
-i.imagem-busca {
-    color: white;
-    position: absolute;
-    margin-left: 722px;
-    margin-top: 8px;
-    background-color: #67BC48;
-    padding: 4px;
-    font-size: 19px;
-}
-
 body .ui-panelgrid .ui-panelgrid-cell {
     border: none !important;
 }
@@ -209,42 +199,113 @@ body .ui-panelgrid .ui-panelgrid-cell {
     padding: .1em .5em;
 }
 
-@media only screen and (max-width:1369px) {
-    /* For HD Notebooks: */
-
+.searchBar{
+    margin:5px 10px 1px 1px !important;
+    width: 750px !important;
 }
 
-@media only screen and (max-width:1290px) {
+i.imagem-busca {
+    color: white;
+    position: absolute;
+    margin-left: 722px;
+    margin-top: 8px;
+    background-color: #67BC48;
+    padding: 4px;
+    font-size: 19px;
+}
 
+@media only screen and (max-width:1400px) {
+
+    .searchBar{
+        width: 550px !important;
+    }
+    
     i.imagem-busca {
-        margin-left: 572px;
+        margin-left: 522px !important;
     }
 }
 
-@media only screen and (max-width:800px) {
+@media only screen and (max-width:1300px) {
 
-    i.imagem-busca {
-        margin-left: 472px;
+    .searchBar{
+        width: 350px !important;
     }
+    
+    i.imagem-busca {
+        margin-left: 322px !important;
+    }
+}
+
+
+@media only screen and (max-width:1030px) {
+
+    .searchBar{
+        width: 300px !important;
+    }
+    
+    i.imagem-busca {
+        margin-left: 272px !important;
+    }
+}
+
+@media only screen and (max-width:960px) {
+
+    .searchBar{
+        width: 220px !important;
+    }
+    
+    i.imagem-busca {
+        margin-left: 192px !important;
+    }
+}
+
+
+@media only screen and (max-width:895px) {
 
     .botaoAddCesta {
-        font-size: 75% !important;
+        font-size: 85% !important;
     }
 
     .botaoDetalhe {
-        font-size: 75% !important
+        font-size: 85% !important
     }
 
     .botaoFechar {
-        font-size: 75% !important
+        font-size: 85% !important
     }
 }
 
-@media only screen and (max-width:600px) {
+@media only screen and (max-width:801px) {
 
-    i.imagem-busca {
-        margin-left: 472px;
+    .botaoAddCesta {
+        font-size: 78% !important;
     }
+
+    .botaoDetalhe {
+        font-size: 78% !important
+    }
+
+    .botaoFechar {
+        font-size: 78% !important
+    }
+}
+
+@media only screen and (max-width:762px) {
+
+    .botaoAddCesta {
+        font-size: 69% !important;
+    }
+
+    .botaoDetalhe {
+        font-size: 69% !important
+    }
+
+    .botaoFechar {
+        font-size: 69% !important
+    }
+}
+
+@media only screen and (max-width:695px) {
 
     .botaoAddCesta {
         font-size: 60% !important;
@@ -259,12 +320,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
     }
 }
 
-@media only screen and (max-width:550px) {
-    /* For mobile phones: */
-
-    i.imagem-busca {
-        margin-left: 272px;
-    }
+@media only screen and (max-width:640px) {
 
     .botaoAddCesta {
         font-size: 100% !important;
@@ -276,5 +332,17 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
     .botaoFechar {
         font-size: 100% !important
+    }
+}
+
+@media only screen and (max-width:550px) {
+    /* For mobile phones: */
+    
+    .searchBar{
+        width: 214px !important;
+    }
+    
+    i.imagem-busca {
+        margin-left: 186px !important;
     }
 }

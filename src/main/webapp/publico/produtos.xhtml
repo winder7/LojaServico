@@ -17,7 +17,10 @@
                                     rows="12" paginator="true" id="cars" paginatorPosition="top" rowsPerPageTemplate="12,24,48" 
                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
-                            <f:facet name="header">Produtos</f:facet>
+                            <f:facet name="header">
+                                <i class="fa fa-cubes" style="font-size: 18px; margin-right: 3px"/>
+                                <h:outputText value="Produtos" style="font-size: 18px; color: blue"/>
+                            </f:facet>
                             <p:panel header="#{prod.nome}" style="text-align:center">
                                 <h:panelGrid columns="1" class="responsive">
                                     <p:dataGrid id="gridImg" var="f" value="#{prod.imagens}" emptyMessage="Sem imagem">
@@ -26,18 +29,18 @@
                                             <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
                                         </p:commandLink>
                                     </p:dataGrid>
-
-                                    <h:outputText value="#{prod.nome}" />
-                                    <h:outputText value="#{produtoCtrl.formatarNumero(prod.preco)}" />
+                                    <h:outputText value="#{produtoCtrl.formatarNumero(prod.preco)}" style="font-weight: bold; font-size: 16px"/>
                                     <p:column>
-                                        <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
-                                            <h:outputText styleClass="icon-vitrine fa fa-search"/>
-                                            <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
-                                        </p:commandLink>
-                                        <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.addCesta(prod)}" update="form menu:menubar">
-                                            <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
-                                            <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}"/>
-                                        </p:commandLink>
+                                        <h:panelGrid columns="2" style="width: 100%; height: auto; margin-left: -5px; text-align: center">
+                                            <p:commandButton class="botaoDetalhe" value="Detalhes" icon="fa fa-search" update=":form:prodDetalhe" 
+                                                             oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
+                                                <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
+                                            </p:commandButton>
+                                            <p:commandButton class="botaoAddCesta" value="Comprar" icon="fa fa-shopping-basket"  style="margin-left: 10px" title="Adicionar na cesta" 
+                                                             action="#{cestaCtrl.addCesta(prod)}" update="form menu:menubar">
+                                                <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}"/>
+                                            </p:commandButton>
+                                        </h:panelGrid>
                                     </p:column>
                                 </h:panelGrid>
                             </p:panel>
@@ -65,15 +68,14 @@
                                 </p:panelGrid>
                                 <p:column>
                                     <p:dataGrid columns="2" var="p" value="#{produtoCtrl.produto}">
-                                        <center>
-                                            <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').hide()" title="Fechar">
-                                                <h:outputText styleClass="icon-fechar-vitrine fa fa-close"/>
-                                            </p:commandLink>
-                                            <p:commandLink style="margin-left: 10px" title="Adicionar na cesta" action="#{cestaCtrl.addCesta(p)}" update="form menu:menubar">
-                                                <h:outputText styleClass="icon-vitrine fa fa-shopping-basket"/>
+                                        <h:panelGrid columns="2" style="width: 100%; text-align: center">
+                                            <p:commandButton class="botaoFechar" value="Fechar" icon="fa fa-close" update=":form:prodDetalhe" 
+                                                             oncomplete="PF('prodDetalhe').hide()" title="Fechar"/>
+                                            <p:commandButton value="Comprar" class="botaoAddCesta" icon="fa fa-shopping-basket" style="margin-left: 10px"  
+                                                           title="Adicionar na cesta" action="#{cestaCtrl.addCesta(p)}" update="form menu:menubar">
                                                 <f:setPropertyActionListener value="#{p}" target="#{produtoCtrl.produto}" />
-                                            </p:commandLink>
-                                        </center>
+                                            </p:commandButton>
+                                        </h:panelGrid>
                                     </p:dataGrid>
                                 </p:column>
                             </p:outputPanel>

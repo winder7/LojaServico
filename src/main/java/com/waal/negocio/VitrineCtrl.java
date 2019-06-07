@@ -34,11 +34,11 @@ public class VitrineCtrl implements Serializable {
 
         listaVitrine.clear();
 
-        listaProdutos.forEach((t) -> {
+        listaServicos.forEach((t) -> {
             listaVitrine.add(new ProdutoServico(t));
         });
-
-        listaServicos.forEach((t) -> {
+        
+        listaProdutos.forEach((t) -> {
             listaVitrine.add(new ProdutoServico(t));
         });
 
