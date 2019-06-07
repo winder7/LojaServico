@@ -44,15 +44,15 @@
                         <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{minhaContaCtrl.listagem}"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                      {PageLinks} {NextPageLink} {LastPageLink}"
-                                     paginator="true" rows="10" style="margin-bottom:20px">
+                                     paginator="true" rows="10" style="margin-bottom:20px" class="responsive" reflow="true">
                             <p:column headerText="Código" sortBy="#{f.id}"  width="52" style="text-align: center">
                                 <h:outputText value="#{f.id}"/>
                             </p:column>
                             <p:column headerText="Data de Emissão" sortBy="#{f.dataEmissao}" width="12%" style="text-align: center">
                                 <h:outputText value="#{minhaContaCtrl.formatarData(f.dataEmissao)}"/>
                             </p:column>
-                            <p:column headerText="Data da Autorização" sortBy="#{f.dataAutorizacao}" width="12%" style="text-align: center">
-                                <h:outputText value="#{minhaContaCtrl.formatarData(f.dataAutorizacao) }"/>
+                            <p:column headerText="Forma Pagamen." sortBy="#{f.dataAutorizacao}" width="12%" style="text-align: center">
+                                <h:outputText value="#{f.fpg_descr}"/>
                             </p:column>
                             <p:column headerText="Status" sortBy="#{f.status}" width="18%" style="text-align: center">
                                 <h:outputText value="#{f.status}"/>
@@ -69,8 +69,8 @@
                             <p:column headerText="Desconto" sortBy="#{f.desconto}" width="10%" style="text-align: center">
                                 <h:outputText value="#{minhaContaCtrl.formatarNumero(f.desconto)}"/>
                             </p:column>
-                            <p:column style="width:32px;text-align: center">
-                                <p:commandButton update=":form:pedDetail" oncomplete="PF('pedDetail').show()" icon="pi pi-search" title="View" action="#{minhaContaCtrl.ItensPedido(f)}">
+                            <p:column style="text-align: center;" width="25">
+                                <p:commandButton update=":form:pedDetail" oncomplete="PF('pedDetail').show()" icon="pi pi-search" title="Itens do Pedido" action="#{minhaContaCtrl.ItensPedido(f)}">
                                     <f:setPropertyActionListener value="#{f}" target="#{minhaContaCtrl.pedido}"/>
                                 </p:commandButton>
                             </p:column>

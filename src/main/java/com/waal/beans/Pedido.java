@@ -43,6 +43,8 @@ public class Pedido implements Serializable {
     private float totalGeral;
     @Column(name = "ped_desconto", nullable = true)
     private float desconto;
+    @Column(name = "fpg_descr", length = 80, nullable = true)
+    private String fpg_descr;
     @Column(name = "fk_pes_id")
     private int pes_id;
     @Column(name = "fk_fpg_id")
@@ -137,5 +139,13 @@ public class Pedido implements Serializable {
 
     public void setItesPed(List<ItensPed> itesPed) {
         this.itesPed = itesPed;
+    }
+
+    public String getFpg_descr() {
+        return fpg_descr;
+    }
+
+    public void setFpg_descr(String fpg_descr) {
+        this.fpg_descr = fpg_descr;
     }
 }

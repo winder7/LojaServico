@@ -33,8 +33,11 @@
                                             <f:setPropertyActionListener value="#{prodCarousel.servico}" target="#{vitrineCtrl.servico}"/>
                                         </p:commandLink>
                                     </p:dataGrid>
-                                    <h:outputText class="carouselNome" value="#{prodCarousel.produto != null ? prodCarousel.produto.nome 
-                                                                                : prodCarousel.servico.nome}" />
+                                    <p:column>
+                                        <i class="#{prodCarousel.produto != null ? 'fa fa-cubes' : 'fa fa-wrench'}" style="font-size: 22px; margin-right: 3px"/>
+                                        <h:outputText class="carouselNome" value="#{prodCarousel.produto != null ? prodCarousel.produto.nome 
+                                                                                    : prodCarousel.servico.nome}" />
+                                    </p:column>
                                     <h:outputText class="carouselPreco"  value="#{prodCarousel.produto != null ? produtoCtrl.formatarNumero(prodCarousel.produto.preco) :
                                                                                   produtoCtrl.formatarNumero(prodCarousel.servico.valor)}" />
                                 </p:panelGrid>

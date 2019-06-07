@@ -209,11 +209,11 @@ public class CestaCtrl implements Serializable {
     public String formaPagInfo(String formaPag) {
 
         if (formaPag.contains("Boleto")) {
-            return formaPag + " (" + (int) (percentDesconto * -1) + "% desc.)";
+            return formaPag.split(";")[0] + " (" + (int) (percentDesconto * -1) + "% desc.)";
         } else if (formaPag.contains("Cartão")) {
-            return formaPag + " \n" + parcelaSel;
+            return formaPag.split(";")[0] + " \n" + parcelaSel;
         } else {
-            return formaPag;
+            return formaPag.split(";")[0];
         }
     }
 
@@ -245,7 +245,7 @@ public class CestaCtrl implements Serializable {
                 pedido.setDesconto((float) desconto);
                 pedido.setPes_id(usr.getId());
                 pedido.setFpg_id(Integer.parseInt(forPagEsc.split(";")[1]));
-                //List<ItensPed> listaItensPedido = new ArrayList<>();          
+                pedido.setFpg_descr(formaPagInfo(forPagEsc));
                 for (ProdutoServico prodServ : listaProdServ) {
                     itensPed = new ItensPed();
                     if (prodServ.getProduto() != null) {
