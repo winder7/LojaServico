@@ -19,7 +19,7 @@
 
                             <f:facet name="header">Produtos</f:facet>
                             <p:panel header="#{prod.nome}" style="text-align:center">
-                                <h:panelGrid columns="1" style="width:100%; height: 390px">
+                                <h:panelGrid columns="1" class="responsive">
                                     <p:dataGrid id="gridImg" var="f" value="#{prod.imagens}" emptyMessage="Sem imagem">
                                         <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
                                             <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>

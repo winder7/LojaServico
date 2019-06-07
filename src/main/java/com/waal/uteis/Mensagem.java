@@ -41,7 +41,7 @@ public class Mensagem {
                 + "<br>Descontos: " + Formatar.formatarNumero(pedido.getDesconto())
                 + "<br>Total geral: " + Formatar.formatarNumero(pedido.getTotalGeral())
                 + "</p></div></div></body></html>";
-        System.out.println(htmlMsg);
+        //System.out.println(htmlMsg);
         return htmlMsg;
     }
 

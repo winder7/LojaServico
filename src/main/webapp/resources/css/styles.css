@@ -116,29 +116,51 @@ body .ui-panelgrid .ui-panelgrid-cell {
     height: 32px;
     width: 100px;
 }
+
+.botaoAddCesta {
+    font-weight: bold;
+    color: white !important;
+    background-color: #419641 !important;
+    border-color: #419641 !important;
+    width: 100%;
+    height: 40px;
+}
+
+.botaoDetalhe {
+    font-weight: bold;
+    color: white !important;
+    width: 100%;
+    height: 40px
+}
+
+.botaoFechar {
+    font-weight: bold;
+    color: white !important;
+    background-color: #C73834 !important;
+    border-color: #C73834 !important;
+    width: 100%;
+    height: 40px
+}
+
+.responsive {
+    width: 100% !important;
+    height: auto !important;
+}
+
 .carousel-imagem {
-    max-width: 500px;
-    max-height:240px;
-    min-width: 500px;
-    min-height:240px;
-    width: auto;
-    height: auto;
+    width: 100% !important;
+    max-width: 380px !important;
+    height: auto !important;
 }
 .imagens-vitrine {
-    max-width: 380px;
-    max-height:250px;
-    min-width: 266px;
-    min-height:250px;
-    width: auto;
-    height: auto;
+    width: 100% !important;
+    max-width: 380px !important;
+    height: auto !important;
 }
 .imagens-detalhe {
-    max-width: 494px;
-    max-height:325px;
-    min-width: 494px;
-    min-height:325px;
-    width: auto;
-    height: auto;
+    width: 100% !important;
+    max-width: 380px !important;
+    height: auto !important;
 }
 .icon-vitrine {
     margin:0 auto; 
@@ -173,25 +195,23 @@ body .ui-panelgrid .ui-panelgrid-cell {
     margin-top: 10px !important;
 }
 
+.carouselNome{
+    font-weight: bold;
+    font-size: 22px
+}
+
+.carouselPreco{
+    font-weight: bold;
+    font-size: 16px
+}
+
+.ui-button-text-only .ui-button-text {
+    padding: .1em .5em;
+}
+
 @media only screen and (max-width:1369px) {
     /* For HD Notebooks: */
-    .imagens-vitrine {
-        max-width: 300px;
-        max-height:197px;
-        min-width: 200px;
-        min-height:180px;
-        width: auto;
-        height: auto;
-    }
 
-    .imagens-detalhe {
-        max-width: 380px;
-        max-height:250px;
-        min-width: 266px;
-        min-height:250px;
-        width: auto;
-        height: auto;
-    }
 }
 
 @media only screen and (max-width:1290px) {
@@ -202,32 +222,59 @@ body .ui-panelgrid .ui-panelgrid-cell {
 }
 
 @media only screen and (max-width:800px) {
-    .imagens-vitrine {
-        max-width: 250px;
-        max-height:164px;
-        min-width: 150px;
-        min-height:120px;
-        width: auto;
-        height: auto;
-    }
 
     i.imagem-busca {
         margin-left: 472px;
     }
+
+    .botaoAddCesta {
+        font-size: 75% !important;
+    }
+
+    .botaoDetalhe {
+        font-size: 75% !important
+    }
+
+    .botaoFechar {
+        font-size: 75% !important
+    }
 }
 
-@media only screen and (max-width:500px) {
-    /* For mobile phones: */
-    .imagens-vitrine {
-        max-width: 200px;
-        max-height:130px;
-        min-width: 100px;
-        min-height:60px;
-        width: auto;
-        height: auto;
+@media only screen and (max-width:600px) {
+
+    i.imagem-busca {
+        margin-left: 472px;
     }
+
+    .botaoAddCesta {
+        font-size: 60% !important;
+    }
+
+    .botaoDetalhe {
+        font-size: 60% !important
+    }
+
+    .botaoFechar {
+        font-size: 60% !important
+    }
+}
+
+@media only screen and (max-width:550px) {
+    /* For mobile phones: */
 
     i.imagem-busca {
         margin-left: 272px;
+    }
+
+    .botaoAddCesta {
+        font-size: 100% !important;
+    }
+
+    .botaoDetalhe {
+        font-size: 100% !important
+    }
+
+    .botaoFechar {
+        font-size: 100% !important
     }
 }

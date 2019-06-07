@@ -521,12 +521,13 @@
                                         <i class="fa fa-check" style="font-size: 16px"/>
                                         <p:outputLabel value=" Finalizar Pedido"/>
                                     </f:facet>
-                                    <p:messages />
                                     <p>
                                         Verifique se todos os itens e valores do pedido estão de acordo e finalize o pedido.
                                     </p>
                                     <p>
-                                        <p:selectBooleanCheckbox value="#{cestaCtrl.finalPedido}"/>
+                                        <p:selectBooleanCheckbox value="#{cestaCtrl.finalPedido}">
+                                            <f:validator validatorId="termosValidador" />
+                                        </p:selectBooleanCheckbox>
                                         <b><p:outputLabel value="Você afirma  que leu e concorda com nossos "/></b> 
                                         <b><p:commandLink value="Termos." oncomplete="PF('termosServico').show()"/></b>
                                     </p>
