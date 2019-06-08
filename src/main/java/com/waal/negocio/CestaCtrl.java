@@ -238,7 +238,7 @@ public class CestaCtrl implements Serializable {
                 Pessoa usr = SessionData.getUsuarioLogado();
                 pedido.setDataEmissao(new Date());
                 pedido.setDataAutorizacao(new Date());
-                pedido.setStatus("Aguardando Pagamento");
+                pedido.setStatus(forPagEsc.contains("Boleto") ? "Aguardando pagamento" : "Pagamento aprovado");
                 pedido.setTotalServico((float) somaServico);
                 pedido.setTotalProduto((float) somaProduto);
                 pedido.setTotalGeral((float) somaTotal);

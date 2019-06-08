@@ -45,29 +45,32 @@
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                      {PageLinks} {NextPageLink} {LastPageLink}"
                                      paginator="true" rows="10" style="margin-bottom:20px" class="responsive" reflow="true">
-                            <p:column headerText="Código" sortBy="#{f.id}"  width="52" style="text-align: center">
-                                <h:outputText value="#{f.id}"/>
+                            <p:column headerText="Núm." sortBy="#{f.id}"  width="40" style="text-align: center">
+                                <h:outputText value="#{minhaContaCtrl.addZeroEsq(f.id)}"/>
                             </p:column>
-                            <p:column headerText="Data de Emissão" sortBy="#{f.dataEmissao}" width="12%" style="text-align: center">
+                            <p:column headerText="Data Pedido" sortBy="#{f.dataEmissao}" width="90" style="text-align: center">
                                 <h:outputText value="#{minhaContaCtrl.formatarData(f.dataEmissao)}"/>
                             </p:column>
-                            <p:column headerText="Forma Pagamen." sortBy="#{f.dataAutorizacao}" width="12%" style="text-align: center">
+                            <p:column headerText="Forma Pgto" sortBy="#{f.fpg_descr}" width="12%" style="text-align: left">
                                 <h:outputText value="#{f.fpg_descr}"/>
                             </p:column>
-                            <p:column headerText="Status" sortBy="#{f.status}" width="18%" style="text-align: center">
+                            <p:column headerText="Status" sortBy="#{f.status}" width="140" style="text-align: center;">
                                 <h:outputText value="#{f.status}"/>
                             </p:column>
-                            <p:column headerText="Total em produtos" sortBy="#{f.totalProduto}" width="15%" style="text-align: center">
-                                <h:outputText value="#{minhaContaCtrl.formatarNumero(f.totalProduto)}"/>
-                            </p:column>
-                            <p:column headerText="Total em serviços" sortBy="#{f.totalServico}" width="15%" style="text-align: center">
+                            <p:column headerText="Total serviços" sortBy="#{f.totalServico}" width="110" style="text-align: center">
                                 <h:outputText value="#{minhaContaCtrl.formatarNumero(f.totalServico)}"/>
                             </p:column>
-                            <p:column headerText="Total geral" sortBy="#{f.totalGeral}" width="10%" style="text-align: center">
-                                <h:outputText value="#{minhaContaCtrl.formatarNumero(f.totalGeral)}"/>
+                            <p:column headerText="Total produtos" sortBy="#{f.totalProduto}" width="110" style="text-align: center">
+                                <h:outputText value="#{minhaContaCtrl.formatarNumero(f.totalProduto)}"/>
                             </p:column>
-                            <p:column headerText="Desconto" sortBy="#{f.desconto}" width="10%" style="text-align: center">
+                            <p:column headerText="Frete" width="60" style="text-align: center">
+                                <h:outputText value="#{minhaContaCtrl.calculaFrete(f.totalServico, f.totalProduto, f.desconto, f.totalGeral)}"/>
+                            </p:column>
+                            <p:column headerText="Desconto" sortBy="#{f.desconto}" width="70" style="text-align: center">
                                 <h:outputText value="#{minhaContaCtrl.formatarNumero(f.desconto)}"/>
+                            </p:column>
+                            <p:column headerText="Total Pago" sortBy="#{f.totalGeral}" width="100" style="text-align: center">
+                                <h:outputText value="#{minhaContaCtrl.formatarNumero(f.totalGeral)}"/>
                             </p:column>
                             <p:column style="text-align: center;" width="25">
                                 <p:commandButton update=":form:pedDetail" oncomplete="PF('pedDetail').show()" icon="pi pi-search" title="Itens do Pedido" action="#{minhaContaCtrl.ItensPedido(f)}">
@@ -77,15 +80,28 @@
                         </p:dataTable>
                     </p:panel>
 
-                    <p:dialog  widgetVar="pedDetail" modal="true" showEffect="fade" fitViewport="true" hideEffect="fade" resizable="false" responsive="true" >
+                    <p:dialog  widgetVar="pedDetail" modal="true" showEffect="fade" fitViewport="true" hideEffect="fade" 
+                               resizable="false" responsive="true" style="max-width: 80%">
                         <f:facet name="header">
                             <i class="fa fa-cubes"><p:outputLabel value=" Detalhes do pedido" style="font-weight: bold"/></i>
                         </f:facet>
                         <p:outputPanel id="pedDetail" style="text-align: center;">
+                            <center><p:outputLabel value="Status do Pedido" style="font-weight: bold"/></center>
+                            <p:steps activeIndex="#{minhaContaCtrl.statusPed}">
+                                <p:menuitem value="Pedido efetuado" />
+                                <p:menuitem value="Aguardando pagamento" />
+                                <p:menuitem value="Pagamento aprovado" />
+                                <p:menuitem value="Nota Fiscal" />
+                                <p:menuitem value="Em preparação" />
+                                <p:menuitem value="Em transporte" />
+                            </p:steps>
                             <p:dataTable resizableColumns="true" id="tblRes" var="f" value="#{minhaContaCtrl.listaProdServ}"
-                                         emptyMessage="Cesta Vazia!" style="max-height: 400px !important; max-width: 600px !important" reflow="true" scrollHeight="true">
+                                         emptyMessage="Cesta Vazia!" style="max-height: 300px" reflow="true" scrollHeight="true">
 
                                 <p:column headerText="Item" sortBy="Produto" width="50" style="text-align: center">
+                                    <h:outputText value="#{minhaContaCtrl.numItem()}"/>
+                                </p:column>
+                                <p:column headerText="Tipo" sortBy="Produto" width="50" style="text-align: center">
                                     <h:outputText value="#{f.produto != null ? 'Produto' : 'Serviço'}"/>
                                 </p:column>
                                 <p:column headerText="Imagem" style="width:60px;text-align: center">
@@ -96,7 +112,7 @@
                                     <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}"/>
                                 </p:column>
                                 <p:column headerText="Preço" sortBy="f.preco">
-                                    <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor)}"/>
+                                    <h:outputText value="#{f.produto != null ? minhaContaCtrl.formatarNumero(f.produto.preco) : minhaContaCtrl.formatarNumero(f.servico.valor)}"/>
                                 </p:column>
                             </p:dataTable>
                         </p:outputPanel>

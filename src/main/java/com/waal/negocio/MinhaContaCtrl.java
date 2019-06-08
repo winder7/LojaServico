@@ -34,6 +34,7 @@ public class MinhaContaCtrl implements Serializable {
     private ProdutoServico prodSeerv = new ProdutoServico();
     private List<ItensPed> listaItensPed = new ArrayList<>();
     private ItensPed itensPed = new ItensPed();
+    private int statusPed;
     
     private String _nome;
     
@@ -65,6 +66,7 @@ public class MinhaContaCtrl implements Serializable {
     }
     
     public void ItensPedido(Pedido pedido) {
+        statusPed = pedido.getFpg_id() == 1 ? 1 : 2;
         listaItensPed = pedido.getItesPed();
         listaProdServ = new ArrayList<>();
         for (ItensPed itensPed1 : listaItensPed) {
@@ -74,6 +76,7 @@ public class MinhaContaCtrl implements Serializable {
                 listaProdServ.add(new ProdutoServico(itensPed1.getServico()));
             }
         }
+        cont = 1;
     }
     
     public String formatarNumero(double num) {
@@ -92,6 +95,20 @@ public class MinhaContaCtrl implements Serializable {
             System.out.println("Erro na formatação de data!:");
             return "Erro";
         }
+    }
+    
+    public String addZeroEsq(int num) {
+        return String.format("%05d", num);
+    }
+    
+    private int cont = 1;
+    public String numItem() {
+        return String.format("%02d", cont++);
+    }
+    
+    public String calculaFrete(float totalServ, float totalProd, float desconto, float totalPago) {
+        float frete = totalPago - (totalServ + totalProd + desconto);
+        return formatarNumero(frete);
     }
 
     //gets e sets
@@ -173,5 +190,13 @@ public class MinhaContaCtrl implements Serializable {
 
     public void setItensPed(ItensPed itensPed) {
         this.itensPed = itensPed;
+    }
+
+    public int getStatusPed() {
+        return statusPed;
+    }
+
+    public void setStatusPed(int statusPed) {
+        this.statusPed = statusPed;
     }
 }
