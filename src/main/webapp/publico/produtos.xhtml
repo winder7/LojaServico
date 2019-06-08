@@ -50,21 +50,23 @@
                                 Ops! Nenhum produto cadastrado.
                             </p:outputLabel>
                         </center>
-                        <p:dialog header="Detalhes do produto" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:outputPanel id="prodDetalhe" style="text-align:center;">
+                        <p:dialog id="prodDetalhe" header="Detalhes do produto: #{produtoCtrl.produto.nome}" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel style="text-align:center;">
                                 <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
                                     <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-detalhe"/>
                                 </p:dataGrid><br/>
-                                <p:panelGrid  columns="2" rendered="#{not empty produtoCtrl.produto}" columnClasses="label,value">
+                                <p:panelGrid  columns="2" rendered="#{not empty produtoCtrl.produto}">
 
-                                    <h:outputText value="Código:" />
+                                    <h:outputText value="Código:" style="font-weight: bold"/>
                                     <h:outputText value="#{produtoCtrl.produto.id}" />
 
-                                    <h:outputText value="Nome:" />
-                                    <h:outputText value="#{produtoCtrl.produto.nome}" />
+                                    <h:outputText value="Preço:" style="font-weight: bold"/>
+                                    <h:outputText value="#{produtoCtrl.formatarNumero(produtoCtrl.produto.preco)}" style="font-weight: bold; font-size: 18px"/>
 
-                                    <h:outputText value="Preço:" />
-                                    <h:outputText value="#{produtoCtrl.formatarNumero(produtoCtrl.produto.preco)}" />
+                                    <h:outputText value="Descrição:" style="font-weight: bold"/>
+                                    <p:outputPanel style="max-width: 380px; text-align: justify">
+                                        <h:outputText value="#{produtoCtrl.produto.descricao}" />
+                                    </p:outputPanel>
                                 </p:panelGrid>
                                 <p:column>
                                     <p:dataGrid columns="2" var="p" value="#{produtoCtrl.produto}">
@@ -72,7 +74,7 @@
                                             <p:commandButton class="botaoFechar" value="Fechar" icon="fa fa-close" update=":form:prodDetalhe" 
                                                              oncomplete="PF('prodDetalhe').hide()" title="Fechar"/>
                                             <p:commandButton value="Comprar" class="botaoAddCesta" icon="fa fa-shopping-basket" style="margin-left: 10px"  
-                                                           title="Adicionar na cesta" action="#{cestaCtrl.addCesta(p)}" update="form menu:menubar">
+                                                             title="Adicionar na cesta" action="#{cestaCtrl.addCesta(p)}" update="form menu:menubar">
                                                 <f:setPropertyActionListener value="#{p}" target="#{produtoCtrl.produto}" />
                                             </p:commandButton>
                                         </h:panelGrid>
