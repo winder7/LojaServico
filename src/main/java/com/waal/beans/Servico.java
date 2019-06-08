@@ -25,9 +25,9 @@ public class Servico implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ser_id")
     private int id;
-    @Column(name = "ser_nome", length = 20, nullable = true)
+    @Column(name = "ser_nome", length = 120, nullable = true)
     private String nome;
-    @Column(name = "ser_descricao", length = 60, nullable = true)
+    @Column(name = "ser_descricao", length = 300, nullable = true)
     private String descricao;
     @Column(name = "ser_und", length = 60, nullable = true)
     private String und;

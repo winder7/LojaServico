@@ -246,6 +246,7 @@ public class CestaCtrl implements Serializable {
                 pedido.setPes_id(usr.getId());
                 pedido.setFpg_id(Integer.parseInt(forPagEsc.split(";")[1]));
                 pedido.setFpg_descr(formaPagInfo(forPagEsc));
+                pedido.setFrete((float) freteEscolhido);
                 for (ProdutoServico prodServ : listaProdServ) {
                     itensPed = new ItensPed();
                     if (prodServ.getProduto() != null) {

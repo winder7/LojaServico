@@ -36,6 +36,9 @@
                             <p:column headerText="Descricão" sortBy="f.descricao">
                                 <h:outputText value="#{f.descricao}" />
                             </p:column>
+                            <p:column headerText="Tipo" sortBy="f.descricao">
+                                <h:outputText value="#{f.tipo}" />
+                            </p:column>
                             <p:column headerText="Máximo de Parcelas" sortBy="f.numMaxParc">
                                 <h:outputText value="#{f.numMaxParc}" />
                             </p:column>
@@ -67,6 +70,8 @@
                                 <p:inputText value="#{formaPgtoCtrl.formaPgto.id}" size="5" maxlength="10" disabled="true" rendered="#{formaPgtoCtrl.formaPgto.id != 0}"/>
                                 <h:outputLabel value="Nome:" rendered="true"/>
                                 <p:inputText value="#{formaPgtoCtrl.formaPgto.descricao}" size="60" maxlength="60"/>
+                                <h:outputLabel value="Tipo:" rendered="true"/>
+                                <p:inputText value="#{formaPgtoCtrl.formaPgto.tipo}" size="20" maxlength="60"/>
                                 <h:outputLabel value="Máximo de Parcelas:"/>
                                 <p:inputText value="#{formaPgtoCtrl.formaPgto.numMaxParc}" size="3" maxlength="3" type="number"/>
                                 <h:outputLabel value="Padrão de Parcelas"/>

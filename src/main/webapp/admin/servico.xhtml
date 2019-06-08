@@ -66,9 +66,9 @@
                                 <h:outputLabel value="Código:" rendered="#{servicoCtrl.servico.id !=0}"/>
                                 <p:inputText value="#{servicoCtrl.servico.id}" size="6" maxlength="10" disabled="true" rendered="#{servicoCtrl.servico.id !=0}"/>
                                 <h:outputLabel value="Nome:"/>
-                                <p:inputText value="#{servicoCtrl.servico.nome}" size="20" maxlength="20"/>
+                                <p:inputText value="#{servicoCtrl.servico.nome}" size="20" maxlength="120"/>
                                 <h:outputLabel value="Descrição:"/>
-                                <p:inputText value="#{servicoCtrl.servico.descricao}" size="60" maxlength="60"/>
+                                <p:inputText value="#{servicoCtrl.servico.descricao}" size="60" maxlength="300"/>
                                 <h:outputLabel value="Unidade:"/>
                                 <p:inputText value="#{servicoCtrl.servico.und}" size="20" maxlength="20"/>
                                 <h:outputLabel value="Valor:"/>
@@ -82,7 +82,7 @@
 
                                 <p:outputLabel value="Imagem:"/>
                                 <p:dataGrid id="gridImg" var="f" value="#{servicoCtrl.servico.imagens}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
+                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" style="height: auto; width: 100%; max-width: 200px"/>
                                     <p:commandButton value="Remover" update=":form:gridImg" action="#{servicoCtrl.actionExcluirImagem()}">
                                         <f:setPropertyActionListener value="#{f}" target="#{servicoCtrl.imagem}"/>
                                     </p:commandButton>

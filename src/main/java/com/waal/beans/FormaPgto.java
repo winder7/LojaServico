@@ -22,6 +22,8 @@ public class FormaPgto implements Serializable {
     private int id;
     @Column(name = "fpg_descricao", length = 60, nullable = true)
     private String descricao;
+    @Column(name = "fpg_tipo", length = 60, nullable = true)
+    private String tipo;
     @Column(name = "fpg_num_max_parc", nullable = true)
     private int numMaxParc;
     @Column(name = "fpg_num_padrao_parc", nullable = true)
@@ -77,5 +79,13 @@ public class FormaPgto implements Serializable {
 
     public void setPercentualAcres(float percentualAcres) {
         this.percentualAcres = percentualAcres;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

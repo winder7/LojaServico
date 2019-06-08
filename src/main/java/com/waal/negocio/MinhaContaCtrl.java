@@ -105,11 +105,6 @@ public class MinhaContaCtrl implements Serializable {
     public String numItem() {
         return String.format("%02d", cont++);
     }
-    
-    public String calculaFrete(float totalServ, float totalProd, float desconto, float totalPago) {
-        float frete = totalPago - (totalServ + totalProd + desconto);
-        return formatarNumero(frete);
-    }
 
     //gets e sets
     public String getMenu() {

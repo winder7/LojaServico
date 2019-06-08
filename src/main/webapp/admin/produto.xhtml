@@ -42,6 +42,9 @@
                             <p:column headerText="Nome" sortBy="#{f.nome}">
                                 <h:outputText value="#{f.nome}"/>
                             </p:column>
+                            <p:column headerText="Descrição" sortBy="f.preco">
+                                <h:outputText value="#{f.descricao}"/>
+                            </p:column>
                             <p:column headerText="Preço" sortBy="f.preco">
                                 <h:outputText value="#{produtoCtrl.formatarNumero(f.preco)}"/>
                             </p:column>
@@ -62,7 +65,9 @@
                                 <h:outputLabel value="Código:" rendered="#{produtoCtrl.produto.id != 0}"/>
                                 <p:inputText value="#{produtoCtrl.produto.id}" size="6" maxlength="10" disabled="true" rendered="#{produtoCtrl.produto.id != 0}"/>
                                 <p:outputLabel value="Nome:"/>
-                                <p:inputText value="#{produtoCtrl.produto.nome}" size="60" maxlength="60"/>
+                                <p:inputText value="#{produtoCtrl.produto.nome}" size="60" maxlength="120"/>
+                                <p:outputLabel value="Descrição:"/>
+                                <p:inputText value="#{produtoCtrl.produto.descricao}" size="60" maxlength="300"/>
                                 <p:outputLabel value="Preço:"/>
                                 <p:inputNumber value="#{produtoCtrl.produto.preco}" size="20" maxlength="20" symbol="R$ "/>
                                 <p:outputLabel value="Carregar:"/>
@@ -74,7 +79,7 @@
 
                                 <p:outputLabel value="Imagem:"/>
                                 <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" style="max-height: 200px; max-width: 200px"/>
+                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" style="height: auto; width: 100%; max-width: 200px"/>
                                     <p:commandButton value="Remover" update=":form:gridImg" action="#{produtoCtrl.actionExcluirImagem()}">
                                         <f:setPropertyActionListener value="#{f}" target="#{produtoCtrl.imagem}"/>
                                     </p:commandButton>

@@ -22,20 +22,20 @@
                                              {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Cesta Vazia!"
                                              paginator="true" rows="10" style="margin-bottom:20px" reflow="true">
 
-                                    <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
+                                    <p:column headerText="Código" sortBy="f.id" width="45" style="text-align: center">
                                         <h:outputText value="#{f.produto != null ? f.produto.id : f.servico.id}"/>
                                     </p:column>
-                                    <p:column headerText="Tipo" sortBy="Produto" width="5%" style="text-align: center">
+                                    <p:column headerText="Tipo" sortBy="Produto" width="55" style="text-align: center">
                                         <h:outputText value="#{f.produto != null ? 'Produto' : 'Serviço'}"/>
                                     </p:column>
                                     <p:column headerText="Imagem" style="width:100px;text-align: center">
                                         <p:graphicImage value="../resources/prod_Serv/#{cestaCtrl.getImagem(f.produto != null ? f.produto : f.servico)}.jpg" 
                                                         cache="false" style="height: 65px; width: 100px"/>
                                     </p:column>
-                                    <p:column headerText="Nome" sortBy="#{f.produto != null ? f.produto.nome : f.servico.nome}">
+                                    <p:column headerText="Nome" sortBy="#{f.produto != null ? f.produto.nome : f.servico.nome}" width="50%">
                                         <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}"/>
                                     </p:column>
-                                    <p:column headerText="Preço" sortBy="f.preco">
+                                    <p:column headerText="Preço" sortBy="#{f.produto != null ? f.produto.preco : f.servico.valor}" width="50%">
                                         <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor)}"/>
                                     </p:column>
                                     <p:column style="width:75px;text-align: center">
@@ -497,19 +497,19 @@
                                             <p:outputLabel value=" O que você está comprando"/>
                                         </f:facet>
                                         <p:dataTable resizableColumns="true" id="tblRes" var="f" value="#{cestaCtrl.listaProdServ}"
-                                                     emptyMessage="Cesta Vazia!" style="height: 200px !important" reflow="true" scrollHeight="true">
+                                                     emptyMessage="Cesta Vazia!" style="height: 200px !important" reflow="true" scrollHeight="true" scrollWidth="true">
 
                                             <p:column headerText="Item" sortBy="Produto" width="50" style="text-align: center">
                                                 <h:outputText value="#{f.produto != null ? 'Produto' : 'Serviço'}"/>
                                             </p:column>
-                                            <p:column headerText="Imagem" style="width:60px;text-align: center">
+                                            <p:column headerText="Imagem" style="text-align: center" width="50">
                                                 <p:graphicImage value="../resources/prod_Serv/#{cestaCtrl.getImagem(f.produto != null ? f.produto : f.servico)}.jpg" 
-                                                                cache="false" style="height: 25px; width: 40px"/>
+                                                                cache="false" style="height: auto; width: 100%; max-width: 42px"/>
                                             </p:column>
                                             <p:column headerText="Nome" sortBy="#{f.produto != null ? f.produto.nome : f.servico.nome}">
                                                 <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}"/>
                                             </p:column>
-                                            <p:column headerText="Preço" sortBy="f.preco">
+                                            <p:column headerText="Preço" sortBy="#{f.produto != null ? f.produto.preco : f.servico.valor}">
                                                 <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor)}"/>
                                             </p:column>
                                         </p:dataTable>

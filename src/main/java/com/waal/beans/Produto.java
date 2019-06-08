@@ -25,10 +25,12 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pro_id")
     private int id;
-    @Column(name = "pro_nome", length = 60, nullable = true)
+    @Column(name = "pro_nome", length = 120, nullable = true)
     private String nome;
     @Column(name = "pro_preco", nullable = true)
     private float preco;
+    @Column(name = "pro_descricao", length = 300, nullable = true)
+    private String descricao;
     
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Imagem> imagens = new ArrayList<Imagem>();
@@ -63,5 +65,13 @@ public class Produto implements Serializable {
 
     public void setImagens(List<Imagem> imagens) {
         this.imagens = imagens;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

@@ -43,11 +43,13 @@ public class Pedido implements Serializable {
     private float totalGeral;
     @Column(name = "ped_desconto", nullable = true)
     private float desconto;
-    @Column(name = "fpg_descr", length = 80, nullable = true)
+    @Column(name = "ped_fpg_descr", length = 80, nullable = true)
     private String fpg_descr;
-    @Column(name = "fk_pes_id")
+    @Column(name = "ped_frete", nullable = true)
+    private float frete;
+    @Column(name = "fk_pes_id", nullable = true)
     private int pes_id;
-    @Column(name = "fk_fpg_id")
+    @Column(name = "fk_fpg_id", nullable = true)
     private int fpg_id;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
@@ -147,5 +149,13 @@ public class Pedido implements Serializable {
 
     public void setFpg_descr(String fpg_descr) {
         this.fpg_descr = fpg_descr;
+    }
+
+    public float getFrete() {
+        return frete;
+    }
+
+    public void setFrete(float frete) {
+        this.frete = frete;
     }
 }

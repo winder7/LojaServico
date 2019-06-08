@@ -64,7 +64,7 @@
                                 <h:outputText value="#{minhaContaCtrl.formatarNumero(f.totalProduto)}"/>
                             </p:column>
                             <p:column headerText="Frete" width="60" style="text-align: center">
-                                <h:outputText value="#{minhaContaCtrl.calculaFrete(f.totalServico, f.totalProduto, f.desconto, f.totalGeral)}"/>
+                                <h:outputText value="#{minhaContaCtrl.formatarNumero(f.frete)}"/>
                             </p:column>
                             <p:column headerText="Desconto" sortBy="#{f.desconto}" width="70" style="text-align: center">
                                 <h:outputText value="#{minhaContaCtrl.formatarNumero(f.desconto)}"/>
@@ -83,7 +83,8 @@
                     <p:dialog  widgetVar="pedDetail" modal="true" showEffect="fade" fitViewport="true" hideEffect="fade" 
                                resizable="false" responsive="true" style="max-width: 80%">
                         <f:facet name="header">
-                            <i class="fa fa-cubes"><p:outputLabel value=" Detalhes do pedido" style="font-weight: bold"/></i>
+                            <i class="fa fa-info-circle" style="font-size: 18px"/>
+                            <p:outputLabel value=" Detalhes do pedido"/>
                         </f:facet>
                         <p:outputPanel id="pedDetail" style="text-align: center;">
                             <center><p:outputLabel value="Status do Pedido" style="font-weight: bold"/></center>
@@ -106,7 +107,7 @@
                                 </p:column>
                                 <p:column headerText="Imagem" style="width:60px;text-align: center">
                                     <p:graphicImage value="../resources/prod_Serv/#{cestaCtrl.getImagem(f.produto != null ? f.produto : f.servico)}.jpg" 
-                                                    cache="false" style="height: 25px; width: 40px"/>
+                                                    cache="false" style="height: auto; width: 100%; max-width: 42px"/>
                                 </p:column>
                                 <p:column headerText="Nome" sortBy="#{f.produto != null ? f.produto.nome : f.servico.nome}">
                                     <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}"/>
@@ -217,14 +218,14 @@
                                                 <f:facet name="header">
                                                     <h:outputLabel value="Número"/>
                                                 </f:facet>
-                                                <p:inputMask value="#{fon.numero}" mask="#{f.descricao == 'Fixo' ? '(99)9999-9999' : '(99)99999-9999'}"/>
+                                                <p:inputMask value="#{fon.numero}" mask="#{fon.descricao == 'Fixo' ? '(99)9999-9999' : '(99)99999-9999'}"/>
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">
                                                     <h:outputLabel value="Tipo"/>
                                                 </f:facet>
                                                 <p:selectOneMenu value="#{fon.descricao}" style="margin-top: 3px; width: 110px">
-                                                    <f:selectItem itemLabel="Celular" itemValue="#{f.descricao}" />
+                                                    <f:selectItem itemLabel="Celular" itemValue="#{fon.descricao}" />
                                                     <f:selectItem itemLabel="Fixo" itemValue="Fixo" />
                                                     <f:selectItem itemLabel="Celular" itemValue="Celular" />
                                                     <p:ajax event="change" update=":form:fones"/>
