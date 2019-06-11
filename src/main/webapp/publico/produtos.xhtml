@@ -37,7 +37,7 @@
                                                 <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
                                             </p:commandButton>
                                             <p:commandButton class="botaoAddCesta" value="Comprar" icon="fa fa-shopping-basket"  style="margin-left: 10px" title="Adicionar na cesta" 
-                                                             action="#{cestaCtrl.addCesta(prod)}" update="form menu:menubar">
+                                                             action="#{cestaCtrl.addCesta(prod)}" update="form">
                                                 <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}"/>
                                             </p:commandButton>
                                         </h:panelGrid>
@@ -50,10 +50,11 @@
                                 Ops! Nenhum produto cadastrado.
                             </p:outputLabel>
                         </center>
-                        <p:dialog id="prodDetalhe" header="Detalhes do produto: #{produtoCtrl.produto.nome}" widgetVar="prodDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:dialog id="prodDetalhe" header="Detalhes do produto: #{produtoCtrl.produto.nome}" widgetVar="prodDetalhe" modal="true" showEffect="fade" 
+                                  hideEffect="fade" resizable="false" fitViewport="true">
                             <p:outputPanel style="text-align:center;">
                                 <p:dataGrid id="gridImg" var="f" value="#{produtoCtrl.produto.imagens}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-detalhe"/>
+                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-detalhe" style="max-width: 280px !important"/>
                                 </p:dataGrid><br/>
                                 <p:panelGrid  columns="2" rendered="#{not empty produtoCtrl.produto}">
 
@@ -64,7 +65,7 @@
                                     <h:outputText value="#{produtoCtrl.formatarNumero(produtoCtrl.produto.preco)}" style="font-weight: bold; font-size: 18px"/>
 
                                     <h:outputText value="Descrição:" style="font-weight: bold"/>
-                                    <p:outputPanel style="max-width: 380px; text-align: justify">
+                                    <p:outputPanel style="max-width: 500px; text-align: justify">
                                         <h:outputText value="#{produtoCtrl.produto.descricao}" />
                                     </p:outputPanel>
                                 </p:panelGrid>
@@ -74,7 +75,7 @@
                                             <p:commandButton class="botaoFechar" value="Fechar" icon="fa fa-close" update=":form:prodDetalhe" 
                                                              oncomplete="PF('prodDetalhe').hide()" title="Fechar"/>
                                             <p:commandButton value="Comprar" class="botaoAddCesta" icon="fa fa-shopping-basket" style="margin-left: 10px"  
-                                                             title="Adicionar na cesta" action="#{cestaCtrl.addCesta(p)}" update="form menu:menubar">
+                                                             title="Adicionar na cesta" action="#{cestaCtrl.addCesta(p)}" update="form">
                                                 <f:setPropertyActionListener value="#{p}" target="#{produtoCtrl.produto}" />
                                             </p:commandButton>
                                         </h:panelGrid>

@@ -70,8 +70,8 @@ body .ui-panelgrid .ui-panelgrid-cell {
     font-weight: bold;
     margin-top: 11px !important;
     color: white !important;
-    background-color: #EC961C !important
-        border-color: #EC961C !important;
+    background-color: #EC961C !important;
+    border-color: #EC961C !important;
 }
 .botaoGravar {
     font-weight: bold;
@@ -128,6 +128,15 @@ body .ui-panelgrid .ui-panelgrid-cell {
     color: white !important;
     background-color: #C73834 !important;
     border-color: #C73834 !important;
+    width: 100%;
+    height: 40px
+}
+
+.botaoContratar {
+    font-weight: bold;
+    color: white !important;
+    background-color: #EC961C !important;
+    border-color: #EC961C !important;
     width: 100%;
     height: 40px
 }
@@ -219,7 +228,7 @@ i.imagem-busca {
     .searchBar{
         width: 550px !important;
     }
-    
+
     i.imagem-busca {
         margin-left: 522px !important;
     }
@@ -230,7 +239,7 @@ i.imagem-busca {
     .searchBar{
         width: 350px !important;
     }
-    
+
     i.imagem-busca {
         margin-left: 322px !important;
     }
@@ -242,7 +251,7 @@ i.imagem-busca {
     .searchBar{
         width: 300px !important;
     }
-    
+
     i.imagem-busca {
         margin-left: 272px !important;
     }
@@ -253,7 +262,7 @@ i.imagem-busca {
     .searchBar{
         width: 220px !important;
     }
-    
+
     i.imagem-busca {
         margin-left: 192px !important;
     }
@@ -337,11 +346,11 @@ i.imagem-busca {
 
 @media only screen and (max-width:550px) {
     /* For mobile phones: */
-    
+
     .searchBar{
         width: 214px !important;
     }
-    
+
     i.imagem-busca {
         margin-left: 186px !important;
     }

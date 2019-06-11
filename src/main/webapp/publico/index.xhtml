@@ -39,7 +39,7 @@
                                                                                     : prodCarousel.servico.nome}" />
                                     </p:column>
                                     <h:outputText class="carouselPreco"  value="#{prodCarousel.produto != null ? produtoCtrl.formatarNumero(prodCarousel.produto.preco) :
-                                                                                  produtoCtrl.formatarNumero(prodCarousel.servico.valor)}" />
+                                                                                  produtoCtrl.formatarNumero(prodCarousel.servico.valor).concat(' (').concat(prodCarousel.servico.und).concat(')')}" />
                                 </p:panelGrid>
                             </p:carousel>
                         </center>
@@ -55,7 +55,7 @@
                         <p:growl id="msgs" showDetail="true"/>
                         <center>
                             <p:dataGrid var="prod" value="#{vitrineCtrl.listaVitrine}" rendered="#{vitrineCtrl.listaVitrine.size()!=0}" columns="3" layout="grid"
-                                        rows="12" paginator="true" id="produto" paginatorPosition="top" rowsPerPageTemplate="12,24,48" class="responsive"
+                                        rows="24" paginator="true" id="produto" paginatorPosition="top" rowsPerPageTemplate="12,24,48" class="responsive"
                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
                                 <p:panel header="#{prod.produto != null ? prod.produto.nome : prod.servico.nome}" style="text-align:center">
@@ -77,17 +77,20 @@
                                             </p:commandLink>
                                         </p:dataGrid>
                                         <h:outputText value="#{prod.produto != null ? produtoCtrl.formatarNumero(prod.produto.preco) :
-                                                               produtoCtrl.formatarNumero(prod.servico.valor)}" style="font-weight: bold; font-size: 16px"/>
+                                                               produtoCtrl.formatarNumero(prod.servico.valor).concat(' (').concat(prod.servico.und).concat(')')}" style="font-weight: bold; font-size: 16px"/>
                                         <p:column>
                                             <h:panelGrid columns="2" style="width: 100%; height: auto; margin-left: -5px; text-align: center">
-                                                <p:commandButton class="botaoDetalhe" value="Detalhes" icon="fa fa-search" rendered="#{prod.produto != null}" update=":form:ProdDetalhe" oncomplete="PF('ProdDetalhe').show()" title="Detalhes">
+                                                <p:commandButton class="botaoDetalhe" value="Detalhes" icon="fa fa-search" rendered="#{prod.produto != null}" 
+                                                                 update=":form:ProdDetalhe" oncomplete="PF('ProdDetalhe').show()" title="Detalhes">
                                                     <f:setPropertyActionListener value="#{prod.produto}" target="#{vitrineCtrl.produto}"/>
                                                 </p:commandButton>
-                                                <p:commandButton class="botaoDetalhe" icon="fa fa-search" value="Detalhes" rendered="#{prod.produto == null}" update=":form:ServDetalhe" oncomplete="PF('ServDetalhe').show()" title="Detalhes">
+                                                <p:commandButton class="botaoDetalhe" icon="fa fa-search" value="Detalhes" rendered="#{prod.produto == null}" 
+                                                                 update=":form:ServDetalhe" oncomplete="PF('ServDetalhe').show()" title="Detalhes">
                                                     <f:setPropertyActionListener value="#{prod.servico}" target="#{vitrineCtrl.servico}"/>
                                                 </p:commandButton>
 
-                                                <p:commandButton class="botaoAddCesta" value="Comprar" icon="fa fa-shopping-basket" style="margin-left: 10px" title="Adicionar na cesta" 
+                                                <p:commandButton class="#{prod.produto != null ? 'botaoAddCesta' : 'botaoContratar'}" value="#{prod.produto != null ? 'Comprar' : 'Contrate'}" 
+                                                                 icon="fa fa-shopping-basket" style="margin-left: 10px" title="Adicionar na cesta" 
                                                                  action="#{cestaCtrl.addCesta(prod)}" update="form menu:menubar">
                                                     <f:setPropertyActionListener value="#{prod}" target="#{prod}" />
                                                 </p:commandButton>
@@ -97,21 +100,22 @@
                                 </p:panel>
                             </p:dataGrid>
                         </center>
-                        <p:dialog header="Detalhes do produto" widgetVar="ProdDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
-                            <p:outputPanel id="ProdDetalhe" style="text-align:center;">
+                        <p:dialog id="ProdDetalhe" header="Detalhes do produto: #{vitrineCtrl.produto.nome}" widgetVar="ProdDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+                            <p:outputPanel style="text-align:center;">
                                 <p:dataGrid id="gridImgProd" var="imgP" value="#{vitrineCtrl.produto.imagens}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../resources/prod_Serv/#{imgP.id}.jpg" cache="false" class="imagens-detalhe"/>
+                                    <p:graphicImage value="../resources/prod_Serv/#{imgP.id}.jpg" cache="false" class="imagens-detalhe" style="max-width: 280px !important"/>
                                 </p:dataGrid><br/>
                                 <p:panelGrid  columns="2" rendered="#{not empty vitrineCtrl.produto}" columnClasses="label,value">
-
-                                    <h:outputText value="Código:" />
+                                    <h:outputText value="Código:" style="font-weight: bold"/>
                                     <h:outputText value="#{vitrineCtrl.produto.id}" />
 
-                                    <h:outputText value="Nome:" />
-                                    <h:outputText value="#{vitrineCtrl.produto.nome}" />
+                                    <h:outputText value="Preço:" style="font-weight: bold"/>
+                                    <h:outputText value="#{produtoCtrl.formatarNumero(vitrineCtrl.produto.preco)}" style="font-weight: bold; font-size: 18px"/>
 
-                                    <h:outputText value="Preço:" />
-                                    <h:outputText value="#{produtoCtrl.formatarNumero(vitrineCtrl.produto.preco)}" />
+                                    <h:outputText value="Descrição:" style="font-weight: bold"/>
+                                    <p:outputPanel style="max-width: 500px; text-align: justify">
+                                        <h:outputText value="#{vitrineCtrl.produto.descricao}" />
+                                    </p:outputPanel>
                                 </p:panelGrid>
                                 <p:column>
                                     <p:dataGrid columns="2" var="s" value="#{vitrineCtrl.produto}">
@@ -127,28 +131,29 @@
                                 </p:column>
                             </p:outputPanel>
                         </p:dialog>
-                        <p:dialog header="Detalhes do Servico" widgetVar="ServDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
-                            <p:outputPanel id="ServDetalhe" style="text-align:center;">
+                        <p:dialog id="ServDetalhe" header="Detalhes do Serviço: #{vitrineCtrl.servico.nome}" widgetVar="ServDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+                            <p:outputPanel style="text-align:center;">
                                 <p:dataGrid id="gridImgServ" var="imgS" value="#{vitrineCtrl.servico.imagens}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../resources/prod_Serv/#{imgS.id}.jpg" cache="false" class="imagens-detalhe"/>
+                                    <p:graphicImage value="../resources/prod_Serv/#{imgS.id}.jpg" cache="false" class="imagens-detalhe" style="max-width: 280px !important"/>
                                 </p:dataGrid><br/>
                                 <p:panelGrid  columns="2" rendered="#{not empty vitrineCtrl.servico}" columnClasses="label,value">
-
-                                    <h:outputText value="Código:" />
+                                    <h:outputText value="Código:" style="font-weight: bold"/>
                                     <h:outputText value="#{vitrineCtrl.servico.id}" />
 
-                                    <h:outputText value="Nome:" />
-                                    <h:outputText value="#{vitrineCtrl.servico.nome}" />
+                                    <h:outputText value="Preço:" style="font-weight: bold"/>
+                                    <h:outputText value="#{servicoCtrl.formatarNumero(vitrineCtrl.servico.valor)}" style="font-weight: bold; font-size: 18px"/>
 
-                                    <h:outputText value="Preço:" />
-                                    <h:outputText value="#{produtoCtrl.formatarNumero(vitrineCtrl.servico.valor)}" />
+                                    <h:outputText value="Descrição:" style="font-weight: bold"/>
+                                    <p:outputPanel style="max-width: 500px; text-align: justify">
+                                        <h:outputText value="#{vitrineCtrl.servico.descricao}" />
+                                    </p:outputPanel>
                                 </p:panelGrid>
                                 <p:column>
                                     <p:dataGrid columns="2" var="s" value="#{vitrineCtrl.servico}">
                                         <h:panelGrid columns="2" style="width: 100%; text-align: center">
                                             <p:commandButton class="botaoFechar" value="Fechar" icon="fa fa-close" update=":form:ServDetalhe" 
                                                              oncomplete="PF('ServDetalhe').hide()" title="Fechar"/>
-                                            <p:commandButton value="Comprar" class="botaoAddCesta" icon="fa fa-shopping-basket" style="margin-left: 10px" 
+                                            <p:commandButton value="Contrate" class="botaoContratar" icon="fa fa-shopping-basket" style="margin-left: 10px" 
                                                              title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="form menu:menubar">
                                                 <f:setPropertyActionListener value="#{s}" target="#{vitrineCtrl.servico}" />
                                             </p:commandButton>

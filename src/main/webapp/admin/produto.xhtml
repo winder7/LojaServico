@@ -27,11 +27,28 @@
                                 <f:ajax event="keyup" immediate="true" render="tbl"/>
                             </p:inputText>
                         </p:row>
-                        <p:commandButton value="Gerar Relatório" title="Gerar Relatório PDF" action="#{produtoCtrl.gerarRelatorio()}"  ajax="false" onclick="this.form.target = '_blank'"/>
+                        <p:commandButton value="Gerar Relatório" title="Gerar Relatório PDF" action="#{produtoCtrl.gerarRelatorio()}"  
+                                         ajax="false" onclick="this.form.target = '_blank'" style="margin-left: 15px"/>
                         <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{produtoCtrl.listagem}"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                                     {PageLinks} {NextPageLink} {LastPageLink}"
+                                     {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                      paginator="true" rows="10" style="margin-bottom:20px">
+                            
+                            <f:facet name="{Exporters}">
+                                <div style="float:right;padding-top: 5px; font-size: 20px; margin-right: 5px;">
+                                    
+                                    <h:commandLink>
+                                        <i class="fa fa-file-pdf-o"/>
+                                        <p:dataExporter type="pdf" target="tbl" fileName="Produtos"/>
+                                    </h:commandLink>
+
+                                    <h:commandLink>
+                                        <i class="fa fa-file-text-o"/>
+                                        <p:dataExporter type="csv" target="tbl" fileName="Produtos" />
+                                    </h:commandLink>
+                                </div>
+                            </f:facet>
+                            
                             <p:column headerText="Código" sortBy="f.id" width="5%" style="text-align: center">
                                 <h:outputText value="#{f.id}"/>
                             </p:column>

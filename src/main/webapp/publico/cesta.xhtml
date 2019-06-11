@@ -38,6 +38,9 @@
                                     <p:column headerText="Preço" sortBy="f.preco">
                                         <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor)}"/>
                                     </p:column>
+                                    <p:column headerText="Qtde" width="45">
+                                        <p:inputMask placeholder="1"  size="2" maxlength="1" style="text-align: center" mask="9"/>
+                                    </p:column>
                                     <p:column style="width:75px;text-align: center">
                                         <p:commandButton rendered="#{f.produto != null}" update=":form:ProdDetalhe" 
                                                          oncomplete="PF('ProdDetalhe').show()" icon="pi pi-search" title="Detalhe">

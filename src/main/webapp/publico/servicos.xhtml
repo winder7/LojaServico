@@ -24,19 +24,19 @@
                             <p:panel header="#{serv.nome}" style="text-align:center">
                                 <h:panelGrid columns="1" style="width:100%">
                                     <p:dataGrid id="gridImg" var="f" value="#{serv.imagens}" emptyMessage="Sem imagem">
-                                        <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
+                                        <p:commandLink update=":form:servDetalhe" oncomplete="PF('servDetalhe').show()" title="Ver detalhes">
                                             <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
                                             <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
                                         </p:commandLink>
                                     </p:dataGrid>
-                                    <h:outputText value="#{produtoCtrl.formatarNumero(serv.valor)}" style="font-weight: bold; font-size: 16px"/>
+                                    <h:outputText value="#{servicoCtrl.formatarNumero(serv.valor)}" style="font-weight: bold; font-size: 16px"/>
                                     <p:column>
                                         <h:panelGrid columns="2" style="width: 100%; height: auto; margin-left: -5px; text-align: center">
-                                            <p:commandButton class="botaoDetalhe" value="Detalhes" icon="fa fa-search" update=":form:prodDetalhe" 
+                                            <p:commandButton class="botaoDetalhe" value="Detalhes" icon="fa fa-search" update=":form:servDetalhe" 
                                                              oncomplete="PF('servDetalhe').show()" title="Ver detalhes">
                                                 <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
                                             </p:commandButton>
-                                            <p:commandButton class="botaoAddCesta" value="Comprar" icon="fa fa-shopping-basket" style="margin-left: 10px" title="Adicionar na cesta" 
+                                            <p:commandButton class="botaoContratar" value="Contrate" icon="fa fa-shopping-basket" style="margin-left: 10px" title="Adicionar na cesta" 
                                                              action="#{cestaCtrl.addCesta(serv)}" update="form menu:menubar">
                                                 <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
                                             </p:commandButton>
@@ -50,10 +50,10 @@
                                 Ops! Nenhum serviço cadastrado.
                             </p:outputLabel>
                         </center>
-                        <p:dialog id="prodDetalhe" header="Detalhes do Serviço: #{servicoCtrl.servico.nome}" widgetVar="servDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:dialog id="servDetalhe" header="Detalhes do Serviço: #{servicoCtrl.servico.nome}" widgetVar="servDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                             <p:outputPanel  style="text-align:center;">
                                 <p:dataGrid id="gridImg" var="f" value="#{servicoCtrl.servico.imagens}" emptyMessage="Sem imagem">
-                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-detalhe"/>
+                                    <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-detalhe" style="max-width: 280px !important"/>
                                 </p:dataGrid><br/>
                                 <p:panelGrid  columns="2" rendered="#{not empty servicoCtrl.servico}" columnClasses="label,value">
                                     <h:outputText value="Código:" style="font-weight: bold"/>
@@ -61,19 +61,19 @@
 
                                     <h:outputText value="Preço:" style="font-weight: bold"/>
                                     <h:outputText value="#{servicoCtrl.formatarNumero(servicoCtrl.servico.valor)}" style="font-weight: bold; font-size: 18px"/>
-                                    
+
                                     <h:outputText value="Descrição:" style="font-weight: bold"/>
-                                    <p:outputPanel style="max-width: 380px; text-align: justify">
+                                    <p:outputPanel style="max-width: 500px; text-align: justify">
                                         <h:outputText value="#{servicoCtrl.servico.descricao}" />
                                     </p:outputPanel>
                                 </p:panelGrid>
                                 <p:column>
                                     <p:dataGrid columns="2" var="s" value="#{servicoCtrl.servico}">
                                         <h:panelGrid columns="2" style="width: 100%; text-align: center">
-                                            <p:commandButton class="botaoFechar" value="Fechar" icon="fa fa-close" update=":form:prodDetalhe" 
-                                                           oncomplete="PF('servDetalhe').hide()" title="Fechar"/>
-                                            <p:commandButton value="Comprar" class="botaoAddCesta" icon="fa fa-shopping-basket" style="margin-left: 10px" 
-                                                           title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="form menu:menubar">
+                                            <p:commandButton class="botaoFechar" value="Fechar" icon="fa fa-close" update=":form:servDetalhe" 
+                                                             oncomplete="PF('servDetalhe').hide()" title="Fechar"/>
+                                            <p:commandButton value="Contrate" class="botaoContratar" icon="fa fa-shopping-basket" style="margin-left: 10px" 
+                                                             title="Adicionar na cesta" action="#{cestaCtrl.addCesta(s)}" update="form menu:menubar">
                                                 <f:setPropertyActionListener value="#{s}" target="#{servicoCtrl.servico}" />
                                             </p:commandButton>
                                         </h:panelGrid>
