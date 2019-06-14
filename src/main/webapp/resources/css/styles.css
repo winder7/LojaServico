@@ -165,6 +165,20 @@ body .ui-panelgrid .ui-panelgrid-cell {
     margin:0 auto; 
     font-size: 22px;
 }
+
+.icon-plus {
+    margin:0 auto; 
+    font-size: 22px;
+    color: #419641;
+}
+
+.icon-minus {
+    margin:0 auto; 
+    font-size: 22px;
+    color: red;
+    margin-left: 8px;
+}
+
 .icon-fechar-vitrine {
     margin:0 auto; 
     font-size: 25px;

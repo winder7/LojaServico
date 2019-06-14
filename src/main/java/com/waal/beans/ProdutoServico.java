@@ -8,6 +8,7 @@ public class ProdutoServico {
     
     private Produto produto;
     private Servico servico;
+    private int quantidade = 1;
 
     public ProdutoServico() {
     }
@@ -20,9 +21,25 @@ public class ProdutoServico {
         this.servico = servico;
     }
     
+    public ProdutoServico(Produto produto, int quantidade) {
+        this.produto = produto;
+        this.quantidade = quantidade;
+    }
+    
+    public ProdutoServico(Servico servico, int quantidade) {
+        this.servico = servico;
+        this.quantidade = quantidade;
+    }
+    
     public ProdutoServico(Produto produto, Servico servico) {
         this.produto = produto;
         this.servico = servico;
+    }
+
+    public ProdutoServico(Produto produto, Servico servico, int quantidade) {
+        this.produto = produto;
+        this.servico = servico;
+        this.quantidade = quantidade;
     }
     
     public Produto getProduto() {
@@ -39,5 +56,13 @@ public class ProdutoServico {
 
     public void setServico(Servico servico) {
         this.servico = servico;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 }

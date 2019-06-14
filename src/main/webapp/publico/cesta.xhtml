@@ -12,11 +12,11 @@
             <ui:define name="content">
                 <h:form id="form" style="padding: 10px 15px 15px 15px">
                     <p:growl id="msgs" showDetail="true"/>
-
+                    
                     <p:wizard widgetVar="wiz" id="cadDetail" flowListener="#{wizardCtrl.onFlowProcess}" backLabel="Voltar" nextLabel="Próximo" 
                               onnext="#{cestaCtrl.listaProdServ.size() == 0 ? 'hideBackOnLastTab' : ''}" showNavBar="false">
                         <p:tab id="login" title="Cesta">
-                            <p:panel id="basic" header="Minha Cesta">
+                            <p:panel id="panelCesta" header="Minha Cesta">
                                 <p:dataTable paginatorPosition="top" resizableColumns="true" id="tbl" var="f" value="#{cestaCtrl.listaProdServ}"
                                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
                                              {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Cesta Vazia!"
@@ -35,11 +35,26 @@
                                     <p:column headerText="Nome" sortBy="#{f.produto != null ? f.produto.nome : f.servico.nome}">
                                         <h:outputText value="#{f.produto != null ? f.produto.nome : f.servico.nome}"/>
                                     </p:column>
-                                    <p:column headerText="Preço" sortBy="f.preco">
-                                        <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor)}"/>
+                                    <p:column headerText="Preço Unitário" sortBy="f.preco">
+                                        <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero(f.produto.preco) : cestaCtrl.formatarNumero(f.servico.valor).concat(' (').concat(f.servico.und).concat(')')}"/>
+                                    </p:column>
+                                    <p:column headerText="Subtotal" sortBy="f.preco">
+                                        <h:outputText value="#{f.produto != null ? cestaCtrl.formatarNumero((f.produto.preco * f.quantidade)) : cestaCtrl.formatarNumero((f.servico.valor * f.quantidade))}"/>
                                     </p:column>
                                     <p:column headerText="Qtde" width="45">
-                                        <p:inputMask placeholder="1"  size="2" maxlength="1" style="text-align: center" mask="9"/>
+                                        <p:row>
+                                            <p:inputText value="#{f.quantidade}" size="2" maxlength="2" style="text-align: center">
+                                                <p:ajax event="keyup" update=":form:tbl menu:menubar" listener="#{cestaCtrl.somaItens()}"/>
+                                            </p:inputText>
+                                        </p:row><br></br>
+                                        <p:row>
+                                            <p:commandLink action="#{cestaCtrl.addRemQtde(f, 1)}" update=":form:tbl menu:menubar"> 
+                                                <h:outputText styleClass="icon-plus fa fa-plus-circle"/>
+                                            </p:commandLink>
+                                            <p:commandLink action="#{cestaCtrl.addRemQtde(f, -1)}" update=":form:tbl menu:menubar"> 
+                                                <h:outputText styleClass="icon-minus fa fa-minus-circle"/>
+                                            </p:commandLink>
+                                        </p:row>
                                     </p:column>
                                     <p:column style="width:75px;text-align: center">
                                         <p:commandButton rendered="#{f.produto != null}" update=":form:ProdDetalhe" 
@@ -80,44 +95,46 @@
                                 </p:dataTable>
                             </p:panel>
 
-                            <p:dialog header="Detalhes do produto" widgetVar="ProdDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                <p:outputPanel id="ProdDetalhe" style="text-align:center;">
+                            <p:dialog id="ProdDetalhe" header="Detalhes do produto: #{cestaCtrl.produto.nome}" widgetVar="ProdDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+                                <p:outputPanel style="text-align:center;">
                                     <p:dataGrid id="gridImgProd" var="imgP" value="#{cestaCtrl.produto.imagens}" emptyMessage="Sem imagem">
-                                        <p:graphicImage value="../resources/prod_Serv/#{imgP.id}.jpg" cache="false" class="imagens-detalhe"/>
+                                        <p:graphicImage value="../resources/prod_Serv/#{imgP.id}.jpg" cache="false" class="imagens-detalhe" style="max-width: 280px !important"/>
                                     </p:dataGrid><br/>
                                     <p:panelGrid  columns="2" rendered="#{not empty cestaCtrl.produto}" columnClasses="label,value">
-
-                                        <h:outputText value="Código:" />
+                                        <h:outputText value="Código:" style="font-weight: bold"/>
                                         <h:outputText value="#{cestaCtrl.produto.id}" />
 
-                                        <h:outputText value="Nome:" />
-                                        <h:outputText value="#{cestaCtrl.produto.nome}" />
+                                        <h:outputText value="Preço:" style="font-weight: bold"/>
+                                        <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.produto.preco)}" style="font-weight: bold; font-size: 18px"/>
 
-                                        <h:outputText value="Preço:" />
-                                        <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.produto.preco)}" />
+                                        <h:outputText value="Descrição:" style="font-weight: bold"/>
+                                        <p:outputPanel style="max-width: 500px; text-align: justify">
+                                            <h:outputText value="#{cestaCtrl.produto.descricao}" />
+                                        </p:outputPanel>
                                     </p:panelGrid>
                                 </p:outputPanel>
                             </p:dialog>
-                            <p:dialog header="Detalhes do Servico" widgetVar="ServDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                <p:outputPanel id="ServDetalhe" style="text-align:center;">
+                            <p:dialog id="ServDetalhe" header="Detalhes do Serviço: #{cestaCtrl.servico.nome}" widgetVar="ServDetalhe" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+                                <p:outputPanel style="text-align:center;">
                                     <p:dataGrid id="gridImgServ" var="imgS" value="#{cestaCtrl.servico.imagens}" emptyMessage="Sem imagem">
-                                        <p:graphicImage value="../resources/prod_Serv/#{imgS.id}.jpg" cache="false" class="imagens-detalhe"/>
+                                        <p:graphicImage value="../resources/prod_Serv/#{imgS.id}.jpg" cache="false" class="imagens-detalhe" style="max-width: 280px !important"/>
                                     </p:dataGrid><br/>
                                     <p:panelGrid  columns="2" rendered="#{not empty cestaCtrl.servico}" columnClasses="label,value">
-
-                                        <h:outputText value="Código:" />
+                                        <h:outputText value="Código:" style="font-weight: bold"/>
                                         <h:outputText value="#{cestaCtrl.servico.id}" />
 
-                                        <h:outputText value="Nome:" />
-                                        <h:outputText value="#{cestaCtrl.servico.nome}" />
+                                        <h:outputText value="Preço:" style="font-weight: bold"/>
+                                        <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.servico.valor).concat(' (').concat(cestaCtrl.servico.und).concat(')')}" style="font-weight: bold; font-size: 18px"/>
 
-                                        <h:outputText value="Preço:" />
-                                        <h:outputText value="#{cestaCtrl.formatarNumero(cestaCtrl.servico.valor)}" />
+                                        <h:outputText value="Descrição:" style="font-weight: bold"/>
+                                        <p:outputPanel style="max-width: 500px; text-align: justify">
+                                            <h:outputText value="#{cestaCtrl.servico.descricao}" />
+                                        </p:outputPanel>
                                     </p:panelGrid>
                                 </p:outputPanel>
                             </p:dialog>
                             <p:commandButton value="Próximo" oncomplete="PF('wiz').next()" process="@this" class="btnWizarProximo" 
-                                             icon="fa fa-angle-right" rendered="#{cestaCtrl.listaProdServ.size() > 0}" style="margin-bottom: 30px"/>
+                                             icon="fa fa-angle-right" rendered="#{cestaCtrl.qtde > 0}" style="margin-bottom: 30px"/>
                         </p:tab>
 
                         <p:tab id="endereco" title="Identificação">

@@ -71,9 +71,9 @@ public class MinhaContaCtrl implements Serializable {
         listaProdServ = new ArrayList<>();
         for (ItensPed itensPed1 : listaItensPed) {
             if (itensPed1.getProduto() != null) {
-                listaProdServ.add(new ProdutoServico(itensPed1.getProduto()));
+                listaProdServ.add(new ProdutoServico(itensPed1.getProduto(), (int) itensPed1.getQtde()));
             } else {
-                listaProdServ.add(new ProdutoServico(itensPed1.getServico()));
+                listaProdServ.add(new ProdutoServico(itensPed1.getServico(), (int) itensPed1.getQtde()));
             }
         }
         cont = 1;

@@ -37,7 +37,7 @@
                     <p:menuitem value="Sobre" icon="fa fa-info-circle" oncomplete="PF('sobreDialog').show()"/>
                 </p:submenu>
 
-                <p:submenu rendered="#{!pessoaCtrl.userAdmin}" label="Cesta #{cestaCtrl.listaProdServ.size()}" icon="fa fa-shopping-basket" style="float: right;margin-top:4px">
+                <p:submenu rendered="#{!pessoaCtrl.userAdmin}" label="Cesta #{cestaCtrl.qtde}" icon="fa fa-shopping-basket" style="float: right;margin-top:4px">
                     <p:menuitem value="Ir para a Cesta" icon="fa fa-shopping-basket" url="#{request.contextPath}#{temaCtrl.verifClienteLogado()}"/>
                     <p:menuitem value="Limpar Cesta" icon="fa fa-trash-o" action="#{cestaCtrl.actionLimpar()}" update="menubar form"/>
                 </p:submenu>

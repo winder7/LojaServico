@@ -12,6 +12,7 @@ import com.waal.persistencia.FormaPgtoDAO;
 import com.waal.persistencia.PedidoDAO;
 import com.waal.uteis.BoletoDto;
 import com.waal.uteis.Enviar;
+import com.waal.uteis.Exibir;
 import com.waal.uteis.Gerar;
 import com.waal.uteis.Mensagem;
 import com.waal.uteis.SessionData;
@@ -21,10 +22,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 /**
  * @Autor Winder Rezende
@@ -33,12 +32,11 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class CestaCtrl implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     private String filtro = "";
     private Produto produto = new Produto();
     private Servico servico = new Servico();
-    private Produto produto2 = new Produto();
     private List<Produto> listaProdutos = new ArrayList<>();
     private List<Servico> listaServico = new ArrayList<>();
     private List<ProdutoServico> listaProdServ = new ArrayList<>();
@@ -59,30 +57,31 @@ public class CestaCtrl implements Serializable {
     private boolean finalPedido;
     private ItensPed itensPed = new ItensPed();
     public static boolean redirCesta = false;
-
+    private int qtde = 0;
+    
     public CestaCtrl() {
         freteNormal = Gerar.Frete(9, 40);
         freteExpersso = freteNormal + Gerar.Frete(1, 15);
         freteEscolhido = freteNormal;
         setBoxAno();
     }
-
+    
     public void addCesta(Produto produto) {
-        listaProdServ.add(new ProdutoServico(produto));
-        somaProduto += produto.getPreco();
-        somaProdServ = somaProduto + somaServico;
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Sucesso", "Produto adicionado a cesta"));
+        if (!verifAdd(produto)) {
+            listaProdServ.add(new ProdutoServico(produto));
+        }
+        somaItens();
+        Exibir.Mensagem("Sucesso", "Produto: " + produto.getNome() + " adicionado a cesta");
     }
-
+    
     public void addCesta(Servico servico) {
-        listaProdServ.add(new ProdutoServico(servico));
-        somaServico += servico.getValor();
-        somaProdServ = somaProduto + somaServico;
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Sucesso", "Serviço adicionado a cesta"));
+        if (!verifAdd(servico)) {
+            listaProdServ.add(new ProdutoServico(servico));
+        }
+        somaItens();
+        Exibir.Mensagem("Sucesso", "Serviço: " + servico.getNome() + " adicionado a cesta");
     }
-
+    
     public void addCesta(ProdutoServico prodServ) {
         if (prodServ.getProduto() != null) {
             addCesta(prodServ.getProduto());
@@ -90,25 +89,51 @@ public class CestaCtrl implements Serializable {
             addCesta(prodServ.getServico());
         }
     }
-
+    
+    private boolean verifAdd(Produto produto) {
+        for (ProdutoServico produtoServico : listaProdServ) {
+            if (produtoServico.getProduto() != null) {
+                if (produtoServico.getProduto().getId() == produto.getId()) {
+                    produtoServico.setQuantidade(produtoServico.getQuantidade() + 1);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    private boolean verifAdd(Servico servico) {
+        for (ProdutoServico produtoServico : listaProdServ) {
+            if (produtoServico.getServico() != null) {
+                if (produtoServico.getServico().getId() == servico.getId()) {
+                    produtoServico.setQuantidade(produtoServico.getQuantidade() + 1);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     public String formatarNumero(double num) {
         return String.format("R$ " + "%,.2f", num);
     }
-
+    
     public void actionExcluir(ProdutoServico itens) {
-        FacesContext context = FacesContext.getCurrentInstance();
         listaProdServ.remove(itens);
+        somaItens();
         if (itens.getProduto() != null) {
-            this.somaProduto -= itens.getProduto().getPreco();
-            somaProdServ = somaProduto + somaServico;
-            context.addMessage(null, new FacesMessage("Sucesso", "Produto removido!"));
+            Exibir.Mensagem("Sucesso", "Produto removido!");
         } else {
-            this.somaServico -= itens.getServico().getValor();
-            somaProdServ = somaProduto + somaServico;
-            context.addMessage(null, new FacesMessage("Sucesso", "Serviço Removido!"));
+            Exibir.Mensagem("Sucesso", "Serviço removido!");
         }
     }
-
+    
+    public void removeQtdeZero(ProdutoServico iten) {
+        if (iten.getQuantidade() == 0) {
+            listaProdServ.remove(iten);
+        }
+    }
+    
     public void actionLimpar() {
         listaProdServ.clear();
         listaProdutos.clear();
@@ -120,18 +145,19 @@ public class CestaCtrl implements Serializable {
         desconto = 0.0;
         finalPedido = false;
         redirCesta = false;
+        qtde = 0;
     }
-
+    
     public int getImagem(Produto produto) {
         return produto.getImagens().get(0).getId();
     }
-
+    
     public int getImagem(Servico servico) {
         return servico.getImagens().get(0).getId();
     }
-
+    
     public String selecionarIcone(String descricao) {
-
+        
         if (descricao.contains("Boleto")) {
             return "fa fa-barcode";
         } else if (descricao.contains("Cartão")) {
@@ -142,7 +168,7 @@ public class CestaCtrl implements Serializable {
             return "";
         }
     }
-
+    
     public String selDescricao(String descricao, int parcelas, float percentDesconto) {
         if (parcelas > 1) {
             return descricao + " em " + parcelas + " vezes";
@@ -153,18 +179,18 @@ public class CestaCtrl implements Serializable {
             return descricao;
         }
     }
-
+    
     private void setBoxAno() {
-
+        
         ItensBoxAno = new LinkedHashMap<>();
         int ano = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date()));
         for (int i = 0; i < 10; i++) {
             ItensBoxAno.put(Integer.toString(ano), (ano++));
         }
     }
-
+    
     public Map<String, String> setBoxParcelas(Map<String, String> ItensBoxParcelas) {
-
+        
         ItensBoxParcelas = new LinkedHashMap<>();
         try {
             List<FormaPgto> parcelas = FormaPgtoDAO.listagem(filtro);
@@ -184,17 +210,32 @@ public class CestaCtrl implements Serializable {
         }
         return ItensBoxParcelas;
     }
-
+    
     public boolean verficaFormaPag(String formaPagamento) {
-
+        
         return forPagEsc.contains(formaPagamento);
     }
-
+    
+    public void somaItens() {
+        somaProduto = 0;
+        somaServico = 0;
+        qtde = 0;
+        for (ProdutoServico listProdServ : listaProdServ) {
+            if (listProdServ.getProduto() != null) {
+                somaProduto += listProdServ.getProduto().getPreco() * listProdServ.getQuantidade();
+            } else {
+                somaServico += listProdServ.getServico().getValor() * listProdServ.getQuantidade();
+            }
+            qtde += listProdServ.getQuantidade();
+        }
+        somaProdServ = somaProduto + somaServico;
+    }
+    
     public double calculaTotal(double somaProdServ, double freteEscolhido) {
         somaTotal = somaProdServ + freteEscolhido + desconto;
         return somaTotal;
     }
-
+    
     public double calculaDesconto(double desconto) {
         forPagEsc = formPagSel;
         if (formPagSel.contains("Boleto")) {
@@ -205,9 +246,9 @@ public class CestaCtrl implements Serializable {
         this.desconto = desconto;
         return desconto;
     }
-
+    
     public String formaPagInfo(String formaPag) {
-
+        
         if (formaPag.contains("Boleto")) {
             return formaPag.split(";")[0] + " (" + (int) (percentDesconto * -1) + "% desc.)";
         } else if (formaPag.contains("Cartão")) {
@@ -216,7 +257,7 @@ public class CestaCtrl implements Serializable {
             return formaPag.split(";")[0];
         }
     }
-
+    
     public void gerarBoleto() {
         System.out.println("Gerando Boleto...");
         PagamentoCtrl pg = new PagamentoCtrl();
@@ -229,7 +270,7 @@ public class CestaCtrl implements Serializable {
         pg.GerarBoleto(boletoDto);
         System.out.println("Boleto Gerado!");
     }
-
+    
     public void finalizarPedido() {
         if (finalPedido) {
             try {
@@ -251,12 +292,12 @@ public class CestaCtrl implements Serializable {
                     itensPed = new ItensPed();
                     if (prodServ.getProduto() != null) {
                         itensPed.setProduto(prodServ.getProduto());
-                        itensPed.setQtde(1);
+                        itensPed.setQtde(prodServ.getQuantidade());
                         itensPed.setValorUnit(prodServ.getProduto().getPreco());
                         itensPed.setSubTotal(prodServ.getProduto().getPreco());
                     } else {
                         itensPed.setServico(prodServ.getServico());
-                        itensPed.setQtde(1);
+                        itensPed.setQtde(prodServ.getQuantidade());
                         itensPed.setValorUnit(prodServ.getServico().getValor());
                         itensPed.setSubTotal(prodServ.getServico().getValor());
                     }
@@ -273,17 +314,18 @@ public class CestaCtrl implements Serializable {
             }
         }
     }
-
-    private void imprimePed(Pedido pedido) {
-        System.out.println(pedido.getDataAutorizacao());
-        System.out.println(pedido.getDataEmissao());
-        System.out.println(pedido.getStatus());
-        System.out.println(pedido.getTotalServico());
-        System.out.println(pedido.getTotalProduto());
-        System.out.println(pedido.getTotalGeral());
-        System.out.println(pedido.getDesconto());
-        System.out.println(pedido.getPes_id());
-        System.out.println(pedido.getFpg_id());
+    
+    public void addRemQtde(ProdutoServico prodServ, int arg) {
+        if (arg > 0) {
+            prodServ.setQuantidade(prodServ.getQuantidade() + 1);
+        } else {
+            prodServ.setQuantidade(prodServ.getQuantidade() - 1);
+        }
+        if (prodServ.getQuantidade() < 1) {
+            listaProdServ.remove(prodServ);
+            Exibir.Mensagem("Sucesso", "Item removido!");
+        }
+        somaItens();
     }
     
     public void ativaRedirCesta(boolean ativaInativa) {
@@ -295,184 +337,192 @@ public class CestaCtrl implements Serializable {
     public String getFiltro() {
         return filtro;
     }
-
+    
     public void setFiltro(String filtro) {
         this.filtro = filtro;
     }
-
+    
     public Produto getProduto() {
         return produto;
     }
-
+    
     public void setProduto(Produto produto) {
         this.produto = produto;
     }
-
+    
     public Servico getServico() {
         return servico;
     }
-
+    
     public void setServico(Servico servico) {
         this.servico = servico;
     }
-
-    public Produto getProduto2() {
-        return produto2;
-    }
-
-    public void setProduto2(Produto produto2) {
-        this.produto2 = produto2;
-    }
-
+    
     public List<Produto> getListaProdutos() {
         return listaProdutos;
     }
-
+    
     public void setListaProdutos(List<Produto> listaProdutos) {
         this.listaProdutos = listaProdutos;
     }
-
+    
     public List<Servico> getListaServico() {
         return listaServico;
     }
-
+    
     public void setListaServico(List<Servico> listaServico) {
         this.listaServico = listaServico;
     }
-
+    
     public List<ProdutoServico> getListaProdServ() {
         return listaProdServ;
     }
-
+    
     public void setListaProdServ(List<ProdutoServico> listaProdServ) {
         this.listaProdServ = listaProdServ;
     }
-
+    
     public double getSomaProduto() {
         return somaProduto;
     }
-
+    
     public void setSomaProduto(double somaProduto) {
         this.somaProduto = somaProduto;
     }
-
+    
     public double getSomaServico() {
         return somaServico;
     }
-
+    
     public void setSomaServico(double somaServico) {
         this.somaServico = somaServico;
     }
-
+    
     public double getSomaProdServ() {
         return somaProdServ;
     }
-
+    
     public void setSomaProdServ(double somaProdServ) {
         this.somaProdServ = somaProdServ;
     }
-
+    
     public double getSomaTotal() {
         return somaTotal;
     }
-
+    
     public void setSomaTotal(double somaTotal) {
         this.somaTotal = somaTotal;
     }
-
+    
     public double getFreteNormal() {
         return freteNormal;
     }
-
+    
     public void setFreteNormal(double freteNormal) {
         this.freteNormal = freteNormal;
     }
-
+    
     public double getFreteExpersso() {
         return freteExpersso;
     }
-
+    
     public void setFreteExpersso(double freteExpersso) {
         this.freteExpersso = freteExpersso;
     }
-
+    
     public double getFreteEscolhido() {
         return freteEscolhido;
     }
-
+    
     public void setFreteEscolhido(double freteEscolhido) {
         this.freteEscolhido = freteEscolhido;
     }
-
+    
     public double getDesconto() {
         return desconto;
     }
-
+    
     public void setDesconto(double desconto) {
         this.desconto = desconto;
     }
-
+    
     public float getPercentDesconto() {
         return percentDesconto;
     }
-
+    
     public void setPercentDesconto(float percentDesconto) {
         this.percentDesconto = percentDesconto;
     }
-
+    
     public String getParcelaSel() {
         return parcelaSel;
     }
-
+    
     public void setParcelaSel(String parcelaSel) {
         this.parcelaSel = parcelaSel;
     }
-
+    
     public String getFormPagSel() {
         return formPagSel;
     }
-
+    
     public void setFormPagSel(String formPagSel) {
         this.formPagSel = formPagSel;
     }
-
+    
     public String getForPagEsc() {
         return forPagEsc;
     }
-
+    
     public void setForPagEsc(String forPagEsc) {
         this.forPagEsc = forPagEsc;
     }
-
+    
     public Map<String, Integer> getItensBoxAno() {
         return ItensBoxAno;
     }
-
+    
     public void setItensBoxAno(Map<String, Integer> ItensBoxAno) {
         this.ItensBoxAno = ItensBoxAno;
     }
-
+    
     public Map<String, String> getItensBoxParcelas() {
         return ItensBoxParcelas;
     }
-
+    
     public void setItensBoxParcelas(Map<String, String> ItensBoxParcelas) {
         this.ItensBoxParcelas = ItensBoxParcelas;
     }
-
+    
     public boolean isFinalPedido() {
         return finalPedido;
     }
-
+    
     public void setFinalPedido(boolean finalPedido) {
         this.finalPedido = finalPedido;
     }
-
+    
     public ItensPed getItensPed() {
         return itensPed;
     }
-
+    
     public void setItensPed(ItensPed itensPed) {
         this.itensPed = itensPed;
+    }
+    
+    public static boolean isRedirCesta() {
+        return redirCesta;
+    }
+    
+    public static void setRedirCesta(boolean redirCesta) {
+        CestaCtrl.redirCesta = redirCesta;
+    }
+
+    public int getQtde() {
+        return qtde;
+    }
+
+    public void setQtde(int qtde) {
+        this.qtde = qtde;
     }
 }

@@ -21,7 +21,8 @@
                                 <i class="fa fa-wrench" style="font-size: 18px; margin-right: 3px"/>
                                 <h:outputText value="Serviços" style="font-size: 18px; color: green"/>
                             </f:facet>
-                            <p:panel header="#{serv.nome}" style="text-align:center">
+                            <p:panel id="panelItem" header="#{serv.nome}" style="text-align:center">
+                                <p:growl id="msgsPanel" showDetail="true"/>
                                 <h:panelGrid columns="1" style="width:100%">
                                     <p:dataGrid id="gridImg" var="f" value="#{serv.imagens}" emptyMessage="Sem imagem">
                                         <p:commandLink update=":form:servDetalhe" oncomplete="PF('servDetalhe').show()" title="Ver detalhes">
@@ -29,7 +30,7 @@
                                             <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
                                         </p:commandLink>
                                     </p:dataGrid>
-                                    <h:outputText value="#{servicoCtrl.formatarNumero(serv.valor)}" style="font-weight: bold; font-size: 16px"/>
+                                    <h:outputText value="#{servicoCtrl.formatarNumero(serv.valor).concat(' (').concat(serv.und).concat(')')}" style="font-weight: bold; font-size: 16px"/>
                                     <p:column>
                                         <h:panelGrid columns="2" style="width: 100%; height: auto; margin-left: -5px; text-align: center">
                                             <p:commandButton class="botaoDetalhe" value="Detalhes" icon="fa fa-search" update=":form:servDetalhe" 
@@ -37,7 +38,7 @@
                                                 <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
                                             </p:commandButton>
                                             <p:commandButton class="botaoContratar" value="Contrate" icon="fa fa-shopping-basket" style="margin-left: 10px" title="Adicionar na cesta" 
-                                                             action="#{cestaCtrl.addCesta(serv)}" update="form menu:menubar">
+                                                             action="#{cestaCtrl.addCesta(serv)}" update="panelItem menu:menubar">
                                                 <f:setPropertyActionListener value="#{serv}" target="#{servicoCtrl.servico}" />
                                             </p:commandButton>
                                         </h:panelGrid>
@@ -60,7 +61,7 @@
                                     <h:outputText value="#{servicoCtrl.servico.id}" />
 
                                     <h:outputText value="Preço:" style="font-weight: bold"/>
-                                    <h:outputText value="#{servicoCtrl.formatarNumero(servicoCtrl.servico.valor)}" style="font-weight: bold; font-size: 18px"/>
+                                    <h:outputText value="#{servicoCtrl.formatarNumero(servicoCtrl.servico.valor).concat(' (').concat(servicoCtrl.servico.und).concat(')')}" style="font-weight: bold; font-size: 18px"/>
 
                                     <h:outputText value="Descrição:" style="font-weight: bold"/>
                                     <p:outputPanel style="max-width: 500px; text-align: justify">

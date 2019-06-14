@@ -58,7 +58,8 @@
                                         rows="24" paginator="true" id="produto" paginatorPosition="top" rowsPerPageTemplate="12,24,48" class="responsive"
                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
-                                <p:panel header="#{prod.produto != null ? prod.produto.nome : prod.servico.nome}" style="text-align:center">
+                                <p:panel id="panelItem" header="#{prod.produto != null ? prod.produto.nome : prod.servico.nome}" style="text-align:center">
+                                    <p:growl id="msgsPanel" showDetail="true"/>
                                     <f:facet name="header">
                                         <i class="#{prod.produto != null ? 'fa fa-cubes' : 'fa fa-wrench'}" style=" margin-right: 3px; font-size: 16px"/>
                                         <h:outputText value="#{prod.produto != null ? prod.produto.nome : prod.servico.nome}" 
@@ -91,7 +92,7 @@
 
                                                 <p:commandButton class="#{prod.produto != null ? 'botaoAddCesta' : 'botaoContratar'}" value="#{prod.produto != null ? 'Comprar' : 'Contrate'}" 
                                                                  icon="fa fa-shopping-basket" style="margin-left: 10px" title="Adicionar na cesta" 
-                                                                 action="#{cestaCtrl.addCesta(prod)}" update="form menu:menubar">
+                                                                 action="#{cestaCtrl.addCesta(prod)}" update="panelItem menu:menubar">
                                                     <f:setPropertyActionListener value="#{prod}" target="#{prod}" />
                                                 </p:commandButton>
                                             </h:panelGrid>

@@ -115,6 +115,12 @@
                                 <p:column headerText="Preço" sortBy="f.preco">
                                     <h:outputText value="#{f.produto != null ? minhaContaCtrl.formatarNumero(f.produto.preco) : minhaContaCtrl.formatarNumero(f.servico.valor)}"/>
                                 </p:column>
+                                <p:column headerText="Qtde" sortBy="f.preco">
+                                    <h:outputText value="#{f.quantidade}"/>
+                                </p:column>
+                                <p:column headerText="Subtotal" sortBy="f.preco">
+                                    <h:outputText value="#{f.produto != null ? minhaContaCtrl.formatarNumero(f.produto.preco * f.quantidade) : minhaContaCtrl.formatarNumero(f.servico.valor * f.quantidade)}"/>
+                                </p:column>
                             </p:dataTable>
                         </p:outputPanel>
                     </p:dialog>

@@ -21,8 +21,9 @@
                                 <i class="fa fa-cubes" style="font-size: 18px; margin-right: 3px"/>
                                 <h:outputText value="Produtos" style="font-size: 18px; color: blue"/>
                             </f:facet>
-                            <p:panel header="#{prod.nome}" style="text-align:center">
+                            <p:panel id="panelItem" header="#{prod.nome}" style="text-align:center">
                                 <h:panelGrid columns="1" class="responsive">
+                                    <p:growl id="msgsPanel" showDetail="true"/>
                                     <p:dataGrid id="gridImg" var="f" value="#{prod.imagens}" emptyMessage="Sem imagem">
                                         <p:commandLink update=":form:prodDetalhe" oncomplete="PF('prodDetalhe').show()" title="Ver detalhes">
                                             <p:graphicImage value="../resources/prod_Serv/#{f.id}.jpg" cache="false" class="imagens-vitrine"/>
@@ -37,7 +38,7 @@
                                                 <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}" />
                                             </p:commandButton>
                                             <p:commandButton class="botaoAddCesta" value="Comprar" icon="fa fa-shopping-basket"  style="margin-left: 10px" title="Adicionar na cesta" 
-                                                             action="#{cestaCtrl.addCesta(prod)}" update="form">
+                                                             action="#{cestaCtrl.addCesta(prod)}" update="panelItem menu:menubar">
                                                 <f:setPropertyActionListener value="#{prod}" target="#{produtoCtrl.produto}"/>
                                             </p:commandButton>
                                         </h:panelGrid>
