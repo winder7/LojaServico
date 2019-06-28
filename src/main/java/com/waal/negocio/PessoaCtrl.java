@@ -48,6 +48,7 @@ public class PessoaCtrl implements Serializable {
         if (pessoa.getId() == 0) {
             pessoa.setSenha(SessionData.encriptarSenha(pessoa.getSenha()));
             if (!usrLogado) {
+                pessoa.setSituacao(true);
                 pessoa.setTipo("ROLE_CLIENTE");
             }
             PessoaDAO.inserir(pessoa);
@@ -63,19 +64,24 @@ public class PessoaCtrl implements Serializable {
         this.pessoa = pessoa;
         BuscaCep();
     }
-    
+
     public void BuscaCep() {
         String cep = pessoa.getCep();
-        CepDTO cepDto = new CepDTO();
+        
         if (cep.length() >= 8) {
-            cepDto = BuscaCEP.Buscar(cep);
-        }
-        if (cepDto != null) {
-            pessoa.setNome(pessoa.getNome());
-            pessoa.setRua(cepDto.getLogradouro());
-            pessoa.setBairro(cepDto.getBairro());
-            pessoa.setCidade(cepDto.getCidade());
-            pessoa.setUf(cepDto.getUf());
+            new Thread() {
+                @Override
+                public void run() {
+                    CepDTO cepDto = BuscaCEP.Buscar(cep);
+                    if (cepDto != null) {
+                        pessoa.setNome(pessoa.getNome());
+                        pessoa.setRua(cepDto.getLogradouro());
+                        pessoa.setBairro(cepDto.getBairro());
+                        pessoa.setCidade(cepDto.getCidade());
+                        pessoa.setUf(cepDto.getUf());
+                    }
+                }
+            }.start();
         }
     }
 
@@ -143,8 +149,8 @@ public class PessoaCtrl implements Serializable {
         }
         return erro;
     }
-    
-    public Pessoa getDadosUsrLogado(){
+
+    public Pessoa getDadosUsrLogado() {
         pessoa = new Pessoa();
         pessoa = SessionData.getUsuarioLogado();
         return pessoa;

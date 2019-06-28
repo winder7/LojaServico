@@ -41,7 +41,7 @@ public class Enviar {
                 Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("isoinformaticati@gmail.com", "Ctrl270787");
+                        return new PasswordAuthentication("seu_email@email.com", "senha");
                     }
                 });
 

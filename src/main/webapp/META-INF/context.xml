@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/LojaServico" reloadable="true">
-    <Resource 
-        auth="Container" 
-        driverClassName="org.postgresql.Driver" 
-        maxActive="100" 
-        maxIdle="30" 
-        maxWait="10000" 
-        name="jdbc/bdlojaservico" 
-        password="root" 
-        type="javax.sql.DataSource" 
-        url="jdbc:postgresql://localhost:5432/bdlojaservico?autoReconnect=true" 
-        username="postgres"/>
+  <Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/bdlojaservico" password="root" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/bdlojaservico?autoReconnect=true" username="postgres"/>
 </Context>
