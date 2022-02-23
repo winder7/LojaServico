@@ -107,12 +107,6 @@
             <artifactId>poi-ooxml-schemas</artifactId>
             <version>3.15</version>
         </dependency>
-        <!-- Bopepo -->
-        <dependency>
-            <groupId>org.jrimum</groupId>
-            <artifactId>jrimum-bopepo</artifactId>
-            <version>0.2.3-SNAPSHOT</version><!-- 0.2.3-DEV-SNAPSHOT em desenvolvimento -->
-        </dependency>
     </dependencies>
     <repositories>
         <repository>
